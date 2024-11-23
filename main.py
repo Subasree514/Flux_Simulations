@@ -165,5 +165,5 @@ if __name__ == '__main__':
     #print(results)
     #solution = old_model.optimize()
     results_old=results[results['growth']==0]
-    print(pd.DataFrame(results_old))
+    #print(pd.DataFrame(results_old))
     pd.DataFrame(results_old).to_excel('sgd_old.xlsx')
