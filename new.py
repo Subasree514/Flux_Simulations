@@ -14,7 +14,7 @@ model = cobra.io.load_matlab_model(join('/Users/subasrees/Desktop/RS_demand/new_
 model_rs = cobra.io.load_matlab_model(join('/Users/subasrees/Desktop/RS_demand/new_day_dm_rs.mat'))
 alpha=read_sbml_model('/Users/subasrees/Downloads/PlantCoreModel.sbml')
 rs_model = cobra.io.load_matlab_model(join('/Users/subasrees/Desktop/RSmodule/September 24/Sep 16, 2024/Upload_Final/September 28/New Folder/RSmodel_coremodel.mat'))
-#print(rs_model.groups)
+print(rs_model.groups)
 print(len(model.reactions))
 print(model_rs.reactions)
 core_model=rs_model
