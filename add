@@ -1,0 +1,155 @@
+from __future__ import division, print_function, absolute_import
+import csv
+import pandas
+from cobra.flux_analysis import (
+    single_gene_deletion, single_reaction_deletion, double_gene_deletion,
+    double_reaction_deletion)
+import os
+import xml.etree.ElementTree as etree
+import cobra
+import numpy as np
+from itertools import chain
+from cobra.util import solver as sutil
+from cobra.core.solution import get_solution
+from optlang.symbolics import add, Zero
+import pandas as pd
+import os
+from os.path import join
+import matplotlib.pyplot as plt
+from cobra.medium import minimal_medium
+# Press ⌃R to execute it or replace it with your code.
+# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+from cobra.flux_analysis import production_envelope
+from cobra import Model, Reaction, Metabolite
+from cobra.flux_analysis import flux_variability_analysis
+import matplotlib.pyplot as plt
+alpha_day = cobra.io.load_matlab_model(join('/Users/subasrees/Desktop/RSmodule/September 24/Sep 16, 2024/Upload_Final/September 28/New Folder/Plant RS/alpha_day.mat'))
+new_day = cobra.io.load_matlab_model(join('/Users/subasrees/Desktop/RSmodule/September 24/Sep 16, 2024/Upload_Final/September 28/New Folder/Plant RS/new_day.mat'))
+# print summary
+sol = alpha_day.optimize()
+print(alpha_day.summary(sol))
+
+sol = new_day.optimize()
+print(new_day.summary(sol))
+
+
+# Pareto
+objective1={''}
+objective2={''}
+pareto_range = (0.0, 1.001)  # for some reason you need to pick a number higher than 1).
+pareto_step_size = 0.01
+analysis_type = 'pareto'
+metric = 'manhattan'
+rxn2avoid = {''}
+solver='gurobi'
+constants = {'deltaC_CO2': 0.0055, 'D_H2O_0': 2.13E-05, 'D_CO2_0': 1.33E-05, 'mid_day': 6, 'deltaT': 2,
+             'FeasTol': 1e-03, 'OptTol': 1e-03}
+def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_range=pareto_range, metric=metric):
+    reaction_obj1 = model.reactions.get_by_id(objective1)
+    reaction_obj2 = model.reactions.get_by_id(objective2)
+    result_list = []
+    model.objective = {}
+    reaction_obj1.objective_coefficient = 1
+    solution = model.optimize()
+    print("\nSolving model (FBA) for determining objective 1 flux...")
+    max_obj1 = dict(solution.fluxes)[objective1]
+    print("Max {0}: {1}".format(objective1, max_obj1))
+    # change objective
+    reaction_obj1.objective_coefficient = 0
+    reaction_obj2.objective_coefficient = 1
+    print("\nSolving all iterations for Pareto frontier (FBA)...")
+    for pareto in np.arange(pareto_range[0], pareto_range[1], pareto_step_size):
+        if pareto == 1:
+            reaction_obj1.lower_bound = max_obj1 * pareto  # * 0.999 # we need to add a bit of slack as the quadratic optimization is less accurate than the linear couterpart
+        else:
+            reaction_obj1.lower_bound = max_obj1 * pareto  # * 0.9999
+        sol = model.optimize(objective_sense='maximize')
+        # fix this minimal water loss value
+        reaction_obj2.bounds = (sol.get_primal_by_id(objective2), sol.get_primal_by_id(objective2))
+        if metric == 'manhattan':
+            solution = cobra.flux_analysis.pfba(model)
+            # print({'proline sink': solution['SK_PRO_c_06'], 'biomass 05': solution['Leaf_biomass_tx_05'], 'biomass 06': solution['Leaf_biomass_tx_06']})
+            # solution.fluxes.to_excel(f'pareto_no_{pareto}.xlsx')
+            result_list.append([pareto, solution[objective1], solution[objective2]])
+            reaction_obj2.bounds = (0, 1000.0)
+        elif metric == 'euclidean':
+
+            # make copy because that is easier that reverting all the solver settings
+            copy_model = model.copy()
+            model.solver = solver
+
+            FeasTol = float(constants['FeasTol'])
+            OptTol = float(constants['OptTol'])
+
+            copy_model.solver.configuration.tolerances.feasibility = FeasTol
+            copy_model.solver.configuration.tolerances.optimality = OptTol
+
+            rxnlist = [r for r in copy_model.reactions if r.id not in rxn2avoid]
+
+            obj_vars = chain.from_iterable([r.flux_expression ** 2] for r in rxnlist)
+            copy_model.objective = copy_model.problem.Objective(add(obj_vars), direction='min')
+
+            print('\nSolving quadratic minimisation of sum of fluxes')
+            #print(solver)
+            solution = copy_model.optimize(objective_sense=None)
+            result_list.append([pareto, solution[objective1], solution[objective2]])
+        reaction_obj2.bounds = (0, 1000.0)
+    return result_list
+core_model=new_day
+print(core_model.metabolites.query("SUPER_OXIDE"))
+## HS
+reaction = Reaction('HS_tr_1')
+reaction.name = 'Hydrogen sulfide transport'
+reaction.subsystem = 'RS Transport'
+reaction.lower_bound =-1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+reaction.add_metabolites({core_model.metabolites.get_by_id ('HS_p[p]'): -1.0,core_model.metabolites.get_by_id('HS_c[c]'): 1.0})
+core_model.add_reactions([reaction])
+core_model.add_boundary(core_model.metabolites.get_by_id("HS_c[c]"), type="demand")
+## H2O2
+reaction = Reaction('H2O2_tr_1')
+reaction.name = 'HYDROGEN PEROXIDE transport'
+reaction.subsystem = 'RS Transport'
+reaction.lower_bound =-1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+reaction.add_metabolites({core_model.metabolites.get_by_id ('HYDROGEN_PEROXIDE_p[p]'): -1.0,core_model.metabolites.get_by_id('HYDROGEN_PEROXIDE_c[c]'): 1.0})
+core_model.add_reactions([reaction])
+##
+reaction = Reaction('H2O2_tr_2')
+reaction.name = 'HYDROGEN PEROXIDE transport'
+reaction.subsystem = 'RS Transport'
+reaction.lower_bound =-1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+reaction.add_metabolites({core_model.metabolites.get_by_id ('HYDROGEN_PEROXIDE_m[m]'): -1.0,core_model.metabolites.get_by_id('HYDROGEN_PEROXIDE_c[c]'): 1.0})
+print(reaction.reaction) 
+core_model.add_reactions([reaction])
+##
+reaction = Reaction('H2O2_tr_3')
+reaction.name = 'HYDROGEN PEROXIDE transport'
+reaction.subsystem = 'RS Transport'
+reaction.lower_bound =-1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+reaction.add_metabolites({core_model.metabolites.get_by_id ('HYDROGEN_PEROXIDE_x[x]'): -1.0,core_model.metabolites.get_by_id('HYDROGEN_PEROXIDE_c[c]'): 1.0})
+print(reaction.reaction) 
+core_model.add_reactions([reaction])
+## HYDROGEN PEROXIDE DEMAND
+core_model.add_boundary(core_model.metabolites.get_by_id("HYDROGEN_PEROXIDE_c[c]"), type="demand")
+## SUPER OXIDE DEMAND
+core_model.add_boundary(core_model.metabolites.get_by_id("SUPER_OXIDE_c[c]"), type="demand")
+core_model.add_boundary(core_model.metabolites.get_by_id("SUPER_OXIDE_p[p]"), type="demand")
+## plot pareto plots
+objective1 =  'DM_HYDROGEN_PEROXIDE_c[c]'
+objective2 =  'Phloem_output_tx'
+result_list=pareto_analysis(core_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
+#pd.DataFrame(result_list).to_excel('results.xlsx')
+data=pd.DataFrame(result_list)
+plt.plot(data[1],data[2])
+plt.xlabel('Hydrogen peroxide demand')
+plt.ylabel('Phloem output')
+plt.title("Hydrogen peroxide vs. Phloem output reaction")
+#plt.savefig('/Users/subasrees/Desktop/RSmodule/September 24/Sep 16, 2024/Upload_Final/September 28/New Folder/Plant RS/h2o2_Phloem_output.pdf')
+plt.show()
+
+## calculate FVA 
+#fva=flux_variability_analysis(old_model, [objective1,objective2])
+#print(fva)

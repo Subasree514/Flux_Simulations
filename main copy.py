@@ -21,6 +21,7 @@ from cobra.medium import minimal_medium
 # Press ⌃R to execute it or replace it with your code.
 # Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
 from cobra.flux_analysis import production_envelope
+import matplotlib.pyplot as plt
 
 
 #def print_hi(name):
@@ -31,7 +32,7 @@ from cobra.flux_analysis import production_envelope
 
 # Pareto
 objective1 = 'Phloem_output_tx'
-objective2 =  'ARGSUCCINLYA_RXN_p'
+objective2 =  'GLC_tx'
 pareto_range = (0.0, 1.001)  # for some reason you need to pick a number higher than 1).
 pareto_step_size = 0.01
 analysis_type = 'pareto'
@@ -66,7 +67,7 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
             solution = cobra.flux_analysis.pfba(model)
             # print({'proline sink': solution['SK_PRO_c_06'], 'biomass 05': solution['Leaf_biomass_tx_05'], 'biomass 06': solution['Leaf_biomass_tx_06']})
             # solution.fluxes.to_excel(f'pareto_no_{pareto}.xlsx')
-            result_list.append([pareto, solution['Phloem_output_tx'], solution['ARGSUCCINLYA_RXN_p']])
+            result_list.append([pareto, solution['Phloem_output_tx'], solution['O2_tx']])
             reaction_obj2.bounds = (0, 1000.0)
         elif metric == 'euclidean':
 
@@ -88,79 +89,17 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
             print('\nSolving quadratic minimisation of sum of fluxes')
             #print(solver)
             solution = copy_model.optimize(objective_sense=None)
-            result_list.append([pareto, solution['Phloem_output_tx'], solution['ARGSUCCINLYA_RXN_p']])
+            result_list.append([pareto, solution['Phloem_output_tx'], solution['GLC_tx']])
         reaction_obj2.bounds = (0, 1000.0)
     return result_list
-def abiotic_constraint(model):
-    #print(model.optimize)
-    medium = model.medium
-    #print(medium)
-    #for i in medium:
-     #   medium[i] = 0.1
-     #   print(i)
-     #   model.medium = medium
-    ## Non-Essential under normal
-    if model==old_model:
-        for i in medium:
-            medium[i] = 0
-            model.medium = medium
-            #model.medium['SO4_tx'] = 0
-            #model.medium['NH4_tx'] = 0
-            #model.medium['K_tx'] = 0
-            #model.medium['GLC_tx'] = 0
-            model.medium['Ca_tx'] = 0
-            model.medium['Photon_tx'] = 0
-            model.medium['Sucrose_tx'] = 0
-            model.medium['H2O_tx'] = 0
-            model.medium['O2_tx'] = 0
-            print(model.medium)
-            solution = model.optimize()
-            print(solution.objective_value)
-    ## Non-Essential under stressed conditions
-    else:
-      for i in medium:
-          medium[i] = 0
-          print(i)
-          model.medium = medium
-          model.medium['Ca_tx'] = 0
-          model.medium['Photon_tx'] = 0
-          model.medium['Sucrose_tx'] = 0
-          model.medium['H2O_tx'] = 0
-          model.medium['CO2_tx'] = 0
-          solution = model.optimize()
-          print(solution.objective_value)
-
-
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     old_model = cobra.io.load_matlab_model(join(r'/Users/subasrees/Desktop/RSmodule/September 24/Sep 16, 2024/Upload_Final/September 28/New Folder',
                 "core_model.mat"))
-    #print(old_model.optimize)
     new_model = cobra.io.load_matlab_model(join(r'/Users/subasrees/Desktop/RSmodule/September 24/Sep 16, 2024/Upload_Final/September 28/New Folder',
              "model_merged_New.mat"))
-    #result_list=pareto_analysis(old_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
-    #data=pd.DataFrame(result_list)
-    #data.to_excel('results_old_model.xlsx')
-    #plt.plot(data[1],data[2])
-    #plt.show()
-    #abiotic_constraint(old_model)
-    #max_growth = old_model.slim_optimize()
-    #print(minimal_medium(old_model, max_growth))
-    #print(minimal_medium(old_model, 0.1, minimize_components=True))
-    #print(minimal_medium(old_model, 0.8, minimize_components=8, open_exchanges=True))
-    #prod_env = production_envelope(old_model, ["CO2_tx", "O2_tx"])
-    #prod_env = production_envelope(old_model, ["O2_tx"], objective="Sucrose_tx", carbon_sources="CO2_tx")
-    #print(prod_env.head())
-    #print(prod_env.columns)
-    #matplotlib inline
-    #plt.plot(prod_env['carbon_source'], prod_env['mass_yield_maximum'])
-    #plt.show()
-    #max_growth = new_model.slim_optimize()
-    #print(minimal_medium(new_model, max_growth))
-    #print(minimal_medium(new_model, 0.1, minimize_components=True))
-    #print(minimal_medium(new_model, 0.8, minimize_components=8, open_exchanges=True))
-    medium = old_model.medium
+    medium = new_model.medium
     medium["Ca_tx"] = 0.0
     medium["Sucrose_tx"] = 0.0
     medium['K_tx']=0.0
@@ -169,13 +108,12 @@ if __name__ == '__main__':
     medium['H_tx']=0.0
     medium['Mg_tx']=0.0
     medium['O2_tx']=0.0
-    old_model.medium = medium
-    old_model.medium
-    results=single_reaction_deletion(old_model, old_model.reactions)
-    #print("exchanges", new_model.exchanges)
-    solution = old_model.optimize()
-    print(solution)
-    print("exchanges", old_model.exchanges)
-    results_new=results[results['growth']==0]
-    #print(pd.DataFrame(results_old))
-    #pd.DataFrame(results_new).to_excel('sgd_photon  _tx_New.xlsx')
+    new_model.medium = medium
+    result_list=pareto_analysis(new_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
+    #%matplotlib inline
+    data=pd.DataFrame(result_list)
+    print(data)
+    plt.plot(data[1],data[2])
+    plt.show()
+
+

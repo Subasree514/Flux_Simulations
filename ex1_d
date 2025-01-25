@@ -1,0 +1,37 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Data
+city = ['New York', 'Tokyo', 'London', 'Sydney', 'Cape Town', 'Rio de Janeiro', 'Paris', 'Moscow']
+country = ['USA', 'Japan', 'UK', 'Australia', 'South Africa', 'Brazil', 'France', 'Russia']
+average_temperature = [12.5, 16.3, 11.1, 21.3, 17.2, 23.4, 13.9, 5.2]
+annual_rainfall = [1200, 1500, 715, 850, 500, 1200, 640, 300]
+
+# Create a scatter plot with heatmap effect using temperature as the color
+plt.figure(figsize=(10, 6))
+
+# Normalize the temperature for colormap
+norm = plt.Normalize(min(average_temperature), max(average_temperature))
+cmap = plt.cm.coolwarm
+
+# Create the scatter plot
+scatter = plt.scatter(annual_rainfall, average_temperature, c=average_temperature, cmap=cmap, s=100, edgecolors='black', norm=norm)
+
+# Annotate each point with both city and country names
+for i, (city_name, country_name) in enumerate(zip(city, country)):
+    label = f'{city_name}, {country_name}'
+    plt.text(annual_rainfall[i] + 20, average_temperature[i] + 0.2, label, fontsize=9)
+
+# Add labels and title
+plt.xlabel('Annual Rainfall (mm)')
+plt.ylabel('Average Temperature (°C)')
+plt.title('Average Temperature vs Annual Rainfall (Heatmap of Temperature)')
+
+# Add colorbar to represent the temperature scale
+plt.colorbar(scatter, label='Average Temperature (°C)')
+
+# Show the plot
+plt.tight_layout()
+plt.savefig('/Users/subasrees/Desktop/fig4.png')
+
+plt.show()

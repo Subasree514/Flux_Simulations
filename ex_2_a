@@ -1,0 +1,35 @@
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Data
+group = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+seeds_in_each_group = [3, 17, 66, 161, 252, 252, 161, 66, 17, 3]
+dormancy_level = [-2.5, -1.9, -1.4, -0.8, -0.3, 0.3, 0.8, 1.4, 1.9, 2.5]
+time_to_germination = [118, 118, 118, 123, 153, 192, 233, 252, 317, 495]
+time_to_first_flower = [229, 229, 230, 234, 262, 300, 340, 357, 420, 591]
+
+# Create a DataFrame
+data = pd.DataFrame({
+    'Group': group,
+    'Seeds in Each Group': seeds_in_each_group,
+    'Dormancy Level': dormancy_level,
+    'Time to Germination': time_to_germination,
+    'Time to First Flower': time_to_first_flower
+})
+
+# Calculate the Pearson correlation matrix
+correlation_matrix = data[['Seeds in Each Group', 'Dormancy Level', 'Time to Germination', 'Time to First Flower']].corr()
+
+# Plot the correlation heatmap
+plt.figure(figsize=(8, 6))
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt='.2f', linewidths=0.5)
+plt.title('Correlation Matrix')
+plt.savefig('/Users/subasrees/Desktop/fig7.png')
+
+plt.show()
+
+# Print the correlation matrix
+print("Correlation Matrix:")
+print(correlation_matrix)

@@ -1,0 +1,25 @@
+import matplotlib.pyplot as plt
+
+# Data
+city = ['New York', 'Tokyo', 'London', 'Sydney', 'Cape Town', 'Rio de Janeiro', 'Paris', 'Moscow']
+average_temperature = [12.5, 16.3, 11.1, 21.3, 17.2, 23.4, 13.9, 5.2]
+annual_rainfall = [1200, 1500, 715, 850, 500, 1200, 640, 300]
+
+# Create the scatter plot
+plt.figure(figsize=(10, 6))
+plt.scatter(annual_rainfall, average_temperature, color='green', s=100)
+
+# Annotate each point with the city name
+for i, city_name in enumerate(city):
+    plt.text(annual_rainfall[i] + 20, average_temperature[i] + 0.2, city_name, fontsize=9)
+
+# Add labels and title
+plt.xlabel('Annual Rainfall (mm)')
+plt.ylabel('Average Temperature (°C)')
+plt.title('Average Temperature vs Annual Rainfall')
+
+# Show the plot
+plt.tight_layout()
+plt.savefig('/Users/subasrees/Desktop/fig2.pdf')
+
+plt.show()
