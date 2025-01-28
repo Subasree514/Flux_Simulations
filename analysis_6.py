@@ -66,7 +66,7 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
             ## Starch synthesis pathway - 4-5
             primary_2=['PGLUCISOM_RXN_p','GLYCOGENSYN_RXN_p']
             ## Sucrose synthesis pathway - 6-7
-            primary_3=['F16ALDOLASE_RXN_c','SUCROSE_PHOSPHATASE_RXN_c','3.2.1.48_RXN_c']
+            primary_3=['F16ALDOLASE_RXN_c','SUCROSE_PHOSPHATASE_RXN_c','3_PERIOD_2_PERIOD_1_PERIOD_48_RXN_c']
             ## Defense related in carbohydrate metabolism and photorespiration - 8-10
             primary_4=['RXN_961_p','RXN_969_x','GLYCINE_AMINOTRANSFERASE_RXN_x','GLYOHMETRANS_RXN_m','SERINE_GLYOXYLATE_AMINOTRANSFERASE_RXN_x','GLY3KIN_RXN_p']#hxk gox fab2
             ## Defense related in aminoacid metabolism - 11-13
