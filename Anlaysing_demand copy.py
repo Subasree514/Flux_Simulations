@@ -26,7 +26,9 @@ import matplotlib.pyplot as plt
 from cobra.io import load_json_model, save_json_model, load_matlab_model, save_matlab_model, read_sbml_model, write_sbml_model
 
 
-model = cobra.io.load_matlab_model(join('/Users/subasrees/Desktop/RSmodule/September 24/Sep 16, 2024/Upload_Final/September 28/New Folder/Plant RS/new_day_DM.mat'))
+#core_model = cobra.io.load_matlab_model(join('alpha_day_DM.mat'))
+core_model = cobra.io.load_matlab_model(join('alpha_day_RS_DM.mat'))
+
 ## Pareto function
 # Pareto
 objective1={''}
@@ -90,22 +92,25 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
             result_list.append([pareto, solution[objective1], solution[objective2]])
         reaction_obj2.bounds = (0, 1000.0)
     return result_list
-core_model=model
-#rubisco = core_model.problem.Constraint(1 * core_model.reactions.get_by_id("RXN_961_p").flux_expression - core_model.reactions.get_by_id("RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p").flux_expression,lb=0, ub=0,)
-print(core_model.reactions.query('O2S'))
+
+rubisco = core_model.problem.Constraint(1 * core_model.reactions.get_by_id("RXN_961_p").flux_expression - core_model.reactions.get_by_id("RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p").flux_expression,lb=0, ub=0,)
 # Adding to model
-#core_model.add_cons_vars([rubisco])
-objective1 =  'O2S_p_demand'
-objective2 =  'DM_SUPER_OXIDE_cell[cell]'
+core_model.add_cons_vars([rubisco])
+core_model.reactions.get_by_id('LPG_biosynthesis_c').bounds=(0,0)
+objective1 =  'AraCore_Biomass_tx'
+objective2 =  'DM_HYDROGEN_PEROXIDE_cell'
 result_list=pareto_analysis(core_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
 data=pd.DataFrame(result_list)
 plt.plot(data[1],data[2])
-plt.xlabel('Superoxide demand from plastid')
-plt.ylabel('Superoxide demand overall')
-plt.title("Superoxide analysis")
+plt.xlabel('Biomass reaction')
+plt.ylabel('RS demand overall')
+plt.title("RS vs.Biomass analysis")
 #plt.savefig('/Users/subasrees/Desktop/RSmodule/September 24/Sep 16, 2024/Upload_Final/September 28/New Folder/Plant RS/RS_demand/o2s_p.pdf')
 #plt.ticklabel_format(style='plain')
 plt.show()
+
+
+
 #with core_model:
 #    core_model.reactions.get_by_id('DM_HS_cell[cell]').bounds = (0, 0)
 #   sol = core_model.optimize()
@@ -122,6 +127,7 @@ plt.show()
     #sol = core_model.optimize()
     #print(core_model.summary(sol))
     #pd.DataFrame(result_list).to_excel('results.xlsx')
+
 ## pareto plots
 #data=pd.DataFrame(result_list_max)
 #print('flux at start',data[2][0])
