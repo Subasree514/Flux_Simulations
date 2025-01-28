@@ -30,11 +30,11 @@ import pandas as pd
 import numpy as np
 from cobra.io import load_json_model, save_json_model, load_matlab_model, save_matlab_model, read_sbml_model, write_sbml_model
 
-#model = cobra.io.load_matlab_model(join(r'/home/subasree/Desktop/curation_alpha_only/core_alpha_model_balanced.mat'))
-model_rs = cobra.io.load_matlab_model(join(r'/home/subasree/Desktop/curation_alpha_only',"modelalpha_loopless.mat"))
+model = cobra.io.load_matlab_model(join(r'/home/subasree/Desktop/curation_alpha_only/core_alpha_model_balanced.mat'))
+#model_rs = cobra.io.load_matlab_model(join(r'/home/subasree/Desktop/curation_alpha_only',"modelalpha_loopless.mat"))
 
 ## rename the model
-core_model=model_rs
+core_model=model
 print(core_model.groups)
 
 
