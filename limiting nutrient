@@ -30,8 +30,8 @@ import pandas as pd
 import numpy as np
 from cobra.io import load_json_model, save_json_model, load_matlab_model, save_matlab_model, read_sbml_model, write_sbml_model
 
-model = cobra.io.load_matlab_model(join(r'/home/subasree/Desktop/curation_alpha_only/core_alpha_model_balanced.mat'))
-#model_rs = cobra.io.load_matlab_model(join(r'/home/subasree/Desktop/curation_alpha_only',"modelalpha_loopless.mat"))
+model = cobra.io.load_matlab_model(join(r'/home/subasree/Desktop/Models_to_work',"core_alpha_model_balanced.mat"))
+model_rs = cobra.io.load_matlab_model(join(r'/home/subasree/Desktop/Models_to_work',"modelalpha_loopless.mat"))
 
 ## rename the model
 core_model=model
@@ -73,8 +73,12 @@ with core_model:
     #total = sol.fluxes["RXN_961_p"] + sol.fluxes["RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p"]
     #print("O2: {}".format(round(sol.fluxes['RXN_961_p']/total*100,2)))
     #print("CO2 : {}".format(round(sol.fluxes['RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p']/total*100,2)))
-    alpha_day_rs=core_model
-    save_matlab_model(alpha_day_rs, "alpha_day_rs.mat")
+    alpha_day=core_model
+    #save_matlab_model(alpha_day_rs, "alpha_day_rs.mat")
+    save_matlab_model(alpha_day, "alpha_day.mat")
+    #save_matlab_model(alpha_day_rs, "/home/subasree/Desktop/Models_to_work/alpha_day_rs.mat")
+    save_matlab_model(alpha_day, "/home/subasree/Desktop/Models_to_work/alpha_day.mat")
+
 
 #model=read_sbml_model('/Users/subasrees/Downloads/PlantCoreModel.sbml')
 
