@@ -27,7 +27,7 @@ from cobra.io import load_json_model, save_json_model, load_matlab_model, save_m
 
 
 #core_model = cobra.io.load_matlab_model(join('alpha_day_DM.mat'))
-core_model = cobra.io.load_matlab_model(join('alpha_day_RS_DM.mat'))
+core_model = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/model_rs.mat'))
 
 ## Pareto function
 # Pareto
@@ -98,7 +98,7 @@ rubisco = core_model.problem.Constraint(1 * core_model.reactions.get_by_id("RXN_
 core_model.add_cons_vars([rubisco])
 core_model.reactions.get_by_id('LPG_biosynthesis_c').bounds=(0,0)
 objective1 =  'AraCore_Biomass_tx'
-objective2 =  'DM_HYDROGEN_PEROXIDE_cell'
+objective2 =  'DM_SUPER_OXIDE_cell'
 result_list=pareto_analysis(core_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
 data=pd.DataFrame(result_list)
 plt.plot(data[1],data[2])
