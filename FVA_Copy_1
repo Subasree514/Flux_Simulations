@@ -1,0 +1,35 @@
+import cobra
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from cobra.flux_analysis import production_envelope
+from cobra import Model, Reaction, Metabolite
+from cobra.flux_analysis import flux_variability_analysis
+import matplotlib.pyplot as plt
+from cobra.io import load_json_model, save_json_model, load_matlab_model, save_matlab_model, read_sbml_model, write_sbml_model
+import os
+from os.path import join
+
+model_rs_0 = cobra.io.load_matlab_model(join('alpha_day_rs.mat'))
+#block_rs_0=cobra.flux_analysis.variability.find_blocked_reactions(model_rs_0,model_rs_0.reactions,open_exchanges=True)
+core_model_0=model_rs_0
+for i in core_model_0.exchanges:
+    print(i)
+    core_model_0.reactions.get_by_id(i.id).bounds=(-1000,1000)
+
+fva_0=flux_variability_analysis(core_model_0, core_model_0.reactions,fraction_of_optimum=0)
+fva_0[fva_0.abs() < core_model_0.tolerance] = 0
+fva_0['formulas']=core_model_0.reactions
+j=[]
+for i in fva_0.index:
+   if fva_0.minimum[i]==0 and fva_0.maximum[i]==0:
+        j.append(i)
+                
+print(len(j))
+#
+df_0=pd.DataFrame([fva_0.maximum[j],fva_0.minimum[j],fva_0.formulas[j]])            
+df_new_0=df_0.transpose()
+print(df_new_0)
+#df_new_0.to_excel('/home/subasree/Desktop/Models_to_work/fva_no_dm.xlsx')
+
+

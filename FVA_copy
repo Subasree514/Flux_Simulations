@@ -30,26 +30,5 @@ print(len(j))
 df=pd.DataFrame([fva.maximum[j],fva.minimum[j],fva.formulas[j]])            
 df_new=df.transpose()
 print(df_new)
-df_new.to_excel('/home/subasree/Desktop/Models_to_work/fva_dm.xlsx')
+#df_new.to_excel('/home/subasree/Desktop/Models_to_work/fva_dm.xlsx')
 #
-model_rs_0 = cobra.io.load_matlab_model(join('alpha_day_rs.mat'))
-#block_rs_0=cobra.flux_analysis.variability.find_blocked_reactions(model_rs_0,model_rs_0.reactions,open_exchanges=True)
-core_model=model_rs_0
-for i in core_model.exchanges:
-    print(i)
-    core_model.reactions.get_by_id(i.id).bounds=(-1000,1000)
-
-fva=flux_variability_analysis(core_model, core_model.reactions,fraction_of_optimum=0)
-fva[fva.abs() < core_model.tolerance] = 0
-fva['formulas']=core_model.reactions
-j=[]
-for i in fva.index:
-   if fva.minimum[i]==0 and fva.maximum[i]==0:
-        j.append(i)
-                
-print(len(j))
-#
-df=pd.DataFrame([fva.maximum[j],fva.minimum[j],fva.formulas[j]])            
-df_new=df.transpose()
-print(df_new)
-df_new.to_excel('/home/subasree/Desktop/Models_to_work/fva_dm.xlsx')
