@@ -1,3 +1,4 @@
+
 from __future__ import division, print_function, absolute_import
 import csv
 import pandas
@@ -23,13 +24,12 @@ from cobra.flux_analysis import production_envelope
 from cobra import Model, Reaction, Metabolite
 from cobra.flux_analysis import flux_variability_analysis
 import matplotlib.pyplot as plt
-import logging
-from cobra.io import read_sbml_model
 from cobra.io import load_json_model, save_json_model, load_matlab_model, save_matlab_model, read_sbml_model, write_sbml_model
 
-test = read_sbml_model('/Users/subasrees/Downloads/c3.xml')
-# print summary
-sol = test.optimize()
-#print(alpha_day.summary(sol))
-print(test.exchanges)
-
+core_model = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/model_rs.mat'))
+[core_model,rem]=cobra.manipulation.delete.prune_unused_metabolites(core_model)
+print(rem)
+model_rs=core_model
+save_matlab_model(model_rs, "/home/subasree/Desktop/Models_to_work/model_rs.mat")
+sol = core_model.optimize()
+print(core_model.summary(sol))
