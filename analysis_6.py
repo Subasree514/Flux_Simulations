@@ -78,7 +78,7 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
             #primary_8= ['CYTOCHROME_C_OXIDASE_RXN_mc','SUCCINATE_DEHYDROGENASE_UBIQUINONE_RXN_mi','SUCCINATE_DEHYDROGENASE_UBIQUINONE_RXN_mc']
             primary_9=['Phloem_output_tx','AraCore_Biomass_tx','Mitochondrial_ATP_Synthase_m','Protein_Processing_c']
             primary=primary_1+primary_2+primary_3+primary_6#primary_4+primary_5
-            solution_primary.append(solution.fluxes[primary_10])
+            solution_primary.append(solution.fluxes[primary_9])
             reaction_obj2.bounds = (0, 1000.0)
         elif metric == 'euclidean':
 
@@ -105,14 +105,14 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
     #return result_list
     return solution_primary
 ## Plots
-model = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/alpha_day_RS_DM.mat'))
-model_rs = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/model_rs.mat'))
+model = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/alpha_day_DM.mat'))
+model_rs = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/model_rs_dm.mat'))
 
-core_model=model_rs
+core_model=model
 rubisco = core_model.problem.Constraint(3 * core_model.reactions.get_by_id("RXN_961_p").flux_expression - core_model.reactions.get_by_id("RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p").flux_expression,lb=0, ub=0,)
 core_model.add_cons_vars([rubisco])
 ## plot pareto plo
-objective1 =  'DM_HS_cell'
+objective1 =  'DM_HYDROGEN_PEROXIDE_cell'
 objective2 =  'AraCore_Biomass_tx'
 solution_primary=pareto_analysis(core_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
 #pd.DataFrame(result_list).to_excel('results.xlsx')
@@ -165,7 +165,7 @@ strs5='Light reactions and Respiration'
 strs6='Superpathway of cytosolic glucose metabolism'
 strs7='dTMP de novo biosynthesis (mitochondrial)'
 strs8='RS reactions'
-ax.set_title(strs5 +' '+'at'+' '+objective1,fontsize=25)
+ax.set_title(strs4 +' '+'at'+' '+objective1,fontsize=25)
 
 # Legend and show
 ax.legend()
