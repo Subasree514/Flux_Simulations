@@ -107,7 +107,8 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
 ## Plots
 model = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/alpha_day_DM.mat'))
 model_rs = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/model_rs_dm.mat'))
-
+model = cobra.io.load_matlab_model(join('alpha_day_DM.mat'))
+model_rs = cobra.io.load_matlab_model(join('model_rs_dm.mat'))
 core_model=model
 rubisco = core_model.problem.Constraint(3 * core_model.reactions.get_by_id("RXN_961_p").flux_expression - core_model.reactions.get_by_id("RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p").flux_expression,lb=0, ub=0,)
 core_model.add_cons_vars([rubisco])
