@@ -70,15 +70,17 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
             ## Defense related in carbohydrate metabolism and photorespiration - 8-10
             primary_4=['RXN_961_p','RXN_969_x','GLYCINE_AMINOTRANSFERASE_RXN_x','GLYOHMETRANS_RXN_m','SERINE_GLYOXYLATE_AMINOTRANSFERASE_RXN_x','GLY3KIN_RXN_p']#hxk gox fab2
             ## Defense related in aminoacid metabolism - 11-13
-            #primary_5=['ALANINE_GLYOXYLATE_AMINOTRANSFERASE_RXN_x','GLYOHMETRANS_RXN_m','RXN_14903_m']#AGT,SHMT,ProDH
+            primary_5=['ALANINE_GLYOXYLATE_AMINOTRANSFERASE_RXN_x','GLYOHMETRANS_RXN_m','RXN_14903_m']#AGT,SHMT,ProDH
             primary_6=['PHOSGLYPHOS_RXN_p','PEPDEPHOS_RXN_c','PYRUVDEH_RXN_m','CITSYN_RXN_m']#'GAPOXNPHOSPHN_RXN_p']
             primary_7=['THYMIDYLATESYN_RXN_m','GLYOHMETRANS_RXN_m']#
             primary_10=['Mehler_Reaction_p','L_ASCORBATE_PEROXIDASE_RXN_p','L_ASCORBATE_PEROXIDASE_RXN_m','CATAL_RXN_x','GLUTATHIONE_PEROXIDASE_RXN_p','SUPEROX_DISMUT_RXN_p','SUPEROX_DISMUT_RXN_c','RXN_969_x','SULFITE_OXIDASE_RXN_m','RXN66_1_c','RXN_3521_p']
             primary_8=['PLASTOQUINOL_PLASTOCYANIN_REDUCTASE_RXN_p','1_PERIOD_18_PERIOD_1_PERIOD_2_RXN_p','CYTOCHROME_C_OXIDASE_RXN_mi']
-            #primary_8= ['CYTOCHROME_C_OXIDASE_RXN_mc','SUCCINATE_DEHYDROGENASE_UBIQUINONE_RXN_mi','SUCCINATE_DEHYDROGENASE_UBIQUINONE_RXN_mc']
+            primary_11= ['CYTOCHROME_C_OXIDASE_RXN_mc','SUCCINATE_DEHYDROGENASE_UBIQUINONE_RXN_mi','SUCCINATE_DEHYDROGENASE_UBIQUINONE_RXN_mc']
             primary_9=['Phloem_output_tx','AraCore_Biomass_tx','Mitochondrial_ATP_Synthase_m','Protein_Processing_c']
-            primary=primary_1+primary_2+primary_3+primary_6#primary_4+primary_5
-            solution_primary.append(solution.fluxes[primary_9])
+            primary_12=['DM_HYDROGEN_PEROXIDE_cell','DM_SUPER_OXIDE_cell','DM_oh_rad_cell','DM_CE5643_cell','DM_no_cell','DM_HS_cell']
+
+            #primary=primary_1+primary_2+primary_3+primary_6#primary_4+primary_5
+            solution_primary.append(solution.fluxes[primary_12])
             reaction_obj2.bounds = (0, 1000.0)
         elif metric == 'euclidean':
 
@@ -105,15 +107,15 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
     #return result_list
     return solution_primary
 ## Plots
-model = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/alpha_day_DM.mat'))
-model_rs = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/model_rs_dm.mat'))
+#model = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/alpha_day_DM.mat'))
+#model_rs = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/model_rs_dm.mat'))
 model = cobra.io.load_matlab_model(join('alpha_day_DM.mat'))
 model_rs = cobra.io.load_matlab_model(join('model_rs_dm.mat'))
-core_model=model
-rubisco = core_model.problem.Constraint(3 * core_model.reactions.get_by_id("RXN_961_p").flux_expression - core_model.reactions.get_by_id("RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p").flux_expression,lb=0, ub=0,)
-core_model.add_cons_vars([rubisco])
+core_model=model_rs
+rubisco = core_model.problem.Constraint(2 * core_model.reactions.get_by_id("RXN_961_p").flux_expression - core_model.reactions.get_by_id("RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p").flux_expression,lb=0, ub=0,)
+#core_model.add_cons_vars([rubisco])
 ## plot pareto plo
-objective1 =  'DM_HYDROGEN_PEROXIDE_cell'
+objective1 =  'RS_56_M'
 objective2 =  'AraCore_Biomass_tx'
 solution_primary=pareto_analysis(core_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
 #pd.DataFrame(result_list).to_excel('results.xlsx')
