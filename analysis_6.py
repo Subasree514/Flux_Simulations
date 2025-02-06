@@ -221,7 +221,7 @@ objective1 =  'DM_SUPER_OXIDE_cell'
 objective2 =  'AraCore_Biomass_tx'
 =======
 model = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/alpha_day_DM.mat'))
-model_rs = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/model_rs_dm.mat'))# alpha_day_RS_DM
+model_rs = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/alpha_day_RS_DM.mat'))# alpha_day_RS_DM
 core_model=model
 core_model.add_boundary(core_model.metabolites.get_by_id("SUCROSE_e"), type="demand")
 core_model.add_boundary(core_model.metabolites.get_by_id("GLC_e"), type="demand")
@@ -238,8 +238,12 @@ rubisco = core_model.problem.Constraint(3 * core_model.reactions.get_by_id("RXN_
 core_model.add_cons_vars([rubisco])
 ## plot pareto plo
 objective1 =  'DM_SUPER_OXIDE_cell'
+<<<<<<< HEAD
 objective2 =  'Phloem_output_tx'#x
 >>>>>>> 333dad4 (removed apoplast and redone the models)
+=======
+objective2 =  'AraCore_Biomass_tx'#x
+>>>>>>> 4f52db0 (rxn check)
 solution_primary=pareto_analysis(core_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
 #pd.DataFrame(result_list).to_excel('results.xlsx')
 data=pd.DataFrame(solution_primary)
