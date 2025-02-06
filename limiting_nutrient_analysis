@@ -1,0 +1,81 @@
+import csv
+import pandas
+from cobra.flux_analysis import (
+    single_gene_deletion, single_reaction_deletion, double_gene_deletion,
+    double_reaction_deletion)
+import os
+import xml.etree.ElementTree as etree
+import cobra
+import numpy as np
+from itertools import chain
+from cobra.util import solver as sutil
+from cobra.core.solution import get_solution
+from optlang.symbolics import add, Zero
+import pandas as pd
+import os
+from os.path import join
+import matplotlib.pyplot as plt
+from cobra.medium import minimal_medium
+# Press ⌃R to execute it or replace it with your code.
+# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+from cobra.flux_analysis import production_envelope
+import matplotlib.pyplot as plt
+from cobra import Model, Reaction, Metabolite
+from cobra.io import read_sbml_model
+import matplotlib.pyplot as plt
+from cobra.flux_analysis import flux_variability_analysis
+from cobra.flux_analysis.variability import find_essential_reactions
+# Import data manipulation tools
+import pandas as pd
+import numpy as np
+from cobra.io import load_json_model, save_json_model, load_matlab_model, save_matlab_model, read_sbml_model, write_sbml_model
+
+model = cobra.io.load_matlab_model(join(r'/home/subasree/Desktop/Models_to_work/step1_balance',"core_alpha_model_balanced.mat"))
+model_rs = cobra.io.load_matlab_model(join(r'/home/subasree/Desktop/Models_to_work/step2_merge_loopless',"modelalpha_loopless.mat"))
+core_model=model_rs
+#core_model.reactions.get_by_id('Photon_tx').bounds = (0, 0)
+#core_model.reactions.get_by_id('CO2_tx').bounds = (-1000, 0)
+core_model.reactions.get_by_id('Sucrose_tx').bounds = (-1000, 0)
+core_model.reactions.get_by_id('GLC_tx').bounds = (-1000, 0)
+core_model.reactions.get_by_id('Photon_tx').bounds = (0, 300)
+core_model.reactions.get_by_id('NH4_tx').bounds = (-1000, 0)
+solution = core_model.optimize()
+solution_obj=solution.objective_value
+print(core_model.summary())
+print(core_model.objective)
+
+## limiting nutrient analysis - autotrophic
+obj_flux=[]
+autotrophic_list=['CO2_tx','Ca_tx','H2O_tx','H_tx','K_tx','Mg_tx','Nitrate_tx','O2_tx','Pi_tx','SO4_tx']
+for exchange in autotrophic_list:
+    core_model = cobra.io.load_matlab_model(join(r'/home/subasree/Desktop/Models_to_work/step2_merge_loopless',"modelalpha_loopless.mat"))
+    core_model.reactions.get_by_id(exchange).bounds = (-1000, 0)
+    core_model.reactions.get_by_id('Sucrose_tx').bounds = (-1000, 0)
+    core_model.reactions.get_by_id('GLC_tx').bounds = (-1000, 0)
+    core_model.reactions.get_by_id('Photon_tx').bounds = (0, 300)
+    core_model.reactions.get_by_id('NH4_tx').bounds = (-1000, 0)
+    solution = core_model.optimize()
+    solution_obj=solution.objective_value
+    obj_flux.append(solution_obj)
+
+#for i in range(0,len(obj_flux)):
+#    print(f'{autotrophic_list[i]}\tfluxes: {obj_flux[i]}')
+
+## heterotrophic
+obj_flux_1=[]
+heterotrophic_list=['Sucrose_tx','GLC_tx','NH4_tx','Ca_tx','H2O_tx','H_tx','K_tx','Mg_tx','Nitrate_tx','O2_tx','Pi_tx','SO4_tx']
+for exchange in heterotrophic_list:
+    core_model = cobra.io.load_matlab_model(join(r'/home/subasree/Desktop/Models_to_work/step2_merge_loopless',"modelalpha_loopless.mat"))
+    core_model.reactions.get_by_id(exchange).bounds = (-1000, 0)
+    core_model.reactions.get_by_id('Photon_tx').bounds = (0, 0)
+    core_model.reactions.get_by_id('CO2_tx').bounds = (-1000, 0)
+    core_model.reactions.get_by_id('NH4_tx').bounds = (-1000, 0)
+
+    solution = core_model.optimize()
+    solution_obj=solution.objective_value
+    obj_flux_1.append(solution_obj)
+
+for i in range(0,len(obj_flux_1)):
+    print(f'{heterotrophic_list[i]}\tfluxes: {obj_flux_1[i]}')
+
+

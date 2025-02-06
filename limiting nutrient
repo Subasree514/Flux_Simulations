@@ -30,6 +30,7 @@ import pandas as pd
 import numpy as np
 from cobra.io import load_json_model, save_json_model, load_matlab_model, save_matlab_model, read_sbml_model, write_sbml_model
 
+<<<<<<< HEAD
 #model = cobra.io.load_matlab_model(join(r'/home/subasree/Desktop/Models_to_work',"core_alpha_model_balanced.mat"))
 #model_rs = cobra.io.load_matlab_model(join(r'/home/subasree/Desktop/Models_to_work',"modelalpha_loopless.mat"))
 model_rs = cobra.io.load_matlab_model(join(r'/Users/subasrees/Desktop/Curation_of_core_alpha_model',"modelalpha_loopless.mat"))
@@ -38,6 +39,12 @@ core_model=model_rs
 #print(core_model.groups)
 
 
+=======
+model = cobra.io.load_matlab_model(join(r'/home/subasree/Desktop/Models_to_work/step1_balance',"core_alpha_model_balanced.mat"))
+model_rs = cobra.io.load_matlab_model(join(r'/home/subasree/Desktop/Models_to_work/step2_merge_loopless',"modelalpha_loopless.mat"))
+core_model=model_rs
+print(len(core_model.metabolites))
+>>>>>>> 333dad4 (removed apoplast and redone the models)
 ## limiting nutrient analysis
 #solutions=[]
 #for exchange in core_model.exchanges:
@@ -76,7 +83,11 @@ with core_model:
     alpha_day_rs=core_model
     save_matlab_model(alpha_day_rs, "alpha_day_rs.mat")
     #save_matlab_model(alpha_day, "alpha_day.mat")
+<<<<<<< HEAD
     #save_matlab_model(alpha_day_rs, "/home/subasree/Desktop/Models_to_work/alpha_day_rs.mat")
+=======
+    save_matlab_model(alpha_day_rs, "/home/subasree/Desktop/Models_to_work/alpha_day_rs.mat")
+>>>>>>> 333dad4 (removed apoplast and redone the models)
     #save_matlab_model(alpha_day, "/home/subasree/Desktop/Models_to_work/alpha_day.mat")
 
 
