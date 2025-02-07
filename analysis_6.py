@@ -110,12 +110,12 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
 #model = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/alpha_day_DM.mat'))
 #model_rs = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/model_rs_dm.mat'))
 model = cobra.io.load_matlab_model(join('alpha_day_DM.mat'))
-model_rs = cobra.io.load_matlab_model(join('model_rs_dm.mat'))
+model_rs = cobra.io.load_matlab_model(join('alpha_day_RS_DM.mat'))
 core_model=model_rs
 rubisco = core_model.problem.Constraint(2 * core_model.reactions.get_by_id("RXN_961_p").flux_expression - core_model.reactions.get_by_id("RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p").flux_expression,lb=0, ub=0,)
 #core_model.add_cons_vars([rubisco])
 ## plot pareto plo
-objective1 =  'RS_56_M'
+objective1 =  'H2O2_a_demand'
 objective2 =  'AraCore_Biomass_tx'
 solution_primary=pareto_analysis(core_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
 #pd.DataFrame(result_list).to_excel('results.xlsx')
