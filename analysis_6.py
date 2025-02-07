@@ -78,7 +78,7 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
             primary_11= ['CYTOCHROME_C_OXIDASE_RXN_mc','SUCCINATE_DEHYDROGENASE_UBIQUINONE_RXN_mi','SUCCINATE_DEHYDROGENASE_UBIQUINONE_RXN_mc']
             primary_9=['Phloem_output_tx','AraCore_Biomass_tx','Mitochondrial_ATP_Synthase_m','Protein_Processing_c']
             primary=primary_1+primary_2+primary_3+primary_6#primary_4+primary_5
-            solution_primary.append(solution.fluxes[primary_9])
+            solution_primary.append(solution.fluxes[primary_4])
             reaction_obj2.bounds = (0, 1000.0)
         elif metric == 'euclidean':
 
@@ -105,14 +105,15 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
     #return result_list
     return solution_primary
 ## Plots
-model = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/alpha_day_DM.mat'))
-model_rs = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/model_rs_dm.mat'))
+#model = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/alpha_day_DM.mat'))
+#model_rs = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/model_rs_dm.mat'))
+model_rs = cobra.io.load_matlab_model(join('alpha_day_RS_DM.mat'))
 
-core_model=model
+core_model=model_rs
 rubisco = core_model.problem.Constraint(3 * core_model.reactions.get_by_id("RXN_961_p").flux_expression - core_model.reactions.get_by_id("RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p").flux_expression,lb=0, ub=0,)
 core_model.add_cons_vars([rubisco])
 ## plot pareto plo
-objective1 =  'DM_HYDROGEN_PEROXIDE_cell'
+objective1 =  'H2O2_a_demand'
 objective2 =  'AraCore_Biomass_tx'
 solution_primary=pareto_analysis(core_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
 #pd.DataFrame(result_list).to_excel('results.xlsx')
@@ -149,11 +150,7 @@ xticks_super=['PGK1','PK','PDH2','CSY4']
 xticks_dttp=['THY2','SHMT2']
 xticks_resp=['PETC', 'PETH1','COX2']#'PLGG1','ME2','CA2','PDH']#'HXK2','rbcl-o2','FAB2','AGT1','SHMT2','PRODH2']
 xticks_photo=['rbcl','GLO2','GGAT1','SHM2','AGT1','GLYK']
-<<<<<<< HEAD
-xticks_redox=xticks_str
-=======
 xticks_redox=data.columns
->>>>>>> 2aa025b222a49bd22cd82be5970f529686744d93
 ax.set_xlabel('Reactions', fontweight='bold',fontsize=20)
 ax.set_xticks(r,xticks_redox,rotation=20,fontsize=20)
 ax.set_xticks(r,xticks_redox,rotation=20,fontsize=20)
@@ -169,20 +166,11 @@ strs5='Light reactions and Respiration'
 strs6='Superpathway of cytosolic glucose metabolism'
 strs7='dTMP de novo biosynthesis (mitochondrial)'
 strs8='RS reactions'
-<<<<<<< HEAD
-<<<<<<< HEAD
 ax.set_title(strs2 +' '+'at'+' '+objective1,fontsize=25)
-=======
-ax.set_title(strs5 +' '+'at'+' '+objective1,fontsize=25)
->>>>>>> 2aa025b222a49bd22cd82be5970f529686744d93
-=======
-ax.set_title(strs4 +' '+'at'+' '+objective1,fontsize=25)
->>>>>>> 85235e71d0e95566e5aa72d7b87c2eab9eb47415
 
 # Legend and show
 ax.legend()
 #plt.savefig('/Users/subasrees/Desktop/RS_demand/No_photo.pdf')
 plt.show()
-print(model.groups)
 #objs_rs=['DM_no[cell]','DM_HS_cell[cell]','DM_SUPER_OXIDE_cell[cell]','DM_OOH-[cell]','DM_HC00250[cell]','DM_CE5643[cell]','DM_SO3_cell[cell]','DM_oh_rad[cell]','DM_HYDROGEN_PEROXIDE_cell[cell]','DM_oh1[cell]','DM_ho2_rad[cell]']
 

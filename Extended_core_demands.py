@@ -26,7 +26,8 @@ from cobra.flux_analysis import flux_variability_analysis
 import matplotlib.pyplot as plt
 from cobra.io import load_json_model, save_json_model, load_matlab_model, save_matlab_model, read_sbml_model, write_sbml_model
 ## import models
-core_model = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/alpha_day_rs.mat'))
+#core_model = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/alpha_day_rs.mat'))
+core_model = cobra.io.load_matlab_model(join('alpha_day_rs.mat'))
 
 ## Query for compartments
 #print(core_model.metabolites.query("ho2_rad"))
@@ -171,8 +172,8 @@ reaction.name = 'Nitric oxide apoplastic demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('no_a'): -1.0,core_model.metabolites.get_by_id('no_cell'): 1.0})
-core_model.add_reactions([reaction])
+#reaction.add_metabolites({core_model.metabolites.get_by_id ('no_a'): -1.0,core_model.metabolites.get_by_id('no_cell'): 1.0})
+#core_model.add_reactions([reaction])
 ##
 reaction = Reaction('NO_x_demand')
 reaction.name = 'Nitric oxide peroxisomal demand'
@@ -256,16 +257,16 @@ reaction.name = 'HYDROGEN PEROXIDE apoplastic demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('HYDROGEN_PEROXIDE_a'): -1.0,core_model.metabolites.get_by_id('HYDROGEN_PEROXIDE_cell'): 1.0})
-print(reaction.reaction) 
-core_model.add_reactions([reaction])
+#reaction.add_metabolites({core_model.metabolites.get_by_id ('HYDROGEN_PEROXIDE_a'): -1.0,core_model.metabolites.get_by_id('HYDROGEN_PEROXIDE_cell'): 1.0})
+#print(reaction.reaction) 
+#core_model.add_reactions([reaction])
 ##
 reaction = Reaction('H2O2_e_demand')
 reaction.name = 'HYDROGEN PEROXIDE extracellular demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('HYDROGEN_PEROXIDE_a'): -1.0,core_model.metabolites.get_by_id('HYDROGEN_PEROXIDE_cell'): 1.0})
+reaction.add_metabolites({core_model.metabolites.get_by_id ('HYDROGEN_PEROXIDE_e'): -1.0,core_model.metabolites.get_by_id('HYDROGEN_PEROXIDE_cell'): 1.0})
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ##
@@ -328,9 +329,9 @@ reaction.name = 'HYDROXYL radical apoplastic demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('oh_rad_a'): -1.0,core_model.metabolites.get_by_id('oh_rad_cell'): 1.0})
-print(reaction.reaction) 
-core_model.add_reactions([reaction])
+#reaction.add_metabolites({core_model.metabolites.get_by_id ('oh_rad_a'): -1.0,core_model.metabolites.get_by_id('oh_rad_cell'): 1.0})
+#print(reaction.reaction) 
+#core_model.add_reactions([reaction])
 ##
 reaction = Reaction('oh_rad_v_demand')
 reaction.name = 'HYDROXYL radical vacuolar demand'
@@ -391,9 +392,9 @@ reaction.name = 'Superoxide apoplastic demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('SUPER_OXIDE_a'): -1.0,core_model.metabolites.get_by_id('SUPER_OXIDE_cell'): 1.0})
-print(reaction.reaction) 
-core_model.add_reactions([reaction])
+#reaction.add_metabolites({core_model.metabolites.get_by_id ('SUPER_OXIDE_a'): -1.0,core_model.metabolites.get_by_id('SUPER_OXIDE_cell'): 1.0})
+#print(reaction.reaction) 
+#core_model.add_reactions([reaction])
 ##
 reaction = Reaction('O2S_v_demand')
 reaction.name = 'Super oxide vacuole demand'
@@ -583,7 +584,7 @@ reaction.add_metabolites({core_model.metabolites.get_by_id ('ho2_rad_p'): -1.0,c
 core_model.add_reactions([reaction])
 ##
 alpha_day_RS_DM=core_model
-save_matlab_model(alpha_day_RS_DM, "/home/subasree/Desktop/Models_to_work/alpha_day_RS_DM.mat")
+#save_matlab_model(alpha_day_RS_DM, "/home/subasree/Desktop/Models_to_work/alpha_day_RS_DM.mat")
 save_matlab_model(alpha_day_RS_DM, "alpha_day_RS_DM.mat")
 
 sol = alpha_day_RS_DM.optimize()
