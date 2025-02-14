@@ -264,9 +264,18 @@ reaction.upper_bound = 1000.  # This is the default
 reaction = Reaction('H2O2_e_demand')
 reaction.name = 'HYDROGEN PEROXIDE extracellular demand'
 reaction.subsystem = 'RS demand'
-reaction.lower_bound =0.  # This is the default
+reaction.lower_bound =-1000.  # This is the default
+reaction.upper_bound = 0.  # This is the default
+reaction.add_metabolites({core_model.metabolites.get_by_id ('HYDROGEN_PEROXIDE_cell'): -1.0,core_model.metabolites.get_by_id('HYDROGEN_PEROXIDE_e'): 1.0})
+print(reaction.reaction) 
+core_model.add_reactions([reaction])
+##
+reaction = Reaction('H2O2_e_tr')
+reaction.name = 'HYDROGEN PEROXIDE extracellular transport'
+reaction.subsystem = 'RS demand'
+reaction.lower_bound =-1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('HYDROGEN_PEROXIDE_e'): -1.0,core_model.metabolites.get_by_id('HYDROGEN_PEROXIDE_cell'): 1.0})
+reaction.add_metabolites({core_model.metabolites.get_by_id ('HYDROGEN_PEROXIDE_c'): -1.0,core_model.metabolites.get_by_id('HYDROGEN_PEROXIDE_e'): 1.0})
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ##
