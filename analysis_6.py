@@ -212,7 +212,7 @@ inv_flux_2 = core_model.problem.Constraint(core_model.reactions.get_by_id('CWINV
 #core_model.add_boundary(core_model.metabolites.get_by_id("GLUTATHIONE_p"), type="demand")
 
 ## plot pareto plot
-objective1 =  'DM_SUPER_OXIDE_cell'
+objective1 =  'DM_no_cell'
 objective2 =  'AraCore_Biomass_tx'
 solution_primary=pareto_analysis(core_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
 #pd.DataFrame(result_list).to_excel('results.xlsx')
