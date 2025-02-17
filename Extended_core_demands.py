@@ -48,7 +48,7 @@ core_model.add_metabolites([
     charge=0
     ),
     Metabolite(
-    'no_cell',
+    'NITRIC-OXIDE_cell',
     name='Nitric oxide',
     compartment='cell',
     formula='NO',
@@ -62,7 +62,7 @@ core_model.add_metabolites([
     charge=0
     ),
     Metabolite(
-    'oh_rad_cell',
+    'CPD-12377_cell',
     name='Hydroxyl radical',
     compartment='cell',
     formula='OH',
@@ -90,7 +90,7 @@ core_model.add_metabolites([
     #charge=-1
     #),
     Metabolite(
-    'CE5643_cell',
+    'CPD0-1395_cell',
     name='Peroxynitrite',
     compartment='cell',
     formula='NO3',
@@ -112,7 +112,7 @@ core_model.add_metabolites([
     )  
 ])
 ## 1. NO demand
-core_model.add_boundary(core_model.metabolites.get_by_id("no_cell"), type="demand")
+core_model.add_boundary(core_model.metabolites.get_by_id("NITRIC-OXIDE_cell"), type="demand")
 ## 2. H2S demand
 core_model.add_boundary(core_model.metabolites.get_by_id("HS_cell"), type="demand")
 ## 3. SUPER OXIDE DEMAND
@@ -122,11 +122,11 @@ core_model.add_boundary(core_model.metabolites.get_by_id("SUPER_OXIDE_cell"), ty
 ## 5. HS ion
 core_model.add_boundary(core_model.metabolites.get_by_id("HC00250_cell"), type="demand")
 ## 6. PEROXYNITRITE
-core_model.add_boundary(core_model.metabolites.get_by_id("CE5643_cell"), type="demand")
+core_model.add_boundary(core_model.metabolites.get_by_id("CPD0-1395_cell"), type="demand")
 ## 7. SO3
 #core_model.add_boundary(core_model.metabolites.get_by_id("SO3_cell"), type="demand")
 ## 8. Hydroxyl radical demand
-core_model.add_boundary(core_model.metabolites.get_by_id("oh_rad_cell"), type="demand")
+core_model.add_boundary(core_model.metabolites.get_by_id("CPD-12377_cell"), type="demand")
 ## 9. H2O2 demand
 core_model.add_boundary(core_model.metabolites.get_by_id("HYDROGEN_PEROXIDE_cell"), type="demand")
 ## 10. oh1 demand
@@ -159,52 +159,52 @@ reaction.upper_bound = 1000.  # This is the default
 reaction.add_metabolites({core_model.metabolites.get_by_id('HS_c'): -1.0,core_model.metabolites.get_by_id('HS_cell'): 1.0})
 core_model.add_reactions([reaction])
 ## NO
-reaction = Reaction('NO_m_demand')
+reaction = Reaction('NITRIC-OXIDE_m_demand')
 reaction.name = 'Nitric oxide mitochondrial demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id('no_m'): -1.0,core_model.metabolites.get_by_id('no_cell'): 1.0})
+reaction.add_metabolites({core_model.metabolites.get_by_id('NITRIC-OXIDE_m'): -1.0,core_model.metabolites.get_by_id('NITRIC-OXIDE_cell'): 1.0})
 core_model.add_reactions([reaction])
 ##
-reaction = Reaction('NO_a_demand')
+reaction = Reaction('NITRIC-OXIDE_a_demand')
 reaction.name = 'Nitric oxide apoplastic demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-#reaction.add_metabolites({core_model.metabolites.get_by_id ('no_a'): -1.0,core_model.metabolites.get_by_id('no_cell'): 1.0})
+#reaction.add_metabolites({core_model.metabolites.get_by_id ('NITRIC-OXIDE_a'): -1.0,core_model.metabolites.get_by_id('NITRIC-OXIDE_cell'): 1.0})
 #core_model.add_reactions([reaction])
 ##
-reaction = Reaction('NO_x_demand')
+reaction = Reaction('NITRIC-OXIDE_x_demand')
 reaction.name = 'Nitric oxide peroxisomal demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id('no_x'): -1.0,core_model.metabolites.get_by_id('no_cell'): 1.0})
+reaction.add_metabolites({core_model.metabolites.get_by_id('NITRIC-OXIDE_x'): -1.0,core_model.metabolites.get_by_id('NITRIC-OXIDE_cell'): 1.0})
 core_model.add_reactions([reaction])
 ##
-reaction = Reaction('NO_p_demand')
+reaction = Reaction('NITRIC-OXIDE_p_demand')
 reaction.name = 'Nitric oxide plastid demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id('no_p'): -1.0,core_model.metabolites.get_by_id('no_cell'): 1.0})
+reaction.add_metabolites({core_model.metabolites.get_by_id('NITRIC-OXIDE_p'): -1.0,core_model.metabolites.get_by_id('NITRIC-OXIDE_cell'): 1.0})
 core_model.add_reactions([reaction])
 ##
-reaction = Reaction('NO_c_demand')
+reaction = Reaction('NITRIC-OXIDE_c_demand')
 reaction.name = 'Nitric oxide cytosolic demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id('no_c'): -1.0,core_model.metabolites.get_by_id('no_cell'): 1.0})
+reaction.add_metabolites({core_model.metabolites.get_by_id('NITRIC-OXIDE_c'): -1.0,core_model.metabolites.get_by_id('NITRIC-OXIDE_cell'): 1.0})
 core_model.add_reactions([reaction])
 ##
-reaction = Reaction('NO_n_demand')
+reaction = Reaction('NITRIC-OXIDE_n_demand')
 reaction.name = 'Nitric oxide nucleus demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id('no_n'): -1.0,core_model.metabolites.get_by_id('no_cell'): 1.0})
+reaction.add_metabolites({core_model.metabolites.get_by_id('NITRIC-OXIDE_n'): -1.0,core_model.metabolites.get_by_id('NITRIC-OXIDE_cell'): 1.0})
 core_model.add_reactions([reaction])
 ## H2O2
 reaction = Reaction('H2O2_p_demand')
@@ -301,70 +301,70 @@ reaction.add_metabolites({core_model.metabolites.get_by_id('HYDROGEN_PEROXIDE_c'
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ## oh_rad
-reaction = Reaction('oh_rad_c_demand')
+reaction = Reaction('CPD-12377_c_demand')
 reaction.name = 'HYDROXYL radical cytosolic demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id('oh_rad_c'): -1.0,core_model.metabolites.get_by_id('oh_rad_cell'): 1.0})
+reaction.add_metabolites({core_model.metabolites.get_by_id('CPD-12377_c'): -1.0,core_model.metabolites.get_by_id('CPD-12377_cell'): 1.0})
 core_model.add_reactions([reaction])
 print(reaction.reaction) 
 ##
-reaction = Reaction('oh_rad_m_demand')
+reaction = Reaction('CPD-12377_m_demand')
 reaction.name = 'HYDROXYL radical mitochondrial demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id('oh_rad_m'): -1.0,core_model.metabolites.get_by_id('oh_rad_cell'): 1.0})
+reaction.add_metabolites({core_model.metabolites.get_by_id('CPD-12377_m'): -1.0,core_model.metabolites.get_by_id('CPD-12377_cell'): 1.0})
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ##
-reaction = Reaction('oh_rad_n_demand')
+reaction = Reaction('CPD-12377_n_demand')
 reaction.name = 'HYDROXYL radical nucleus demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id('oh_rad_n'): -1.0,core_model.metabolites.get_by_id('oh_rad_cell'): 1.0})
+reaction.add_metabolites({core_model.metabolites.get_by_id('CPD-12377_n'): -1.0,core_model.metabolites.get_by_id('CPD-12377_cell'): 1.0})
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ##
-reaction = Reaction('oh_rad_x_demand')
+reaction = Reaction('CPD-12377_x_demand')
 reaction.name = 'HYDROXYL radical peroxisomal demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id('oh_rad_x'): -1.0,core_model.metabolites.get_by_id('oh_rad_cell'): 1.0})
+reaction.add_metabolites({core_model.metabolites.get_by_id('CPD-12377_x'): -1.0,core_model.metabolites.get_by_id('CPD-12377_cell'): 1.0})
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ##
-reaction = Reaction('oh_rad_a_demand')
+reaction = Reaction('CPD-12377_a_demand')
 reaction.name = 'HYDROXYL radical apoplastic demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-#reaction.add_metabolites({core_model.metabolites.get_by_id ('oh_rad_a'): -1.0,core_model.metabolites.get_by_id('oh_rad_cell'): 1.0})
+#reaction.add_metabolites({core_model.metabolites.get_by_id ('CPD-12377_a'): -1.0,core_model.metabolites.get_by_id('CPD-12377_cell'): 1.0})
 #print(reaction.reaction) 
 #core_model.add_reactions([reaction])
 ##
-reaction = Reaction('oh_rad_v_demand')
+reaction = Reaction('CPD-12377_v_demand')
 reaction.name = 'HYDROXYL radical vacuolar demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id('oh_rad_v'): -1.0,core_model.metabolites.get_by_id('oh_rad_cell'): 1.0})
+reaction.add_metabolites({core_model.metabolites.get_by_id('CPD-12377_v'): -1.0,core_model.metabolites.get_by_id('CPD-12377_cell'): 1.0})
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ##
-reaction = Reaction('oh_rad_p_demand')
+reaction = Reaction('CPD-12377_p_demand')
 reaction.name = 'HYDROXYL radical plastid demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id('oh_rad_p'): -1.0,core_model.metabolites.get_by_id('oh_rad_cell'): 1.0})
+reaction.add_metabolites({core_model.metabolites.get_by_id('CPD-12377_p'): -1.0,core_model.metabolites.get_by_id('CPD-12377_cell'): 1.0})
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ## SUPER OXIDE 
-reaction = Reaction('O2S_c_demand')
+reaction = Reaction('Super_oxide_c_demand')
 reaction.name = 'Superoxide cytosol demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
@@ -373,7 +373,7 @@ reaction.add_metabolites({core_model.metabolites.get_by_id('SUPER_OXIDE_c'): -1.
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ##
-reaction = Reaction('O2S_p_demand')
+reaction = Reaction('Super_oxide_p_demand')
 reaction.name = 'Super oxide plastid demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
@@ -382,7 +382,7 @@ reaction.add_metabolites({core_model.metabolites.get_by_id('SUPER_OXIDE_p'): -1.
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ##
-reaction = Reaction('O2S_m_demand')
+reaction = Reaction('Super_oxide_m_demand')
 reaction.name = 'Superoxide mitochondrial demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
@@ -391,7 +391,7 @@ reaction.add_metabolites({core_model.metabolites.get_by_id('SUPER_OXIDE_m'): -1.
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ##
-reaction = Reaction('O2S_x_demand')
+reaction = Reaction('Super_oxide_x_demand')
 reaction.name = 'Super oxide peroxisome demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
@@ -400,7 +400,7 @@ reaction.add_metabolites({core_model.metabolites.get_by_id('SUPER_OXIDE_x'): -1.
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ##
-reaction = Reaction('O2S_a_demand')
+reaction = Reaction('Super_oxide_a_demand')
 reaction.name = 'Superoxide apoplastic demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
@@ -409,7 +409,7 @@ reaction.upper_bound = 1000.  # This is the default
 #print(reaction.reaction) 
 #core_model.add_reactions([reaction])
 ##
-reaction = Reaction('O2S_v_demand')
+reaction = Reaction('Super_oxide_v_demand')
 reaction.name = 'Super oxide vacuole demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
@@ -418,7 +418,7 @@ reaction.add_metabolites({core_model.metabolites.get_by_id('SUPER_OXIDE_v'): -1.
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ##
-reaction = Reaction('O2S_n_demand')
+reaction = Reaction('Super_oxide_n_demand')
 reaction.name = 'Super oxide nucleus demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
@@ -491,39 +491,39 @@ print(reaction.reaction)
 core_model.add_reactions([reaction])
 
 ## Peroxynitrite 
-reaction = Reaction('NO3_p_demand')
+reaction = Reaction('Peroxynitrite_p_demand')
 reaction.name = 'Peroxynitrite plastid demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id('CE5643_p'): -1.0,core_model.metabolites.get_by_id('CE5643_cell'): 1.0})
+reaction.add_metabolites({core_model.metabolites.get_by_id('CPD0-1395_p'): -1.0,core_model.metabolites.get_by_id('CPD0-1395_cell'): 1.0})
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ##
-reaction = Reaction('NO3_m_demand')
+reaction = Reaction('Peroxynitrite_m_demand')
 reaction.name = 'Peroxynitrite mitochondrial demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id('CE5643_m'): -1.0,core_model.metabolites.get_by_id('CE5643_cell'): 1.0})
+reaction.add_metabolites({core_model.metabolites.get_by_id('CPD0-1395_m'): -1.0,core_model.metabolites.get_by_id('CPD0-1395_cell'): 1.0})
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ##
-reaction = Reaction('NO3_x_demand')
+reaction = Reaction('Peroxynitrite_x_demand')
 reaction.name = 'Peroxynitrite peroxisomal demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id('CE5643_x'): -1.0,core_model.metabolites.get_by_id('CE5643_cell'): 1.0})
+reaction.add_metabolites({core_model.metabolites.get_by_id('CPD0-1395_x'): -1.0,core_model.metabolites.get_by_id('CPD0-1395_cell'): 1.0})
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ##
-reaction = Reaction('NO3_c_demand')
+reaction = Reaction('Peroxynitrite_c_demand')
 reaction.name = 'Peroxynitrite cytosolic demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id('CE5643_c'): -1.0,core_model.metabolites.get_by_id('CE5643_cell'): 1.0})
+reaction.add_metabolites({core_model.metabolites.get_by_id('CPD0-1395_c'): -1.0,core_model.metabolites.get_by_id('CPD0-1395_cell'): 1.0})
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ## oh_rad
@@ -577,7 +577,7 @@ reaction.name = 'Peroxide radical mitochondrial demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id('ho2_rad_m'): -1.0,core_model.metabolites.get_by_id('oh_rad_cell'): 1.0})
+reaction.add_metabolites({core_model.metabolites.get_by_id('ho2_rad_m'): -1.0,core_model.metabolites.get_by_id('CPD-12377_cell'): 1.0})
 core_model.add_reactions([reaction])
 ##
 reaction = Reaction('ho2_rad_c_demand')
@@ -585,7 +585,7 @@ reaction.name = 'Peroxide radical cytosolic demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id('ho2_rad_c'): -1.0,core_model.metabolites.get_by_id('oh_rad_cell'): 1.0})
+reaction.add_metabolites({core_model.metabolites.get_by_id('ho2_rad_c'): -1.0,core_model.metabolites.get_by_id('CPD-12377_cell'): 1.0})
 core_model.add_reactions([reaction])
 ##
 reaction = Reaction('ho2_rad_p_demand')
@@ -593,7 +593,7 @@ reaction.name = 'Peroxide radical plastid demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id('ho2_rad_p'): -1.0,core_model.metabolites.get_by_id('oh_rad_cell'): 1.0})
+reaction.add_metabolites({core_model.metabolites.get_by_id('ho2_rad_p'): -1.0,core_model.metabolites.get_by_id('CPD-12377_cell'): 1.0})
 core_model.add_reactions([reaction])
 ##
 alpha_day_RS_DM=core_model
