@@ -108,7 +108,6 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
 #model = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/alpha_day_DM.mat'))
 #model_rs = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/model_rs_dm.mat'))
 model_rs = cobra.io.load_matlab_model(join('alpha_day_RS_DM.mat'))
-
 core_model=model_rs
 core_model.add_metabolites([
     Metabolite(
@@ -117,13 +116,13 @@ core_model.add_metabolites([
     compartment='e',
     formula='C6H12O6',
     charge=0)])
-#core_model.add_metabolites([
-#   Metabolite(
-#   'L-GAMMA-GLUTAMYLCYSTEINE_p',
-#   name='γ-glutamylcysteine',
-#   compartment='p',
-#   formula='C8H13N2O5S',
-#   charge=-1)])
+core_model.add_metabolites([
+   Metabolite(
+   'L-GAMMA-GLUTAMYLCYSTEINE_p',
+   name='γ-glutamylcysteine',
+   compartment='p',
+   formula='C8H13N2O5S',
+   charge=-1)])
 core_model.add_metabolites([
     Metabolite(
     'MALTOSE_e',
@@ -183,7 +182,7 @@ reaction.name = 'Glutathione synthetase'
 reaction.subsystem = 'glutathionebiosynthesis'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('GLY_p'): -1.0,core_model.metabolites.get_by_id ('ATP_p'): -1.0,core_model.metabolites.get_by_id('glucys_p'): -1.0,core_model.metabolites.get_by_id ('GLUTATHIONE_p'): 1.0,core_model.metabolites.get_by_id ('ADP_p'): 1.0,core_model.metabolites.get_by_id ('Pi_p'): 1.0,core_model.metabolites.get_by_id ('PROTON_p'): 1.0})
+reaction.add_metabolites({core_model.metabolites.get_by_id ('GLY_p'): -1.0,core_model.metabolites.get_by_id ('ATP_p'): -1.0,core_model.metabolites.get_by_id('L-GAMMA-GLUTAMYLCYSTEINE_p'): -1.0,core_model.metabolites.get_by_id ('GLUTATHIONE_p'): 1.0,core_model.metabolites.get_by_id ('ADP_p'): 1.0,core_model.metabolites.get_by_id ('Pi_p'): 1.0,core_model.metabolites.get_by_id ('PROTON_p'): 1.0})
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ##
@@ -192,7 +191,7 @@ reaction.name = 'γ-glutamylcysteine synthetase'
 reaction.subsystem = 'glutathionebiosynthesis'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('GLT_p'): -1.0,core_model.metabolites.get_by_id ('CYS_p'): -1.0,core_model.metabolites.get_by_id ('ATP_p'): -1.0,core_model.metabolites.get_by_id ('glucys_p'): 1.0,core_model.metabolites.get_by_id ('ADP_p'): 1.0,core_model.metabolites.get_by_id ('Pi_p'): 1.0,core_model.metabolites.get_by_id ('PROTON_p'): 1.0})
+reaction.add_metabolites({core_model.metabolites.get_by_id ('GLT_p'): -1.0,core_model.metabolites.get_by_id ('CYS_p'): -1.0,core_model.metabolites.get_by_id ('ATP_p'): -1.0,core_model.metabolites.get_by_id ('L-GAMMA-GLUTAMYLCYSTEINE_p'): 1.0,core_model.metabolites.get_by_id ('ADP_p'): 1.0,core_model.metabolites.get_by_id ('Pi_p'): 1.0,core_model.metabolites.get_by_id ('PROTON_p'): 1.0})
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
 
@@ -212,7 +211,7 @@ inv_flux_2 = core_model.problem.Constraint(core_model.reactions.get_by_id('CWINV
 #core_model.add_boundary(core_model.metabolites.get_by_id("GLUTATHIONE_p"), type="demand")
 
 ## plot pareto plot
-objective1 =  'DM_no_cell'
+objective1 =  'DM_NITRIC-OXIDE_cell'
 objective2 =  'AraCore_Biomass_tx'
 solution_primary=pareto_analysis(core_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
 #pd.DataFrame(result_list).to_excel('results.xlsx')
@@ -271,5 +270,6 @@ ax.set_title(strs2 +' '+'at'+' '+objective1,fontsize=25)
 ax.legend()
 #plt.savefig('/Users/subasrees/Desktop/RS_demand/No_photo.pdf')
 plt.show()
-#objs_rs=['DM_no[cell]','DM_HS_cell[cell]','DM_SUPER_OXIDE_cell[cell]','DM_OOH-[cell]','DM_HC00250[cell]','DM_CE5643[cell]','DM_SO3_cell[cell]','DM_oh_rad[cell]','DM_HYDROGEN_PEROXIDE_cell[cell]','DM_oh1[cell]','DM_ho2_rad[cell]']
+#objs_rs=['Phloem_output_tx','DM_NITRIC-OXIDE_cell','DM_HS_cell','DM_SUPER_OXIDE_cell','DM_HC00250_cell','DM_CPD0-1395_cell','DM_SO3_cell','DM_CPD-12377_cell','DM_HYDROGEN_PEROXIDE_cell','DM_ho2_rad_cell']
+
 
