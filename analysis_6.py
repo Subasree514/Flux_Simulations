@@ -78,11 +78,7 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
             primary_11= ['CYTOCHROME_C_OXIDASE_RXN_mc','SUCCINATE_DEHYDROGENASE_UBIQUINONE_RXN_mi','SUCCINATE_DEHYDROGENASE_UBIQUINONE_RXN_mc']
             primary_9=['Phloem_output_tx','AraCore_Biomass_tx','Mitochondrial_ATP_Synthase_m','Protein_Processing_c']
             primary=primary_1+primary_2+primary_3+primary_6#primary_4+primary_5
-<<<<<<< HEAD
             solution_primary.append(solution.fluxes[primary_10])
-=======
-            solution_primary.append(solution.fluxes[primary_2])
->>>>>>> 333dad4 (removed apoplast and redone the models)
             reaction_obj2.bounds = (0, 1000.0)
         elif metric == 'euclidean':
 
@@ -109,7 +105,6 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
     #return result_list
     return solution_primary
 ## Plots
-<<<<<<< HEAD
 #model = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/alpha_day_DM.mat'))
 #model_rs = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/model_rs_dm.mat'))
 model_rs = cobra.io.load_matlab_model(join('alpha_day_RS_DM.mat'))
@@ -219,31 +214,6 @@ inv_flux_2 = core_model.problem.Constraint(core_model.reactions.get_by_id('CWINV
 ## plot pareto plot
 objective1 =  'DM_SUPER_OXIDE_cell'
 objective2 =  'AraCore_Biomass_tx'
-=======
-model = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/alpha_day_DM.mat'))
-model_rs = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/alpha_day_RS_DM.mat'))# alpha_day_RS_DM
-core_model=model
-core_model.add_boundary(core_model.metabolites.get_by_id("SUCROSE_e"), type="demand")
-core_model.add_boundary(core_model.metabolites.get_by_id("GLC_e"), type="demand")
-core_model.add_boundary(core_model.metabolites.get_by_id("FRU_c"), type="demand")
-#core_model.add_boundary(core_model.metabolites.get_by_id("SULFATE_e"), type="demand")
-#core_model.add_boundary(core_model.metabolites.get_by_id("CAII_e"), type="demand")
-#core_model.add_boundary(core_model.metabolites.get_by_id("MGII_e"), type="demand")
-#print(core_model.exchanges)
-#print(core_model.reactions.query('SUCROSE'))
-
-inv_flux = core_model.problem.Constraint(core_model.reactions.get_by_id('3_PERIOD_2_PERIOD_1_PERIOD_48_RXN_c').flux_expression,lb=0,ub=1000)
-#core_model.add_cons_vars(inv_flux)
-rubisco = core_model.problem.Constraint(3 * core_model.reactions.get_by_id("RXN_961_p").flux_expression - core_model.reactions.get_by_id("RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p").flux_expression,lb=0, ub=0,)
-core_model.add_cons_vars([rubisco])
-## plot pareto plo
-objective1 =  'DM_SUPER_OXIDE_cell'
-<<<<<<< HEAD
-objective2 =  'Phloem_output_tx'#x
->>>>>>> 333dad4 (removed apoplast and redone the models)
-=======
-objective2 =  'AraCore_Biomass_tx'#x
->>>>>>> 4f52db0 (rxn check)
 solution_primary=pareto_analysis(core_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
 #pd.DataFrame(result_list).to_excel('results.xlsx')
 data=pd.DataFrame(solution_primary)
