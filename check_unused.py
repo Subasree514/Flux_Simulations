@@ -26,29 +26,15 @@ from cobra.flux_analysis import flux_variability_analysis
 import matplotlib.pyplot as plt
 from cobra.io import load_json_model, save_json_model, load_matlab_model, save_matlab_model, read_sbml_model, write_sbml_model
 
-<<<<<<< HEAD
-#core_model = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/model_rs.mat'))
-core_model = cobra.io.load_matlab_model(join('alpha_day_DM.mat'))
-#core_model = cobra.io.load_matlab_model(join('alpha_day_rs.mat'))
-core_model=read_sbml_model('/Users/subasrees/Downloads/PlantCoreModel.sbml')
-core_model=read_sbml_model('/Users/subasrees/Downloads/Models/SBML/AraMeta.xml')
-save_matlab_model(core_model, "/Users/subasrees/Downloads/Ara.mat")
-#[core_model,rem]=cobra.manipulation.delete.prune_unused_metabolites(core_model)
-#print(rem)
-#alpha_day_RS_DM=core_model
-#save_matlab_model(alpha_day_RS_DM, "alpha_day_RS_DM.mat")
-#save_matlab_model(alpha_day_RS_DM, "/home/subasree/Desktop/Models_to_work/model_rs.mat")
-=======
 core_model = cobra.io.load_matlab_model(join('alpha_day_RS_DM.mat'))
 print(core_model.boundary)
 
-[core_model,rem]=cobra.manipulation.delete.prune_unused_metabolites(core_model)
-print(rem)
-alpha_day_RS_DM=core_model
-save_matlab_model(alpha_day_RS_DM, "/home/subasree/Desktop/Models_to_work/alpha_day_RS_DM.mat")
-save_matlab_model(alpha_day_RS_DM, "alpha_day_RS_DM.mat")
+#[core_model,rem]=cobra.manipulation.delete.prune_unused_metabolites(core_model)
+#print(rem)
+#alpha_day_RS_DM=core_model
+#save_matlab_model(alpha_day_RS_DM, "/home/subasree/Desktop/Models_to_work/alpha_day_RS_DM.mat")
+#save_matlab_model(alpha_day_RS_DM, "alpha_day_RS_DM.mat")
 
->>>>>>> daee2f0 (biocyc id updated in all models)
 sol = core_model.optimize()
 print(core_model.summary(sol))
 model_rs = cobra.io.load_matlab_model(join('alpha_day_RS_DM.mat'))
