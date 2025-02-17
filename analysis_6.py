@@ -105,14 +105,9 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
     #return result_list
     return solution_primary
 ## Plots
-<<<<<<< HEAD
-=======
-#<<<<<<< HEAD
->>>>>>> 6ac1b5f (Final:modified)
 #model = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/alpha_day_DM.mat'))
 #model_rs = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/model_rs_dm.mat'))
-model_rs = cobra.io.load_matlab_model(join('alpha_day_DM.mat'))
-
+model_rs = cobra.io.load_matlab_model(join('alpha_day_RS_DM.mat'))
 core_model=model_rs
 core_model.add_metabolites([
     Metabolite(
@@ -216,7 +211,7 @@ inv_flux_2 = core_model.problem.Constraint(core_model.reactions.get_by_id('CWINV
 #core_model.add_boundary(core_model.metabolites.get_by_id("GLUTATHIONE_p"), type="demand")
 
 ## plot pareto plot
-objective1 =  'DM_NITRIC-OXIDE_cell''
+objective1 =  'DM_NITRIC-OXIDE_cell'
 objective2 =  'AraCore_Biomass_tx'
 solution_primary=pareto_analysis(core_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
 #pd.DataFrame(result_list).to_excel('results.xlsx')
