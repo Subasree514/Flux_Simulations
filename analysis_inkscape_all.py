@@ -78,7 +78,7 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
             primary_8a= ['GLUCOKIN_RXN_p','6PFRUCTPHOS_RXN_p','3PGAREARR_RXN_p','2PGADEHYDRAT_RXN_p','PEPDEPHOS_RXN_p','PYRUVDEH_RXN_p']
             primary_8b= ['OAA_xc','CITSYN_RXN_x','CIT_xc','ACONITATEDEHYDR_RXN_c','2KG_ACONITATE_mc','ACONITATEHYDR_RXN_m','ISOCITRATE_DEHYDROGENASE_NAD_RXN_m','ASPAMINOTRANS_RXN_c','MALSYN_RXN_x','MALATE_DEH_RXN_x']
             primary_9=['NADH_DEHYDROG_A_RXN_mi','1_PERIOD_10_PERIOD_2_PERIOD_2_RXN_mi','SUCCINATE_DEHYDROGENASE_UBIQUINONE_RXN_mi','CYTOCHROME_C_OXIDASE_RXN_mi','Mitochondrial_ATP_Synthase_m']
-            primary_10=['DM_ATP_x','DM_NADH_x','DM_NADPH_x']
+            primary_10=['2TRANSKETO_RXN_p','PGLUCISOM_RXN_c','GLU6PDEHYDROG_RXN_p','6PGLUCONOLACT_RXN_c','6PGLUCONDEHYDROG_RXN_p','RIBULP3EPIM_RXN_c']
             primary_dark=primary_1+primary_4
             primary_sugar=primary_2+primary_3
             solution_primary.append(solution.fluxes[primary_10])
@@ -210,13 +210,8 @@ core_model.add_cons_vars([rubisco])
 h2o2_x = core_model.problem.Constraint(50 * core_model.reactions.get_by_id("H2O2_m_demand").flux_expression + 2 * core_model.reactions.get_by_id("H2O2_p_demand").flux_expression - core_model.reactions.get_by_id("H2O2_x_demand").flux_expression,lb=0, ub=0,)
 core_model.add_cons_vars([h2o2_x])
 #10.1111/pce.12932
-core_model.add_boundary(core_model.metabolites.get_by_id("ATP_x"), type="demand")
-core_model.add_boundary(core_model.metabolites.get_by_id("NADH_x"), type="demand")
-core_model.add_boundary(core_model.metabolites.get_by_id("NADPH_x"), type="demand")
-#core_model.add_boundary(core_model.metabolites.get_by_id("UBIQUINOL_mc"), type="demand")
-
 ## plot pareto plot
-objective1 =  'DM_SUPER_OXIDE_cell'#'DM_SUPER_OXIDE_cell'#'DM_NITRIC-OXIDE_cell'#'DM_CPD-12377_cell'#'DM_HYDROGEN_PEROXIDE_cell'
+objective1 =  'DM_HYDROGEN_PEROXIDE_cell'#'DM_SUPER_OXIDE_cell'#'DM_NITRIC-OXIDE_cell'#'DM_CPD-12377_cell'#'DM_HYDROGEN_PEROXIDE_cell'
 objective2 =  'AraCore_Biomass_tx'
 solution_primary=pareto_analysis(core_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
 #pd.DataFrame(result_list).to_excel('results.xlsx')
