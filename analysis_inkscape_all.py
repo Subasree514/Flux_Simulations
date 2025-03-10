@@ -61,23 +61,26 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
         reaction_obj2.bounds = (sol.get_primal_by_id(objective2), sol.get_primal_by_id(objective2))
         if metric == 'manhattan':
             solution = cobra.flux_analysis.pfba(model)
-            ## Calvin-Benson Cycle - 0-3
-            primary_1=['RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p','PHOSPHORIBULOKINASE_RXN_p']
-            ## Starch synthesis pathway - 4-5
-            primary_2=['PGLUCISOM_RXN_p','GLYCOGENSYN_RXN_p']
-            ## Sucrose synthesis pathway - 6-7
-            primary_3=['F16ALDOLASE_RXN_c','SUCROSE_PHOSPHATASE_RXN_c','3_PERIOD_2_PERIOD_1_PERIOD_48_RXN_c','CWINV1']
-            ## Defense related in carbohydrate metabolism and photorespiration - 8-10
-            primary_4=['RXN_961_p','RXN_969_x','GLYCINE_AMINOTRANSFERASE_RXN_x','GLYOHMETRANS_RXN_m','SERINE_GLYOXYLATE_AMINOTRANSFERASE_RXN_x','GLY3KIN_RXN_p']#hxk gox fab2
-            ## Defense related in aminoacid metabolism - 11-13
-            primary_5=['ALANINE_GLYOXYLATE_AMINOTRANSFERASE_RXN_x','GLYOHMETRANS_RXN_m','RXN_14903_m']#AGT,SHMT,ProDH
-            primary_6=['PHOSGLYPHOS_RXN_p','PEPDEPHOS_RXN_c','PYRUVDEH_RXN_m','CITSYN_RXN_m']#'GAPOXNPHOSPHN_RXN_p']
-            primary_7=['THYMIDYLATESYN_RXN_m','GLYOHMETRANS_RXN_m']#
-            primary_10=['Mehler_Reaction_p','L_ASCORBATE_PEROXIDASE_RXN_p','L_ASCORBATE_PEROXIDASE_RXN_m','CATAL_RXN_x','GLUTATHIONE_PEROXIDASE_RXN_p','SUPEROX_DISMUT_RXN_p','SUPEROX_DISMUT_RXN_c','RXN_969_x','SULFITE_OXIDASE_RXN_m','RXN66_1_c','RXN_3521_p']
-            primary_8=['PLASTOQUINOL_PLASTOCYANIN_REDUCTASE_RXN_p','1_PERIOD_18_PERIOD_1_PERIOD_2_RXN_p','CYTOCHROME_C_OXIDASE_RXN_mi']
-            primary_11= ['CYTOCHROME_C_OXIDASE_RXN_mc','SUCCINATE_DEHYDROGENASE_UBIQUINONE_RXN_mi','SUCCINATE_DEHYDROGENASE_UBIQUINONE_RXN_mc']
-            primary_9=['Phloem_output_tx','AraCore_Biomass_tx','Mitochondrial_ATP_Synthase_m','Protein_Processing_c']
-            primary=primary_1+primary_2+primary_3+primary_6#primary_4+primary_5
+            ## Calvin-Benson Cycle
+            primary_1=['CO2_tx','RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p','TRIOSEPISOMERIZATION_RXN_p','F16BDEPHOS_RXN_p','PHOSPHORIBULOKINASE_RXN_p',]
+            ## Starch synthesis pathway
+            primary_2=['F16BDEPHOS_RXN_p','PGLUCISOM_RXN_p','GLUC1PADENYLTRANS_RXN_p','GLYCOGENSYN_RXN_p']
+            ## Sucrose synthesis pathway
+            primary_3=['F16BDEPHOS_RXN_c','SUCROSE_PHOSPHATE_SYNTHASE_RXN_c','SUCROSE_PHOSPHATASE_RXN_c',]
+            ## Photorespiration
+            primary_4=['O2_tx','RXN_961_p','GPH_RXN_p','RXN_969_x','GLY3KIN_RXN_p','GLYCINE_AMINOTRANSFERASE_RXN_x']#hxk gox fab2
+            ## FA metabolism
+            primary_5=['Beta_Oxidation_x','ACETATE__COA_LIGASE_RXN_p','2_PERIOD_3_PERIOD_1_PERIOD_180_RXN_p','RXN_9661_p','RXN_9663_p','RXN_9549_p']#'GAPOXNPHOSPHN_RXN_p']
+            ## Light
+            primary_6=['Photon_tx','PSII_RXN_p','PLASTOQUINOL_PLASTOCYANIN_REDUCTASE_RXN_p','1_PERIOD_18_PERIOD_1_PERIOD_2_RXN_p']
+            ## N2 metabolism
+            primary_7=['Nitrate_tx','GLUTAMINESYN_RXN_p','GLUTAMATE_SYNTHASE_FERREDOXIN_RXN_p','GLN_GLU_mc','GLUTAMINESYN_RXN_m']
+            primary_8a= ['GLUCOKIN_RXN_p','6PFRUCTPHOS_RXN_p','3PGAREARR_RXN_p','2PGADEHYDRAT_RXN_p','PEPDEPHOS_RXN_p','PYRUVDEH_RXN_p']
+            primary_8b= ['OAA_xc','CITSYN_RXN_x','CIT_xc','ACONITATEDEHYDR_RXN_c','2KG_ACONITATE_mc','ACONITATEHYDR_RXN_m','ISOCITRATE_DEHYDROGENASE_NAD_RXN_m','ASPAMINOTRANS_RXN_c','MALSYN_RXN_x','MALATE_DEH_RXN_x']
+            primary_9=['NADH_DEHYDROG_A_RXN_mi','1_PERIOD_10_PERIOD_2_PERIOD_2_RXN_mi','SUCCINATE_DEHYDROGENASE_UBIQUINONE_RXN_mi','CYTOCHROME_C_OXIDASE_RXN_mi','Mitochondrial_ATP_Synthase_m']
+            primary_10=['DM_ATP_x','DM_NADH_x','DM_NADPH_x']
+            primary_dark=primary_1+primary_4
+            primary_sugar=primary_2+primary_3
             solution_primary.append(solution.fluxes[primary_10])
             reaction_obj2.bounds = (0, 1000.0)
         elif metric == 'euclidean':
@@ -130,26 +133,28 @@ core_model.add_metabolites([
     compartment='e',
     formula='C12H22O11',
     charge=0)])
-#core_model.add_boundary(core_model.metabolites.get_by_id("GLC_e"), type="demand")
+
 reaction = Reaction('CWINV1')
 reaction.name = 'Extracellular invertase'
 reaction.subsystem = 'sucrosedegradationIII'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 reaction.add_metabolites({core_model.metabolites.get_by_id ('SUCROSE_e'): -1.0,core_model.metabolites.get_by_id ('WATER_e'): -1.0,core_model.metabolites.get_by_id('GLC_e'): 1.0,core_model.metabolites.get_by_id ('FRU_e'): 1.0})
-print(reaction.reaction) 
+#print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ## 10.1093/mp/SSS054
 ## https://www.sciencedirect.com/science/article/pii/S1674205214605724#cesec40
+
 reaction = Reaction('Sucrose_tr')
 reaction.name = 'Sucrose transport'
 #reaction.subsystem = 'sucrosedegradationIII'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 reaction.add_metabolites({core_model.metabolites.get_by_id ('SUCROSE_c'): -1.0,core_model.metabolites.get_by_id ('SUCROSE_e'): 1.0})
-print(reaction.reaction) 
+#print(reaction.reaction) 
 core_model.add_reactions([reaction])
-## https://pmn.plantcyc.org/ARA/class-tree?object=Transport-Reactions#
+## https://pmn.plantcyc.org/ARA/class-tree?object=Transport-Reactions
+
 reaction = Reaction('GLC_tr')
 reaction.name = 'Glucose transport'
 #reaction.subsystem = 'sucrosedegradationIII'
@@ -157,8 +162,9 @@ reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 reaction.add_metabolites({core_model.metabolites.get_by_id('GLC_c'): -1.0,core_model.metabolites.get_by_id ('GLC_e'): 1.0})
 core_model.add_reactions([reaction])
-print(reaction.reaction) 
-##
+#print(reaction.reaction) 
+
+
 reaction = Reaction('FRU_tr')
 reaction.name = 'Fructose transport'
 #reaction.subsystem = 'sucrosedegradationIII'
@@ -166,8 +172,9 @@ reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 reaction.add_metabolites({core_model.metabolites.get_by_id('FRU_c'): -1.0,core_model.metabolites.get_by_id ('FRU_e'): 1.0})
 core_model.add_reactions([reaction])
-print(reaction.reaction) 
-##
+#print(reaction.reaction) 
+
+
 reaction = Reaction('MALTOSE_ec')
 reaction.name = 'Maltose transport'
 #reaction.subsystem = 'sucrosedegradationIII'
@@ -175,7 +182,8 @@ reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 reaction.add_metabolites({core_model.metabolites.get_by_id('MALTOSE_c'): -1.0,core_model.metabolites.get_by_id ('MALTOSE_e'): 1.0})
 core_model.add_reactions([reaction])
-print(reaction.reaction) 
+#print(reaction.reaction) 
+
 ## Aracyc
 reaction = Reaction('GLUTATHIONE-SYN-RXN')
 reaction.name = 'Glutathione synthetase'
@@ -183,8 +191,9 @@ reaction.subsystem = 'glutathionebiosynthesis'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 reaction.add_metabolites({core_model.metabolites.get_by_id ('GLY_p'): -1.0,core_model.metabolites.get_by_id ('ATP_p'): -1.0,core_model.metabolites.get_by_id('L-GAMMA-GLUTAMYLCYSTEINE_p'): -1.0,core_model.metabolites.get_by_id ('GLUTATHIONE_p'): 1.0,core_model.metabolites.get_by_id ('ADP_p'): 1.0,core_model.metabolites.get_by_id ('Pi_p'): 1.0,core_model.metabolites.get_by_id ('PROTON_p'): 1.0})
-print(reaction.reaction) 
+#print(reaction.reaction) 
 core_model.add_reactions([reaction])
+
 ##
 reaction = Reaction('GLUTCYSLIG-RXN')
 reaction.name = 'γ-glutamylcysteine synthetase'
@@ -192,7 +201,7 @@ reaction.subsystem = 'glutathionebiosynthesis'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 reaction.add_metabolites({core_model.metabolites.get_by_id ('GLT_p'): -1.0,core_model.metabolites.get_by_id ('CYS_p'): -1.0,core_model.metabolites.get_by_id ('ATP_p'): -1.0,core_model.metabolites.get_by_id ('L-GAMMA-GLUTAMYLCYSTEINE_p'): 1.0,core_model.metabolites.get_by_id ('ADP_p'): 1.0,core_model.metabolites.get_by_id ('Pi_p'): 1.0,core_model.metabolites.get_by_id ('PROTON_p'): 1.0})
-print(reaction.reaction) 
+#print(reaction.reaction) 
 core_model.add_reactions([reaction])
 
 ##Constraints
@@ -201,78 +210,52 @@ core_model.add_cons_vars([rubisco])
 h2o2_x = core_model.problem.Constraint(50 * core_model.reactions.get_by_id("H2O2_m_demand").flux_expression + 2 * core_model.reactions.get_by_id("H2O2_p_demand").flux_expression - core_model.reactions.get_by_id("H2O2_x_demand").flux_expression,lb=0, ub=0,)
 core_model.add_cons_vars([h2o2_x])
 #10.1111/pce.12932
-h2o2_x2 = core_model.problem.Constraint(50 * core_model.reactions.get_by_id("H2O2_m_demand").flux_expression - core_model.reactions.get_by_id("H2O2_x_demand").flux_expression,lb=0, ub=0,)
-#core_model.add_cons_vars([h2o2_x2])
-inv_flux_1 = core_model.problem.Constraint(core_model.reactions.get_by_id('FRU_tr').flux_expression + core_model.reactions.get_by_id('GLC_tr').flux_expression - core_model.reactions.get_by_id('3_PERIOD_2_PERIOD_1_PERIOD_48_RXN_c').flux_expression,lb=0,ub=0)
-#core_model.add_cons_vars(inv_flux_1)
-inv_flux_2 = core_model.problem.Constraint(core_model.reactions.get_by_id('CWINV1').flux_expression + core_model.reactions.get_by_id('Sucrose_tr').flux_expression,lb=100,ub=100)
-#core_model.add_cons_vars(inv_flux_2)
-#https://doi.org/10.1093/jxb/erm298
-#core_model.add_boundary(core_model.metabolites.get_by_id("GLUTATHIONE_p"), type="demand")
+core_model.add_boundary(core_model.metabolites.get_by_id("ATP_x"), type="demand")
+core_model.add_boundary(core_model.metabolites.get_by_id("NADH_x"), type="demand")
+core_model.add_boundary(core_model.metabolites.get_by_id("NADPH_x"), type="demand")
+#core_model.add_boundary(core_model.metabolites.get_by_id("UBIQUINOL_mc"), type="demand")
 
 ## plot pareto plot
-objective1 =  'Phloem_output_tx'
+objective1 =  'DM_SUPER_OXIDE_cell'#'DM_SUPER_OXIDE_cell'#'DM_NITRIC-OXIDE_cell'#'DM_CPD-12377_cell'#'DM_HYDROGEN_PEROXIDE_cell'
 objective2 =  'AraCore_Biomass_tx'
 solution_primary=pareto_analysis(core_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
 #pd.DataFrame(result_list).to_excel('results.xlsx')
 data=pd.DataFrame(solution_primary)
-print(data)
-#plt.plot(data[1],data[2])
-#plt.show()
-#print(data.iloc[:,11].head(10))
-barWidth = 0.25
+
 bars1 = round(data.iloc[0,:],2)
+bars1_df=pd.DataFrame([bars1])
+bars1_df=bars1_df.T
+bars1_df['Rxns_zero']=bars1_df.index
+bars1_df.columns=['Fluxes_zero','Rxns_zero']
+bars1_df["Rxns_zero"] = bars1_df["Rxns_zero"].apply(lambda x: x+'_zero')
+bars1_df.reset_index(drop=True, inplace=True)
+
 bars2 = round(data.iloc[50,:],2)
+bars2_df=pd.DataFrame([bars2])
+bars2_df=bars2_df.T
+bars2_df['Rxns_half']=bars2_df.index
+bars2_df.columns=['Fluxes_half','Rxns_half']
+bars2_df["Rxns_half"] = bars2_df["Rxns_half"].apply(lambda x: x+'_half')
+bars2_df.reset_index(drop=True, inplace=True)
+
 bars3 = round(data.iloc[100,:],2)
-# Bar positions
-r = np.arange(len(bars1))
-r2 = r + barWidth
-r3 = r2 + barWidth
+bars3_df=pd.DataFrame([bars3])
+bars3_df=bars3_df.T
+bars3_df['Rxns_max']=bars3_df.index
+bars3_df.columns=['Fluxes_max','Rxns_max']
+bars3_df["Rxns_max"] = bars3_df["Rxns_max"].apply(lambda x: x+'_max')
+bars3_df.reset_index(drop=True, inplace=True)
 
-# Plotting
-fig, ax = plt.subplots(dpi=100)
-fig.set_figheight(10)
-fig.set_figwidth(15)
-b1=ax.bar(r, bars1, color='#7f6d5f', width=barWidth, edgecolor='white', label='zero')
-ax.bar_label(b1, padding=3)
-
-b2=ax.bar(r2, bars2, color='#557f2d', width=barWidth, edgecolor='white', label='half max')
-ax.bar_label(b2, padding=3)
-
-b3=ax.bar(r3, bars3, color='#2d7f5e', width=barWidth, edgecolor='white', label='max')
-ax.bar_label(b3, padding=3)
-
-# Xticks
-#  
-xticks_cbc=['rbcl','PRK']
-xticks_str=['PGI1','SS3']
-xticks_suc=['FBA8','SPP2','cwINV4']
-xticks_super=['PGK1','PK','PDH2','CSY4']
-xticks_dttp=['THY2','SHMT2']
-xticks_resp=['PETC', 'PETH1','COX2']#'PLGG1','ME2','CA2','PDH']#'HXK2','rbcl-o2','FAB2','AGT1','SHMT2','PRODH2']
-xticks_photo=['rbcl','GLO2','GGAT1','SHM2','AGT1','GLYK']
-xticks_redox=data.columns
-ax.set_xlabel('Reactions', fontweight='bold',fontsize=20)
-ax.set_xticks(r,xticks_redox,rotation=20,fontsize=20)
-ax.set_xticks(r,xticks_redox,rotation=20,fontsize=20)
-ax.set_xticks(r,xticks_redox,rotation=20,fontsize=20)
-ax.set_ylabel('Fluxes', fontweight='bold',fontsize=20)
-
-# Title
-strs1='Calvin-Benson Cycle'
-strs2='Starch synthesis Pathway'
-strs3='Sucrose metabolism'
-strs4='Photorespiration'
-strs5='Light reactions and Respiration'
-strs6='Superpathway of cytosolic glucose metabolism'
-strs7='dTMP de novo biosynthesis (mitochondrial)'
-strs8='RS reactions'
-ax.set_title(strs2 +' '+'at'+' '+objective1,fontsize=25)
-
-# Legend and show
-ax.legend()
-#plt.savefig('/Users/subasrees/Desktop/RS_demand/No_photo.pdf')
-#plt.show()
-#objs_rs=['Phloem_output_tx','DM_NITRIC-OXIDE_cell','DM_HS_cell','DM_SUPER_OXIDE_cell','DM_HC00250_cell','DM_CPD0-1395_cell','DM_SO3_cell','DM_CPD-12377_cell','DM_HYDROGEN_PEROXIDE_cell','DM_ho2_rad_cell']
-
-
+s1=pd.Series(bars1_df['Rxns_zero'])
+s2=pd.Series(bars2_df['Rxns_half'])
+s3=pd.Series(bars3_df['Rxns_max'])
+df_rxns=pd.concat([s1, s2,s3],ignore_index=True)
+f1=pd.Series(bars1_df['Fluxes_zero'])
+f2=pd.Series(bars2_df['Fluxes_half'])
+f3=pd.Series(bars3_df['Fluxes_max'])
+df_fluxes=pd.concat([f1, f2, f3],ignore_index=True)
+df=pd.DataFrame([df_rxns,df_fluxes])
+df_n2=df.T
+df_n2.columns=['Reactions','Fluxes']
+print(df_n2)
+#f_n2.to_csv('/Users/subasrees/Desktop/FluxMap_Workshop/tca_o2s.csv')
