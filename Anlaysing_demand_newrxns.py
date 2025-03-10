@@ -181,7 +181,7 @@ reaction.add_metabolites({core_model.metabolites.get_by_id ('GLT_p'): -1.0,core_
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
 #core_model.add_boundary(core_model.metabolites.get_by_id("ADP_m"), type="demand")
-core_model.add_boundary(core_model.metabolites.get_by_id("NAD_m"), type="demand")
+core_model.add_boundary(core_model.metabolites.get_by_id("GLC_6_P_p"), type="demand")
 core_model.add_boundary(core_model.metabolites.get_by_id("NADH_m"), type="demand")
 #core_model.add_boundary(core_model.metabolites.get_by_id("UBIQUINOL_mc"), type="demand")
 ##Constraints
@@ -200,14 +200,14 @@ core_model.add_cons_vars([h2o2_x])
 #core_model.add_boundary(core_model.metabolites.get_by_id("GLUTATHIONE_p"), type="demand")
 
 ## plot pareto plot
-objective1 =  'DM_SUPER_OXIDE_cell'
-objective2 =  'DM_NAD_m'
+objective1 =  'DM_GLC_6_P_p'
+objective2 =  'DM_CPD-12377_cell'
 solution_primary=pareto_analysis(core_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
 #pd.DataFrame(result_list).to_excel('results.xlsx')
 data=pd.DataFrame(solution_primary)
 print(data)
 plt.plot(data[1],data[2]) 
-#plt.show()
+plt.show()
 #objs_rs=['Phloem_output_tx','DM_NITRIC-OXIDE_cell','DM_HS_cell','DM_SUPER_OXIDE_cell','DM_HC00250_cell','DM_CPD0-1395_cell','DM_SO3_cell','DM_CPD-12377_cell','DM_HYDROGEN_PEROXIDE_cell','DM_ho2_rad_cell']
 
 
