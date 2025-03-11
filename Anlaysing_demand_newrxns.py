@@ -116,6 +116,7 @@ core_model.add_metabolites([
     compartment='e',
     formula='C12H22O11',
     charge=0)])
+
 #core_model.add_boundary(core_model.metabolites.get_by_id("GLC_e"), type="demand")
 reaction = Reaction('CWINV1')
 reaction.name = 'Extracellular invertase'
@@ -180,28 +181,40 @@ reaction.upper_bound = 1000.  # This is the default
 reaction.add_metabolites({core_model.metabolites.get_by_id ('GLT_p'): -1.0,core_model.metabolites.get_by_id ('CYS_p'): -1.0,core_model.metabolites.get_by_id ('ATP_p'): -1.0,core_model.metabolites.get_by_id ('L-GAMMA-GLUTAMYLCYSTEINE_p'): 1.0,core_model.metabolites.get_by_id ('ADP_p'): 1.0,core_model.metabolites.get_by_id ('Pi_p'): 1.0,core_model.metabolites.get_by_id ('PROTON_p'): 1.0})
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
-#core_model.add_boundary(core_model.metabolites.get_by_id("ADP_m"), type="demand")
-core_model.add_boundary(core_model.metabolites.get_by_id("GLC_6_P_p"), type="demand")
-core_model.add_boundary(core_model.metabolites.get_by_id("NADH_m"), type="demand")
-#core_model.add_boundary(core_model.metabolites.get_by_id("UBIQUINOL_mc"), type="demand")
+##
+reaction = Reaction('ROS_demand')
+reaction.name = 'Combined ROS Effect'
+reaction.subsystem = 'Cellular damage'
+reaction.lower_bound =0.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+reaction.add_metabolites({core_model.metabolites.get_by_id ('HYDROGEN_PEROXIDE_cell'): -1.0,core_model.metabolites.get_by_id ('SUPER_OXIDE_cell'): -1.0,core_model.metabolites.get_by_id('CPD-12377_cell'): -1.0})
+#print(reaction.reaction) 
+core_model.add_reactions([reaction])
+##
+reaction = Reaction('RNS_demand')
+reaction.name = 'Combined RNS Effect'
+reaction.subsystem = 'Cellular damage'
+reaction.lower_bound =0.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+reaction.add_metabolites({core_model.metabolites.get_by_id ('CPD0-1395_cell'): -1.0,core_model.metabolites.get_by_id ('NITRIC-OXIDE_cell'): -1.0})
+#print(reaction.reaction) 
+core_model.add_reactions([reaction])
+
 ##Constraints
-rubisco = core_model.problem.Constraint(3 * core_model.reactions.get_by_id("RXN_961_p").flux_expression - core_model.reactions.get_by_id("RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p").flux_expression,lb=0, ub=0,)
+rubisco = core_model.problem.Constraint(1 * core_model.reactions.get_by_id("RXN_961_p").flux_expression - core_model.reactions.get_by_id("RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p").flux_expression,lb=0, ub=0,)
 core_model.add_cons_vars([rubisco])
-h2o2_x = core_model.problem.Constraint(50 * core_model.reactions.get_by_id("H2O2_m_demand").flux_expression + 2 * core_model.reactions.get_by_id("H2O2_p_demand").flux_expression - core_model.reactions.get_by_id("H2O2_x_demand").flux_expression,lb=0, ub=0,)
-core_model.add_cons_vars([h2o2_x])
-#10.1111/pce.12932
-#h2o2_x2 = core_model.problem.Constraint(50 * core_model.reactions.get_by_id("H2O2_m_demand").flux_expression - core_model.reactions.get_by_id("H2O2_x_demand").flux_expression,lb=0, ub=0,)
-#core_model.add_cons_vars([h2o2_x2])
-#inv_flux_1 = core_model.problem.Constraint(core_model.reactions.get_by_id('FRU_tr').flux_expression + core_model.reactions.get_by_id('GLC_tr').flux_expression - core_model.reactions.get_by_id('3_PERIOD_2_PERIOD_1_PERIOD_48_RXN_c').flux_expression,lb=0,ub=0)
-#core_model.add_cons_vars(inv_flux_1)
-#inv_flux_2 = core_model.problem.Constraint(core_model.reactions.get_by_id('CWINV1').flux_expression + core_model.reactions.get_by_id('Sucrose_tr').flux_expression,lb=100,ub=100)
-#core_model.add_cons_vars(inv_flux_2)
+h2o2_m = core_model.problem.Constraint(50 * core_model.reactions.get_by_id("H2O2_m_demand").flux_expression - core_model.reactions.get_by_id("H2O2_x_demand").flux_expression,lb=0, ub=0,)
+core_model.add_cons_vars([h2o2_m])
+h2o2_p = core_model.problem.Constraint(2 * core_model.reactions.get_by_id("H2O2_p_demand").flux_expression - core_model.reactions.get_by_id("H2O2_x_demand").flux_expression,lb=0, ub=0,)
+core_model.add_cons_vars([h2o2_p])
+Cell_death = core_model.problem.Constraint(core_model.reactions.get_by_id("RNS_demand").flux_expression + core_model.reactions.get_by_id("ROS_demand").flux_expression - core_model.reactions.get_by_id("DM_HS_cell").flux_expression,lb=0, ub=0,)
+#core_model.add_cons_vars([Cell_death])
 #https://doi.org/10.1093/jxb/erm298
 #core_model.add_boundary(core_model.metabolites.get_by_id("GLUTATHIONE_p"), type="demand")
 
 ## plot pareto plot
-objective1 =  'Photon_tx'
-objective2 =  'DM_HYDROGEN_PEROXIDE_cell'
+objective1 =  'ROS_demand'
+objective2 =  'Phloem_output_tx'
 solution_primary=pareto_analysis(core_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
 #pd.DataFrame(result_list).to_excel('results.xlsx')
 data=pd.DataFrame(solution_primary)
