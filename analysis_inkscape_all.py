@@ -79,10 +79,11 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
             primary_8b= ['OAA_xc','CITSYN_RXN_x','CIT_xc','ACONITATEDEHYDR_RXN_c','2KG_ACONITATE_mc','ACONITATEHYDR_RXN_m','ISOCITRATE_DEHYDROGENASE_NAD_RXN_m','ASPAMINOTRANS_RXN_c','MALSYN_RXN_x','MALATE_DEH_RXN_x']
             primary_9=['NADH_DEHYDROG_A_RXN_mi','1_PERIOD_10_PERIOD_2_PERIOD_2_RXN_mi','SUCCINATE_DEHYDROGENASE_UBIQUINONE_RXN_mi','CYTOCHROME_C_OXIDASE_RXN_mi','Mitochondrial_ATP_Synthase_m']
             primary_10=['2TRANSKETO_RXN_p','PGLUCISOM_RXN_c','GLU6PDEHYDROG_RXN_p','6PGLUCONOLACT_RXN_c','6PGLUCONDEHYDROG_RXN_p','RIBULP3EPIM_RXN_c']
-            primary_11=['H2O2_x_demand','H2O2_p_demand','H2O2_m_demand']
+            primary_anti_1=['CATAL_RXN_x','L_ASCORBATE_PEROXIDASE_RXN_m','GLUTATHIONE_PEROXIDASE_RXN_p','L_ASCORBATE_PEROXIDASE_RXN_p','RXN66_1_c','RXN_3521_p','SUPEROX_DISMUT_RXN_c','SUPEROX_DISMUT_RXN_p']
+            primary_anti_2=['RS_Plant_APX_A','RS_Plant_APX_C','RS_Plant_APX_G','RS_Plant_APX_X','RS_Plant_CAT_M','RS_Plant_GPX_M3','RS_Plant_GPX2_C','RS_Plant_GPX2_N','RS_Plant_GPX5_Mb','RS_Plant_PER1_C','RS_Plant_PER1_CP','RS_Plant_PER1_N']
             primary_dark=primary_1+primary_4
             primary_sugar=primary_2+primary_3
-            solution_primary.append(solution.fluxes[primary_5])
+            solution_primary.append(solution.fluxes[primary_anti_1])
             reaction_obj2.bounds = (0, 1000.0)
         elif metric == 'euclidean':
 
@@ -213,8 +214,10 @@ core_model.add_cons_vars([h2o2_m])
 h2o2_p = core_model.problem.Constraint(2 * core_model.reactions.get_by_id("H2O2_p_demand").flux_expression - core_model.reactions.get_by_id("H2O2_x_demand").flux_expression,lb=0, ub=0,)
 core_model.add_cons_vars([h2o2_p])
 #10.1111/pce.12932
+#core_model.add_boundary(core_model.metabolites.get_by_id("FeII_e"), type="sink")
+
 ## plot pareto plot
-objective1 =  'DM_HYDROGEN_PEROXIDE_cell'#'DM_SUPER_OXIDE_cell'#'DM_NITRIC-OXIDE_cell'#'DM_CPD-12377_cell'#'DM_HYDROGEN_PEROXIDE_cell'
+objective1 =  'DM_CPD-12377_cell'#Phloem_output_txAraCore_Biomass_txDM_HS_cellDM_CPD0-1395_cell'DM_SUPER_OXIDE_cell'#'DM_NITRIC-OXIDE_cell'#'DM_CPD-12377_cell'#'DM_HYDROGEN_PEROXIDE_cell'
 objective2 =  'AraCore_Biomass_tx'
 solution_primary=pareto_analysis(core_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
 #pd.DataFrame(result_list).to_excel('results.xlsx')
