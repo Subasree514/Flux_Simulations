@@ -200,8 +200,8 @@ core_model.add_cons_vars([h2o2_x])
 #core_model.add_boundary(core_model.metabolites.get_by_id("GLUTATHIONE_p"), type="demand")
 
 ## plot pareto plot
-objective1 =  'DM_GLC_6_P_p'
-objective2 =  'DM_CPD-12377_cell'
+objective1 =  'Photon_tx'
+objective2 =  'DM_HYDROGEN_PEROXIDE_cell'
 solution_primary=pareto_analysis(core_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
 #pd.DataFrame(result_list).to_excel('results.xlsx')
 data=pd.DataFrame(solution_primary)
