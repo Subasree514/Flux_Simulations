@@ -26,7 +26,7 @@ import matplotlib.pyplot as plt
 from cobra.io import load_json_model, save_json_model, load_matlab_model, save_matlab_model, read_sbml_model, write_sbml_model
 
 
-core_model = cobra.io.load_matlab_model(join('alpha_day_DM.mat'))
+#core_model = cobra.io.load_matlab_model(join('alpha_day_DM.mat'))
 #core_model = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/model_rs.mat'))
 
 ## Pareto function
@@ -116,8 +116,17 @@ core_model.add_metabolites([
     compartment='e',
     formula='C12H22O11',
     charge=0)])
-
-#core_model.add_boundary(core_model.metabolites.get_by_id("GLC_e"), type="demand")
+##Non-enzymatic antioxidant demands
+core_model.add_metabolites([
+    Metabolite(
+    'GLUTATHIONE_cell',
+    name='GLUTATHIONE',
+    compartment='cell',
+    formula='C10H16N3O6S',
+    charge=-1),
+    ])
+core_model.add_boundary(core_model.metabolites.get_by_id("TYR_c"), type="demand")
+core_model.add_boundary(core_model.metabolites.get_by_id("pTYR_c"), type="demand")
 reaction = Reaction('CWINV1')
 reaction.name = 'Extracellular invertase'
 reaction.subsystem = 'sucrosedegradationIII'
@@ -164,7 +173,7 @@ reaction.add_metabolites({core_model.metabolites.get_by_id('MALTOSE_c'): -1.0,co
 core_model.add_reactions([reaction])
 print(reaction.reaction) 
 ## Aracyc
-reaction = Reaction('GLUTATHIONE-SYN-RXN')
+reaction = Reaction('GLUTATHIONE-SYN-RXN-1')
 reaction.name = 'Glutathione synthetase'
 reaction.subsystem = 'glutathionebiosynthesis'
 reaction.lower_bound =0.  # This is the default
@@ -172,8 +181,16 @@ reaction.upper_bound = 1000.  # This is the default
 reaction.add_metabolites({core_model.metabolites.get_by_id ('GLY_p'): -1.0,core_model.metabolites.get_by_id ('ATP_p'): -1.0,core_model.metabolites.get_by_id('L-GAMMA-GLUTAMYLCYSTEINE_p'): -1.0,core_model.metabolites.get_by_id ('GLUTATHIONE_p'): 1.0,core_model.metabolites.get_by_id ('ADP_p'): 1.0,core_model.metabolites.get_by_id ('Pi_p'): 1.0,core_model.metabolites.get_by_id ('PROTON_p'): 1.0})
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
+reaction = Reaction('GLUTATHIONE-SYN-RXN-2')
+reaction.name = 'Glutathione synthetase'
+reaction.subsystem = 'glutathionebiosynthesis'
+reaction.lower_bound =0.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+reaction.add_metabolites({core_model.metabolites.get_by_id ('GLY_c'): -1.0,core_model.metabolites.get_by_id ('ATP_c'): -1.0,core_model.metabolites.get_by_id('L-GAMMA-GLUTAMYLCYSTEINE_c'): -1.0,core_model.metabolites.get_by_id ('GLUTATHIONE_c'): 1.0,core_model.metabolites.get_by_id ('ADP_c'): 1.0,core_model.metabolites.get_by_id ('Pi_c'): 1.0,core_model.metabolites.get_by_id ('PROTON_c'): 1.0})
+print(reaction.reaction) 
+core_model.add_reactions([reaction])
 ##
-reaction = Reaction('GLUTCYSLIG-RXN')
+reaction = Reaction('GLUTCYSLIG-RXN-1')
 reaction.name = 'γ-glutamylcysteine synthetase'
 reaction.subsystem = 'glutathionebiosynthesis'
 reaction.lower_bound =0.  # This is the default
@@ -182,21 +199,32 @@ reaction.add_metabolites({core_model.metabolites.get_by_id ('GLT_p'): -1.0,core_
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ##
+reaction = Reaction('GLUTCYSLIG-RXN-2')
+reaction.name = 'γ-glutamylcysteine synthetase'
+reaction.subsystem = 'glutathionebiosynthesis'
+reaction.lower_bound =0.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+reaction.add_metabolites({core_model.metabolites.get_by_id ('GLT_c'): -1.0,core_model.metabolites.get_by_id ('CYS_c'): -1.0,core_model.metabolites.get_by_id ('ATP_c'): -1.0,core_model.metabolites.get_by_id ('L-GAMMA-GLUTAMYLCYSTEINE_c'): 1.0,core_model.metabolites.get_by_id ('ADP_c'): 1.0,core_model.metabolites.get_by_id ('Pi_c'): 1.0,core_model.metabolites.get_by_id ('PROTON_c'): 1.0})
+print(reaction.reaction) 
+#core_model.add_reactions([reaction])
+##
 reaction = Reaction('ROS_demand')
 reaction.name = 'Combined ROS Effect'
 reaction.subsystem = 'Cellular damage'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('HYDROGEN_PEROXIDE_cell'): -1.0,core_model.metabolites.get_by_id ('SUPER_OXIDE_cell'): -1.0,core_model.metabolites.get_by_id('CPD-12377_cell'): -1.0})
+reaction.add_metabolites({core_model.metabolites.get_by_id ('HYDROGEN_PEROXIDE_cell'): -1.0,core_model.metabolites.get_by_id ('SUPER_OXIDE_cell'): -1.0,core_model.metabolites.get_by_id('CPD-12377_cell'): -1.0,core_model.metabolites.get_by_id ('ho2_rad_p'): -1.0})
 #print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ##
+core_model.add_boundary(core_model.metabolites.get_by_id("gsno_c"), type="demand")
+
 reaction = Reaction('RNS_demand')
 reaction.name = 'Combined RNS Effect'
 reaction.subsystem = 'Cellular damage'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('CPD0-1395_cell'): -1.0,core_model.metabolites.get_by_id ('NITRIC-OXIDE_cell'): -1.0})
+reaction.add_metabolites({core_model.metabolites.get_by_id ('CPD0-1395_cell'): -1.0,core_model.metabolites.get_by_id ('NITRIC-OXIDE_cell'): -1.0})#,core_model.metabolites.get_by_id ('no2_rad_cell'): -1.0})
 #print(reaction.reaction) 
 core_model.add_reactions([reaction])
 
@@ -207,14 +235,16 @@ h2o2_m = core_model.problem.Constraint(50 * core_model.reactions.get_by_id("H2O2
 core_model.add_cons_vars([h2o2_m])
 h2o2_p = core_model.problem.Constraint(2 * core_model.reactions.get_by_id("H2O2_p_demand").flux_expression - core_model.reactions.get_by_id("H2O2_x_demand").flux_expression,lb=0, ub=0,)
 core_model.add_cons_vars([h2o2_p])
-Cell_death = core_model.problem.Constraint(core_model.reactions.get_by_id("RNS_demand").flux_expression + core_model.reactions.get_by_id("ROS_demand").flux_expression - core_model.reactions.get_by_id("DM_HS_cell").flux_expression,lb=0, ub=0,)
+Cell_death = core_model.problem.Constraint(core_model.reactions.get_by_id("RNS_demand").flux_expression + core_model.reactions.get_by_id("ROS_demand").flux_expression - core_model.reactions.get_by_id("DM_HS_cell").flux_expression, lb=0, ub=0)
+#core_model.add_cons_vars([Cell_death])
+#Cell_death = core_model.problem.Constraint(core_model.reactions.get_by_id("SK_Red_Thioredoxin_c").flux_expression -2* core_model.reactions.get_by_id("SK_Ox_Thioredoxin_c").flux_expression, lb=0, ub=0)
 #core_model.add_cons_vars([Cell_death])
 #https://doi.org/10.1093/jxb/erm298
 #core_model.add_boundary(core_model.metabolites.get_by_id("GLUTATHIONE_p"), type="demand")
 
 ## plot pareto plot
 objective1 =  'ROS_demand'
-objective2 =  'Phloem_output_tx'
+objective2 =  'DM_TYR_c'
 solution_primary=pareto_analysis(core_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
 #pd.DataFrame(result_list).to_excel('results.xlsx')
 data=pd.DataFrame(solution_primary)

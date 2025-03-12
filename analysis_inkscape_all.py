@@ -222,7 +222,7 @@ reaction.name = 'Combined RNS Effect'
 reaction.subsystem = 'Cellular damage'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('CPD0-1395_cell'): -1.0,core_model.metabolites.get_by_id ('NITRIC-OXIDE_cell'): -1.0})
+reaction.add_metabolites({core_model.metabolites.get_by_id ('CPD0-1395_cell'): -1.0,core_model.metabolites.get_by_id ('NITRIC-OXIDE_cell'): -1.0,core_model.metabolites.get_by_id ('no2_rad_cell'): -1.0})
 #print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ##Constraints
@@ -233,7 +233,7 @@ core_model.add_cons_vars([h2o2_m])
 h2o2_p = core_model.problem.Constraint(2 * core_model.reactions.get_by_id("H2O2_p_demand").flux_expression - core_model.reactions.get_by_id("H2O2_x_demand").flux_expression,lb=0, ub=0,)
 core_model.add_cons_vars([h2o2_p])
 Cell_death = core_model.problem.Constraint(core_model.reactions.get_by_id("RNS_demand").flux_expression + core_model.reactions.get_by_id("ROS_demand").flux_expression - core_model.reactions.get_by_id("DM_HS_cell").flux_expression,lb=0, ub=0,)
-core_model.add_cons_vars([Cell_death])
+#core_model.add_cons_vars([Cell_death])
 #10.1111/pce.12932
 #core_model.add_boundary(core_model.metabolites.get_by_id("FeII_e"), type="sink")
 
