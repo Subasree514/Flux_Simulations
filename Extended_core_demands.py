@@ -96,13 +96,13 @@ core_model.add_metabolites([
     formula='NO3',
     charge=-1
     ),
-    #Metabolite(
-    #'oh1_cell',
-    #name='Hydroxide ion',
-    #compartment='cell',
-    #formula='OH',
-    #charge=-1
-    #),
+    Metabolite(
+    'no2_rad_cell',
+    name='Nitrogen Dioxide Radical',
+    compartment='cell',
+    formula='NO2',
+    charge=0
+    ),
     Metabolite(
     'HC00250_cell',
     name='Hydrosulfide ion',
@@ -129,8 +129,8 @@ core_model.add_boundary(core_model.metabolites.get_by_id("CPD0-1395_cell"), type
 core_model.add_boundary(core_model.metabolites.get_by_id("CPD-12377_cell"), type="demand")
 ## 9. H2O2 demand
 core_model.add_boundary(core_model.metabolites.get_by_id("HYDROGEN_PEROXIDE_cell"), type="demand")
-## 10. oh1 demand
-#core_model.add_boundary(core_model.metabolites.get_by_id("oh1_cell"), type="demand")
+## 10. no2_rad demand
+core_model.add_boundary(core_model.metabolites.get_by_id("no2_rad_cell"), type="demand")
 ## 11. ho2 demand
 core_model.add_boundary(core_model.metabolites.get_by_id("ho2_rad_cell"), type="demand")
 ## Add individual demand reactions for the RS in organelles
@@ -205,6 +205,25 @@ reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 reaction.add_metabolites({core_model.metabolites.get_by_id('NITRIC-OXIDE_n'): -1.0,core_model.metabolites.get_by_id('NITRIC-OXIDE_cell'): 1.0})
+core_model.add_reactions([reaction])
+##NO2_rad
+##
+reaction = Reaction('no2_rad_m_demand')
+reaction.name = 'Nitrogen dioxide radical mitochondrial demand'
+reaction.subsystem = 'RS demand'
+reaction.lower_bound =0.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+reaction.add_metabolites({core_model.metabolites.get_by_id('no2_rad_m'): -1.0,core_model.metabolites.get_by_id('no2_rad_cell'): 1.0})
+print(reaction.reaction) 
+core_model.add_reactions([reaction])
+##
+reaction = Reaction('no2_rad_c_demand')
+reaction.name = 'Nitrogen dioxide radical cytosolic demand'
+reaction.subsystem = 'RS demand'
+reaction.lower_bound =0.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+reaction.add_metabolites({core_model.metabolites.get_by_id('no2_rad_c'): -1.0,core_model.metabolites.get_by_id('no2_rad_cell'): 1.0})
+print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ## H2O2
 reaction = Reaction('H2O2_p_demand')
@@ -593,7 +612,7 @@ reaction.add_metabolites({core_model.metabolites.get_by_id('ho2_rad_p'): -1.0,co
 core_model.add_reactions([reaction])
 ##
 alpha_day_RS_DM=core_model
-#save_matlab_model(alpha_day_RS_DM, "/home/subasree/Desktop/Models_to_work/alpha_day_RS_DM.mat")
+save_matlab_model(alpha_day_RS_DM, "/home/subasree/Desktop/Models_to_work/alpha_day_RS_DM.mat")
 save_matlab_model(alpha_day_RS_DM, "alpha_day_RS_DM.mat")
 
 sol = alpha_day_RS_DM.optimize()
