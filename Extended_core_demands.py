@@ -38,7 +38,7 @@ core_model.add_metabolites([
     'HS_cell',
     name='Hydrogen Sulfide',
     compartment='cell',
-    formula='HS',
+    formula='H2S',
     charge=0
     ),
     Metabolite('ho2_rad_cell',
@@ -592,7 +592,7 @@ reaction.name = 'Peroxide radical mitochondrial demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id('ho2_rad_m'): -1.0,core_model.metabolites.get_by_id('CPD-12377_cell'): 1.0})
+reaction.add_metabolites({core_model.metabolites.get_by_id('ho2_rad_m'): -1.0,core_model.metabolites.get_by_id('ho2_rad_cell'): 1.0})
 core_model.add_reactions([reaction])
 ##
 reaction = Reaction('ho2_rad_c_demand')
@@ -600,7 +600,7 @@ reaction.name = 'Peroxide radical cytosolic demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id('ho2_rad_c'): -1.0,core_model.metabolites.get_by_id('CPD-12377_cell'): 1.0})
+reaction.add_metabolites({core_model.metabolites.get_by_id('ho2_rad_c'): -1.0,core_model.metabolites.get_by_id('ho2_rad_cell'): 1.0})
 core_model.add_reactions([reaction])
 ##
 reaction = Reaction('ho2_rad_p_demand')
@@ -608,7 +608,7 @@ reaction.name = 'Peroxide radical plastid demand'
 reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id('ho2_rad_p'): -1.0,core_model.metabolites.get_by_id('CPD-12377_cell'): 1.0})
+reaction.add_metabolites({core_model.metabolites.get_by_id('ho2_rad_p'): -1.0,core_model.metabolites.get_by_id('ho2_rad_cell'): 1.0})
 core_model.add_reactions([reaction])
 ##
 alpha_day_RS_DM=core_model
