@@ -83,9 +83,10 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
             primary_anti_2=['RS_Plant_APX_A','RS_Plant_APX_C','RS_Plant_APX_G','RS_Plant_APX_X','RS_Plant_CAT_M','RS_Plant_GPX_M3','RS_Plant_GPX2_C','RS_Plant_GPX2_N','RS_Plant_GPX5_Mb','RS_Plant_PER1_C','RS_Plant_PER1_CP','RS_Plant_PER1_N']
             primary_11=['RXN1F_66_p','RXN_7674_p','RXN_7676_p','RXN_7677_p','RXN_7678_NADP_p','RXN_7678_NAD_p','RXN_7679_p']
             primary_12=['Ca_tx','H_tx','H2O_tx','K_tx','Mg_tx','Pi_tx','SO4_tx','Nitrate_tx']
+            primary_13=['ATPase_tx','NADPHoxc_tx','NADPHoxm_tx','NADPHoxp_tx']
             primary_dark=primary_1+primary_4
             primary_sugar=primary_2+primary_3
-            solution_primary.append(solution.fluxes[primary_dark])
+            solution_primary.append(solution.fluxes[primary_13])
             reaction_obj2.bounds = (0, 1000.0)
         elif metric == 'euclidean':
 
@@ -207,44 +208,27 @@ reaction.upper_bound = 1000.  # This is the default
 reaction.add_metabolites({core_model.metabolites.get_by_id ('GLT_p'): -1.0,core_model.metabolites.get_by_id ('CYS_p'): -1.0,core_model.metabolites.get_by_id ('ATP_p'): -1.0,core_model.metabolites.get_by_id ('L-GAMMA-GLUTAMYLCYSTEINE_p'): 1.0,core_model.metabolites.get_by_id ('ADP_p'): 1.0,core_model.metabolites.get_by_id ('Pi_p'): 1.0,core_model.metabolites.get_by_id ('PROTON_p'): 1.0})
 #print(reaction.reaction) 
 core_model.add_reactions([reaction])
-##
-reaction = Reaction('ROS_demand')
-reaction.name = 'Combined ROS Effect'
-reaction.subsystem = 'Cellular damage'
-reaction.lower_bound =0.  # This is the default
-reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('HYDROGEN_PEROXIDE_cell'): -1.0,core_model.metabolites.get_by_id ('SUPER_OXIDE_cell'): -1.0,core_model.metabolites.get_by_id('CPD-12377_cell'): -1.0})
-#print(reaction.reaction) 
-core_model.add_reactions([reaction])
-##
-reaction = Reaction('RNS_demand')
-reaction.name = 'Combined RNS Effect'
-reaction.subsystem = 'Cellular damage'
-reaction.lower_bound =0.  # This is the default
-reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('CPD0-1395_cell'): -1.0,core_model.metabolites.get_by_id ('NITRIC-OXIDE_cell'): -1.0,core_model.metabolites.get_by_id ('no2_rad_cell'): -1.0})
-#print(reaction.reaction) 
-core_model.add_reactions([reaction])
+
 ##Constraints
 rubisco = core_model.problem.Constraint(3 * core_model.reactions.get_by_id("RXN_961_p").flux_expression - core_model.reactions.get_by_id("RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p").flux_expression,lb=0, ub=0,)
 core_model.add_cons_vars([rubisco])
-h2o2_m = core_model.problem.Constraint(50 * core_model.reactions.get_by_id("H2O2_m_demand").flux_expression - core_model.reactions.get_by_id("H2O2_x_demand").flux_expression,lb=0, ub=0,)
-core_model.add_cons_vars([h2o2_m])
-h2o2_p = core_model.problem.Constraint(2 * core_model.reactions.get_by_id("H2O2_p_demand").flux_expression - core_model.reactions.get_by_id("H2O2_x_demand").flux_expression,lb=0, ub=0,)
-core_model.add_cons_vars([h2o2_p])
-Cell_death = core_model.problem.Constraint(core_model.reactions.get_by_id("RNS_demand").flux_expression + core_model.reactions.get_by_id("ROS_demand").flux_expression - core_model.reactions.get_by_id("DM_HS_cell").flux_expression,lb=0, ub=0,)
-#core_model.add_cons_vars([Cell_death])
+#h2o2_m = core_model.problem.Constraint(50 * core_model.reactions.get_by_id("H2O2_m_demand").flux_expression - core_model.reactions.get_by_id("H2O2_x_demand").flux_expression,lb=0, ub=0,)
+#core_model.add_cons_vars([h2o2_m])
+#h2o2_p = core_model.problem.Constraint(2 * core_model.reactions.get_by_id("H2O2_p_demand").flux_expression - core_model.reactions.get_by_id("H2O2_x_demand").flux_expression,lb=0, ub=0,)
+#core_model.add_cons_vars([h2o2_p])
+#Ser_damage = core_model.problem.Constraint(core_model.reactions.get_by_id("pSER_biomass_incomplete").flux_expression - core_model.reactions.get_by_id("pSER_biomass").flux_expression,lb=0, ub=0,)
+#core_model.add_cons_vars([Ser_damage])
 #10.1111/pce.12932
 #core_model.add_boundary(core_model.metabolites.get_by_id("FeII_e"), type="sink")
 
 ## plot pareto plot
-objective1 =  'ROS_demand'#Phloem_output_tx AraCore_Biomass_tx DM_HS_cell DM_CPD0-1395_cell'DM_SUPER_OXIDE_cell'#'DM_NITRIC-OXIDE_cell'#'DM_CPD-12377_cell'#'DM_HYDROGEN_PEROXIDE_cell'
+objective1 =  'DM_HS_cell'#tput_tx AraCore_Biomass_tx DM_HS_cell DM_CPD0-1395_cell'DM_SUPER_OXIDE_cell'#'DM_NITRIC-OXIDE_cell'#'DM_CPD-12377_cell'#'DM_HYDROGEN_PEROXIDE_cell'
 objective2 =  'AraCore_Biomass_tx'
 solution_primary=pareto_analysis(core_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
 #pd.DataFrame(result_list).to_excel('results.xlsx')
 data=pd.DataFrame(solution_primary)
 
-bars1 = round(data.iloc[0,:],2)
+bars1 = round(data.iloc[25,:],2)
 bars1_df=pd.DataFrame([bars1])
 bars1_df=bars1_df.T
 bars1_df['Rxns_zero']=bars1_df.index
@@ -260,7 +244,7 @@ bars2_df.columns=['Fluxes_half','Rxns_half']
 bars2_df["Rxns_half"] = bars2_df["Rxns_half"].apply(lambda x: x+'_half')
 bars2_df.reset_index(drop=True, inplace=True)
 
-bars3 = round(data.iloc[100,:],2)
+bars3 = round(data.iloc[75,:],2)
 bars3_df=pd.DataFrame([bars3])
 bars3_df=bars3_df.T
 bars3_df['Rxns_max']=bars3_df.index
