@@ -1,3 +1,6 @@
+## References for H2O2
+#Reactive oxygen species signalling in plant stress responses https://doi.org/10.1038/s41580-022-00499-2
+
 ## import libraries
 from __future__ import division, print_function, absolute_import
 import csv
@@ -28,6 +31,7 @@ from cobra.io import load_json_model, save_json_model, load_matlab_model, save_m
 ## import models
 #core_model = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/alpha_day_rs.mat'))
 core_model = cobra.io.load_matlab_model(join('alpha_day_rs.mat'))
+
 
 ## Query for compartments
 #print(core_model.metabolites.query("ho2_rad"))
