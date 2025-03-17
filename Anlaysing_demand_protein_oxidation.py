@@ -125,8 +125,30 @@ core_model.add_metabolites([
     formula='C10H16N3O6S',
     charge=-1),
     ])
-#core_model.add_boundary(core_model.metabolites.get_by_id("C9H10BrNO3_c"), type="demand")
-#core_model.add_boundary(core_model.metabolites.get_by_id("pTYR_c"), type="demand")
+##RS damage demands
+core_model.add_metabolites([
+    Metabolite(
+    'DNA_damage_cost_c',
+    name='DNA damage cost',
+    compartment='c',
+    formula='',
+    charge=0),
+    Metabolite(
+    'Protein_oxidation_cost_c',
+    name='Protein oxidation cost',
+    compartment='c',
+    formula='',
+    charge=0),
+    Metabolite(
+    'Aminoacid_oxidation_cost_c',
+    name='Aminoacid oxidation cost',
+    compartment='c',
+    formula='',
+    charge=0),
+    ])
+#core_model.add_boundary(core_model.metabolites.get_by_id("DNA_damage_cost_c"), type="demand")
+#core_model.add_boundary(core_model.metabolites.get_by_id('Protein_oxidation_cost_c'), type="demand")
+#core_model.add_boundary(core_model.metabolites.get_by_id('Aminoacid_oxidation_cost_c'), type="demand")
 reaction = Reaction('CWINV1')
 reaction.name = 'Extracellular invertase'
 reaction.subsystem = 'sucrosedegradationIII'
@@ -210,10 +232,10 @@ core_model.add_reactions([reaction])
 ##
 reaction = Reaction('ROS_demand')
 reaction.name = 'Combined ROS Effect'
-reaction.subsystem = 'Cellular damage'
-reaction.lower_bound =0.  # This is the default
+reaction.subsystem = 'Overall damage'
+reaction.lower_bound =-1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('HYDROGEN_PEROXIDE_cell'): -1.0,core_model.metabolites.get_by_id ('SUPER_OXIDE_cell'): -1.0,core_model.metabolites.get_by_id('CPD-12377_cell'): -1.0,core_model.metabolites.get_by_id ('ho2_rad_cell'): -1.0})
+reaction.add_metabolites({core_model.metabolites.get_by_id ('HYDROGEN_PEROXIDE_cell'): -1.0,core_model.metabolites.get_by_id ('SUPER_OXIDE_cell'): -1.0,core_model.metabolites.get_by_id('CPD-12377_cell'): -1.0,core_model.metabolites.get_by_id ('ho2_rad_cell'): -1.0,core_model.metabolites.get_by_id ('Protein_oxidation_cost_c'): -1.0,core_model.metabolites.get_by_id ('DNA_damage_cost_c'): -1.0})
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ##
@@ -221,123 +243,136 @@ core_model.add_reactions([reaction])
 
 reaction = Reaction('RNS_demand')
 reaction.name = 'Combined RNS Effect'
-reaction.subsystem = 'Cellular damage'
-reaction.lower_bound =0.  # This is the default
+reaction.subsystem = 'Ovarall damage'
+reaction.lower_bound =-1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('CPD0-1395_cell'): -1.0,core_model.metabolites.get_by_id ('NITRIC-OXIDE_cell'): -1.0})#,core_model.metabolites.get_by_id ('no2_rad_cell'): -1.0})
+reaction.add_metabolites({core_model.metabolites.get_by_id ('CPD0-1395_cell'): -1.0,core_model.metabolites.get_by_id ('NITRIC-OXIDE_cell'): -1.0,core_model.metabolites.get_by_id ('Protein_oxidation_cost_c'): -1.0,core_model.metabolites.get_by_id ('DNA_damage_cost_c'): -1.0})
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ##
-reaction = Reaction('pSER_biomass_incomplete')
-reaction.name = 'pSER_biomass_RS'
-reaction.subsystem = 'Protein oxidationn'
-reaction.lower_bound =0.  # This is the default
-reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('PROTON_c'): -1.0,core_model.metabolites.get_by_id ('SER_tRNAs_c'): -1.0,core_model.metabolites.get_by_id ('C3H6NO3_c'): -1.0})
-#print(reaction.reaction) 
-core_model.add_reactions([reaction])
-##
-reaction = Reaction('METHIONINE_TRNA_LIGASE_RXN_c_incomplete')
-reaction.name = 'METHIONINE_TRNA_LIGASE_RXN_c_RS'
-reaction.subsystem = 'Protein oxidationn'
-reaction.lower_bound =0.  # This is the default
-reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('PROTON_c'): -1.0,core_model.metabolites.get_by_id ('MET_tRNAs_c'): -1.0,core_model.metabolites.get_by_id ('ATP_c'): -1.0,core_model.metabolites.get_by_id ('C15999_c'): -1.0})
-#print(reaction.reaction) 
-core_model.add_reactions([reaction])
-##
-reaction = Reaction('pGLN_biomass_incomplete')
-reaction.name = 'pGLN_biomass_RS'
+core_model.remove_reactions('RS_171')
+reaction = Reaction('RS_171')
+reaction.name = 'Serine:oh_rad'
 reaction.subsystem = 'Protein oxidation'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('PROTON_c'): -1.0,core_model.metabolites.get_by_id ('GLN_tRNAs_c'): -1.0,core_model.metabolites.get_by_id ('gln-h_c'): -1.0})
-#print(reaction.reaction) 
+reaction.add_metabolites({core_model.metabolites.get_by_id ('CPD-12377_c'): -1.0,core_model.metabolites.get_by_id ('pSER_c'): -1.0,core_model.metabolites.get_by_id ('C3H6NO3_c'): -1.0,core_model.metabolites.get_by_id ('C3H6NO3_c'): 1.0,core_model.metabolites.get_by_id ('Protein_oxidation_cost_c'): 1.0})
+print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ##
-reaction = Reaction('pTYR_biomass_incomplete_1')
-reaction.name = 'pTYR_biomass_RS'
-reaction.subsystem = 'Protein oxidationn'
+core_model.remove_reactions('RS_Plant_42_C')
+reaction = Reaction('RS_Plant_42_C')
+reaction.name = 'L-methionine sulfoxide formation'
+reaction.subsystem = 'Protein oxidation'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('PROTON_c'): -1.0,core_model.metabolites.get_by_id ('TYR_tRNAs_c'): -1.0,core_model.metabolites.get_by_id ('tyr_L_r_c'): -1.0})
-#print(reaction.reaction) 
+reaction.add_metabolites({core_model.metabolites.get_by_id ('o1s_c'): -1.0,core_model.metabolites.get_by_id ('MET_c'): -1.0,core_model.metabolites.get_by_id ('C15999_c'): 1.0,core_model.metabolites.get_by_id ('Aminoacid_oxidation_cost_c'): 1.0})
+print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ##
-reaction = Reaction('pTYR_biomass_incomplete_2')
-reaction.name = 'pTYR_biomass_RS'
-reaction.subsystem = 'Protein oxidationn'
+core_model.remove_reactions('RS_88')
+reaction = Reaction('RS_88')
+reaction.name = 'glutamine:oh_rad'
+reaction.subsystem = 'Protein oxidation'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('PROTON_c'): -1.0,core_model.metabolites.get_by_id ('TYR_tRNAs_c'): -1.0,core_model.metabolites.get_by_id ('C9H10BrNO3_c'): -1.0})
-#print(reaction.reaction) 
+reaction.add_metabolites({core_model.metabolites.get_by_id ('CPD-12377_c'): -1.0,core_model.metabolites.get_by_id ('pGLN_c'): -1.0,core_model.metabolites.get_by_id ('gln-h_c'): 1.0,core_model.metabolites.get_by_id ('Protein_oxidation_cost_c'): 1.0})
+print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ##
-reaction = Reaction('pTYR_biomass_incomplete_3')
-reaction.name = 'pTYR_biomass_RS'
-reaction.subsystem = 'Protein oxidationn'
+core_model.remove_reactions('RS_170')
+reaction = Reaction('RS_170')
+reaction.name = 'tyrosine:oh'
+reaction.subsystem = 'Protein oxidation'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('PROTON_c'): -1.0,core_model.metabolites.get_by_id ('TYR_tRNAs_c'): -1.0,core_model.metabolites.get_by_id ('C9H10BrNO3_c'): -1.0})
-#print(reaction.reaction) 
+reaction.add_metabolites({core_model.metabolites.get_by_id ('CPD-12377_c'): -1.0,core_model.metabolites.get_by_id ('pTYR_c'): -1.0,core_model.metabolites.get_by_id ('tyr_L_r_c'): 1.0,core_model.metabolites.get_by_id ('Protein_oxidation_cost_c'): 1.0})
+print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ##
-reaction = Reaction('pTRP_biomass_incomplete')
+core_model.remove_reactions('RS_Plant_51_C')
+reaction = Reaction('RS_Plant_51_C')
+reaction.name = '3-Bromo tyrosine formation'
+reaction.subsystem = 'Protein oxidation'
+reaction.lower_bound =0.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+reaction.add_metabolites({core_model.metabolites.get_by_id ('hobr_c'): -1.0,core_model.metabolites.get_by_id ('pTYR_c'): -1.0,core_model.metabolites.get_by_id ('C9H10BrNO3_c'): 1.0,core_model.metabolites.get_by_id ('Protein_oxidation_cost_c'): 1.0})
+print(reaction.reaction) 
+core_model.add_reactions([reaction])
+##
+core_model.remove_reactions('RS_Plant_10_C')
+reaction = Reaction('RS_Plant_10_C')
+reaction.name = 'tyr:co3_r'
+reaction.subsystem = 'Protein oxidation'
+reaction.lower_bound =0.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+reaction.add_metabolites({core_model.metabolites.get_by_id ('co3_r_c'): -1.0,core_model.metabolites.get_by_id ('TYR_c'): -1.0,core_model.metabolites.get_by_id ('tyr_L_r_c'): 1.0,core_model.metabolites.get_by_id ('HCO3_c'): 1.0,core_model.metabolites.get_by_id ('Aminoacid_oxidation_cost_c'): 1.0})
+print(reaction.reaction) 
+core_model.add_reactions([reaction])
+##
+core_model.remove_reactions('RS_86')
+reaction = Reaction('Tryptophan:no2_rad')
 reaction.name = 'pTRP_biomass_RS'
 reaction.subsystem = 'Protein oxidation'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('PROTON_c'): -1.0,core_model.metabolites.get_by_id ('TRP_tRNAs_c'): -1.0,core_model.metabolites.get_by_id ('trp-adduct_c'): -1.0})
-#print(reaction.reaction) 
+reaction.add_metabolites({core_model.metabolites.get_by_id ('CPD-12377_c'): -1.0,core_model.metabolites.get_by_id ('pTRP_c'): -1.0,core_model.metabolites.get_by_id ('trp-adduct_c'): 1.0,core_model.metabolites.get_by_id ('Protein_oxidation_cost_c'): 1.0})
+print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ##
-reaction = Reaction('pPHE_biomass_incomplete_1')
-reaction.name = 'pPHE_biomass_RS'
-reaction.subsystem = 'Protein oxidationn'
-reaction.lower_bound =0.  # This is the default
-reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('PROTON_c'): -1.0,core_model.metabolites.get_by_id ('PHE_tRNAs_c'): -1.0,core_model.metabolites.get_by_id ('c9h11no3_c'): -1.0})
-#print(reaction.reaction) 
-core_model.add_reactions([reaction])
-##
-reaction = Reaction('pPHE_biomass_incomplete_2')
-reaction.name = 'pPHE_biomass_RS'
-reaction.subsystem = 'Protein oxidationn'
-reaction.lower_bound =0.  # This is the default
-reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('PROTON_c'): -1.0,core_model.metabolites.get_by_id ('PHE_tRNAs_c'): -1.0,core_model.metabolites.get_by_id ('c9h9n2o4_c'): -1.0})
-#print(reaction.reaction) 
-core_model.add_reactions([reaction])
-##
-reaction = Reaction('pVAL_biomass_incomplete')
-reaction.name = 'pVAL_biomass_RS'
+core_model.remove_reactions('RS_Plant_32_C')
+reaction = Reaction('RS_Plant_32_C')
+reaction.name = 'ortho-Tyrosine formation'
 reaction.subsystem = 'Protein oxidation'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('PROTON_c'): -1.0,core_model.metabolites.get_by_id ('VAL_tRNAs_c'): -1.0,core_model.metabolites.get_by_id ('val-hydroperoxide_c'): -1.0})
-#print(reaction.reaction) 
+reaction.add_metabolites({core_model.metabolites.get_by_id ('CPD-12377_c'): -2.0,core_model.metabolites.get_by_id ('pPHE_c'): -1.0,core_model.metabolites.get_by_id ('c9h11no3_c'): 1.0,core_model.metabolites.get_by_id ('Protein_oxidation_cost_c'): 1.0})
+print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ##
-reaction = Reaction('Protein_Polymerisation_c_incomplete')
-reaction.name = 'Protein_Polymerisation_c_RS'
+core_model.remove_reactions('RS_Plant_33_C')
+reaction = Reaction('RS_Plant_33_C')
+reaction.name = '3-Nitrophenylalanine formation'
+reaction.subsystem = 'Protein oxidation'
+reaction.lower_bound =0.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+reaction.add_metabolites({core_model.metabolites.get_by_id ('CPD0-1395_c'): -1.0,core_model.metabolites.get_by_id ('pPHE_c'): -1.0,core_model.metabolites.get_by_id ('c9h9n2o4_c'): 1.0,core_model.metabolites.get_by_id ('Protein_oxidation_cost_c'): 1.0})
+print(reaction.reaction) 
+core_model.add_reactions([reaction])
+##
+core_model.remove_reactions('RS_Plant_41_C')
+reaction = Reaction('RS_Plant_41_C')
+reaction.name = 'RS_val'
+reaction.subsystem = 'Protein oxidation'
+reaction.lower_bound =0.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+reaction.add_metabolites({core_model.metabolites.get_by_id ('CPD-12377_c'): -2.0,core_model.metabolites.get_by_id ('pVAL_c'): -1.0,core_model.metabolites.get_by_id ('val-hydroperoxide_c'): 1.0,core_model.metabolites.get_by_id ('Protein_oxidation_cost_c'): 1.0})
+print(reaction.reaction) 
+core_model.add_reactions([reaction])
+##
+core_model.remove_reactions('RS_30')
+reaction = Reaction('RS_30')
+reaction.name = 'gtp:oh_rad'
 reaction.subsystem = 'DNA damage'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('8ogtp_c'): -1.0,core_model.metabolites.get_by_id ('WATER_c'): -1.0})
-#print(reaction.reaction) 
+reaction.add_metabolites({core_model.metabolites.get_by_id ('CPD-12377_c'): -2.0,core_model.metabolites.get_by_id ('GTP_c'): -1.0,core_model.metabolites.get_by_id ('8ogtp_c'): 1.0,core_model.metabolites.get_by_id ('WATER_c'): 1.0,core_model.metabolites.get_by_id ('DNA_damage_cost_c'): 1.0})
+print(reaction.reaction) 
 core_model.add_reactions([reaction])
 #core_model.reactions.get_by_id('GUANYL_KIN_RXN_c').bounds=(0,0)
 ##
-reaction = Reaction('GUANYL_KIN_RXN_c_incomplete')
-reaction.name = 'GUANYL_KIN_RXN_c_RS'
+core_model.remove_reactions('RS_53')
+reaction = Reaction('RS_53')
+reaction.name = 'gmp:oh_rad'
 reaction.subsystem = 'DNA damage'
-reaction.lower_bound =0.  # This is the default
+reaction.lower_bound =-1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('g5mp_adc_c'): -1.0,core_model.metabolites.get_by_id ('ATP_c'): -1.0})
-#print(reaction.reaction) 
+reaction.add_metabolites({core_model.metabolites.get_by_id ('g5mp_adc_c'): 1.0,core_model.metabolites.get_by_id ('GMP_c'): -1.0,core_model.metabolites.get_by_id ('CPD-12377_c'): -1.0,core_model.metabolites.get_by_id ('DNA_damage_cost_c'): 1.0})
+print(reaction.reaction) 
 core_model.add_reactions([reaction])
+
 core_model_RS=core_model
-#save_matlab_model(core_model_RS, "core_model_RS.mat")
+save_matlab_model(core_model_RS, "core_model_RS.mat")
 
 ##Constraints
 rubisco = core_model.problem.Constraint(3 * core_model.reactions.get_by_id("RXN_961_p").flux_expression - core_model.reactions.get_by_id("RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p").flux_expression,lb=0, ub=0,)
@@ -361,12 +396,12 @@ core_model.add_cons_vars([rubisco])
 solution = core_model.optimize()
 print(solution.objective_value)
 ## plot pareto plot
-objective1 =  'DM_ho2_rad_cell'
-objective2 =  'Phloem_output_tx'
+objective1 =  'DM_CPD0-1395_cell'
+objective2 =  'AraCore_Biomass_tx'
 solution_primary=pareto_analysis(core_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
 #pd.DataFrame(result_list).to_excel('results.xlsx')
 data=pd.DataFrame(solution_primary)
-print(data)
+#print(data)
 plt.plot(data[1],data[2]) 
 plt.show()
 #objs_rs=[AraCore_Biomass_tx 'Phloem_output_tx','DM_NITRIC-OXIDE_cell','DM_HS_cell','DM_SUPER_OXIDE_cell','DM_HC00250_cell','DM_CPD0-1395_cell','DM_SO3_cell','DM_CPD-12377_cell','DM_HYDROGEN_PEROXIDE_cell','DM_ho2_rad_cell']

@@ -85,10 +85,10 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
             primary_12=['Ca_tx','H_tx','H2O_tx','K_tx','Mg_tx','Pi_tx','SO4_tx','Nitrate_tx']
             primary_13=['ATPase_tx','NADPHoxc_tx','NADPHoxm_tx','NADPHoxp_tx']
             primary_14=['CWINV1','Sucrose_tr','GLC_tr','FRU_tr']
-            tests=['pGLN_biomass','pGLN_biomass_incomplete']
+            tests=['ROS_demand','RNS_demand','DM_Protein_adduct_c','DM_DNA_adduct_c']
             primary_dark=primary_1+primary_4
             primary_sugar=primary_2+primary_3
-            solution_primary.append(solution.fluxes[primary_dark])
+            solution_primary.append(solution.fluxes[primary_anti_2])
             reaction_obj2.bounds = (0, 1000.0)
         elif metric == 'euclidean':
 
@@ -127,7 +127,7 @@ core_model.add_cons_vars([rubisco])
 #core_model.add_cons_vars([h2o2_m])
 #h2o2_p = core_model.problem.Constraint(2 * core_model.reactions.get_by_id("H2O2_p_demand").flux_expression - core_model.reactions.get_by_id("H2O2_x_demand").flux_expression,lb=0, ub=0,)
 #core_model.add_cons_vars([h2o2_p])
-Ser_damage = core_model.problem.Constraint(core_model.reactions.get_by_id("pGLN_biomass").flux_expression - core_model.reactions.get_by_id("pGLN_biomass_incomplete").flux_expression,lb=0, ub=0,)
+#Ser_damage = core_model.problem.Constraint(core_model.reactions.get_by_id("pGLN_biomass").flux_expression - core_model.reactions.get_by_id("pGLN_biomass_incomplete").flux_expression,lb=0, ub=0,)
 #core_model.add_cons_vars([Ser_damage])
 #10.1111/pce.12932
 #core_model.add_boundary(core_model.metabolites.get_by_id("FeII_e"), type="sink")
