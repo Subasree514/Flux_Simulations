@@ -84,10 +84,11 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
             primary_11=['RXN1F_66_p','RXN_7674_p','RXN_7676_p','RXN_7677_p','RXN_7678_NADP_p','RXN_7678_NAD_p','RXN_7679_p']
             primary_12=['Ca_tx','H_tx','H2O_tx','K_tx','Mg_tx','Pi_tx','SO4_tx','Nitrate_tx']
             primary_13=['ATPase_tx','NADPHoxc_tx','NADPHoxm_tx','NADPHoxp_tx']
-            tests=['Protein_Polymerisation_c']
+            primary_14=['CWINV1','Sucrose_tr','GLC_tr','FRU_tr']
+            tests=['pGLN_biomass','pGLN_biomass_incomplete']
             primary_dark=primary_1+primary_4
             primary_sugar=primary_2+primary_3
-            solution_primary.append(solution.fluxes[tests])
+            solution_primary.append(solution.fluxes[primary_dark])
             reaction_obj2.bounds = (0, 1000.0)
         elif metric == 'euclidean':
 
@@ -116,99 +117,8 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
 ## Plots
 #model = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/alpha_day_DM.mat'))
 #model_rs = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/model_rs_dm.mat'))
-model_rs = cobra.io.load_matlab_model(join('alpha_day_RS_DM.mat'))
+model_rs = cobra.io.load_matlab_model(join('core_model_RS.mat'))
 core_model=model_rs
-core_model.add_metabolites([
-    Metabolite(
-    'FRU_e',
-    name='Fructose',
-    compartment='e',
-    formula='C6H12O6',
-    charge=0)])
-core_model.add_metabolites([
-   Metabolite(
-   'L-GAMMA-GLUTAMYLCYSTEINE_p',
-   name='γ-glutamylcysteine',
-   compartment='p',
-   formula='C8H13N2O5S',
-   charge=-1)])
-core_model.add_metabolites([
-    Metabolite(
-    'MALTOSE_e',
-    name='Maltose',
-    compartment='e',
-    formula='C12H22O11',
-    charge=0)])
-
-reaction = Reaction('CWINV1')
-reaction.name = 'Extracellular invertase'
-reaction.subsystem = 'sucrosedegradationIII'
-reaction.lower_bound =0.  # This is the default
-reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('SUCROSE_e'): -1.0,core_model.metabolites.get_by_id ('WATER_e'): -1.0,core_model.metabolites.get_by_id('GLC_e'): 1.0,core_model.metabolites.get_by_id ('FRU_e'): 1.0})
-#print(reaction.reaction) 
-core_model.add_reactions([reaction])
-## 10.1093/mp/SSS054
-## https://www.sciencedirect.com/science/article/pii/S1674205214605724#cesec40
-
-reaction = Reaction('Sucrose_tr')
-reaction.name = 'Sucrose transport'
-#reaction.subsystem = 'sucrosedegradationIII'
-reaction.lower_bound =0.  # This is the default
-reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('SUCROSE_c'): -1.0,core_model.metabolites.get_by_id ('SUCROSE_e'): 1.0})
-#print(reaction.reaction) 
-core_model.add_reactions([reaction])
-## https://pmn.plantcyc.org/ARA/class-tree?object=Transport-Reactions
-
-reaction = Reaction('GLC_tr')
-reaction.name = 'Glucose transport'
-#reaction.subsystem = 'sucrosedegradationIII'
-reaction.lower_bound =0.  # This is the default
-reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id('GLC_c'): -1.0,core_model.metabolites.get_by_id ('GLC_e'): 1.0})
-core_model.add_reactions([reaction])
-#print(reaction.reaction) 
-
-
-reaction = Reaction('FRU_tr')
-reaction.name = 'Fructose transport'
-#reaction.subsystem = 'sucrosedegradationIII'
-reaction.lower_bound =0.  # This is the default
-reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id('FRU_c'): -1.0,core_model.metabolites.get_by_id ('FRU_e'): 1.0})
-core_model.add_reactions([reaction])
-#print(reaction.reaction) 
-
-
-reaction = Reaction('MALTOSE_ec')
-reaction.name = 'Maltose transport'
-#reaction.subsystem = 'sucrosedegradationIII'
-reaction.lower_bound =0.  # This is the default
-reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id('MALTOSE_c'): -1.0,core_model.metabolites.get_by_id ('MALTOSE_e'): 1.0})
-core_model.add_reactions([reaction])
-#print(reaction.reaction) 
-
-## Aracyc
-reaction = Reaction('GLUTATHIONE-SYN-RXN')
-reaction.name = 'Glutathione synthetase'
-reaction.subsystem = 'glutathionebiosynthesis'
-reaction.lower_bound =0.  # This is the default
-reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('GLY_p'): -1.0,core_model.metabolites.get_by_id ('ATP_p'): -1.0,core_model.metabolites.get_by_id('L-GAMMA-GLUTAMYLCYSTEINE_p'): -1.0,core_model.metabolites.get_by_id ('GLUTATHIONE_p'): 1.0,core_model.metabolites.get_by_id ('ADP_p'): 1.0,core_model.metabolites.get_by_id ('Pi_p'): 1.0,core_model.metabolites.get_by_id ('PROTON_p'): 1.0})
-#print(reaction.reaction) 
-core_model.add_reactions([reaction])
-
-##
-reaction = Reaction('GLUTCYSLIG-RXN')
-reaction.name = 'γ-glutamylcysteine synthetase'
-reaction.subsystem = 'glutathionebiosynthesis'
-reaction.lower_bound =0.  # This is the default
-reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('GLT_p'): -1.0,core_model.metabolites.get_by_id ('CYS_p'): -1.0,core_model.metabolites.get_by_id ('ATP_p'): -1.0,core_model.metabolites.get_by_id ('L-GAMMA-GLUTAMYLCYSTEINE_p'): 1.0,core_model.metabolites.get_by_id ('ADP_p'): 1.0,core_model.metabolites.get_by_id ('Pi_p'): 1.0,core_model.metabolites.get_by_id ('PROTON_p'): 1.0})
-#print(reaction.reaction) 
-core_model.add_reactions([reaction])
 
 ##Constraints
 rubisco = core_model.problem.Constraint(3 * core_model.reactions.get_by_id("RXN_961_p").flux_expression - core_model.reactions.get_by_id("RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p").flux_expression,lb=0, ub=0,)
@@ -217,10 +127,12 @@ core_model.add_cons_vars([rubisco])
 #core_model.add_cons_vars([h2o2_m])
 #h2o2_p = core_model.problem.Constraint(2 * core_model.reactions.get_by_id("H2O2_p_demand").flux_expression - core_model.reactions.get_by_id("H2O2_x_demand").flux_expression,lb=0, ub=0,)
 #core_model.add_cons_vars([h2o2_p])
-#Ser_damage = core_model.problem.Constraint(core_model.reactions.get_by_id("pSER_biomass_incomplete").flux_expression - core_model.reactions.get_by_id("pSER_biomass").flux_expression,lb=0, ub=0,)
+Ser_damage = core_model.problem.Constraint(core_model.reactions.get_by_id("pGLN_biomass").flux_expression - core_model.reactions.get_by_id("pGLN_biomass_incomplete").flux_expression,lb=0, ub=0,)
 #core_model.add_cons_vars([Ser_damage])
 #10.1111/pce.12932
 #core_model.add_boundary(core_model.metabolites.get_by_id("FeII_e"), type="sink")
+solution = core_model.optimize()
+print(solution.objective_value)
 
 ## plot pareto plot
 objective1 =  'DM_HYDROGEN_PEROXIDE_cell'#tput_tx AraCore_Biomass_tx DM_HS_cell DM_CPD0-1395_cell'DM_SUPER_OXIDE_cell'#'DM_NITRIC-OXIDE_cell'#'DM_CPD-12377_cell'#'DM_HYDROGEN_PEROXIDE_cell'
@@ -229,7 +141,7 @@ solution_primary=pareto_analysis(core_model, objective1 = objective1, objective2
 #pd.DataFrame(result_list).to_excel('results.xlsx')
 data=pd.DataFrame(solution_primary)
 
-bars1 = round(data.iloc[25,:],2)
+bars1 = round(data.iloc[0,:],2)
 bars1_df=pd.DataFrame([bars1])
 bars1_df=bars1_df.T
 bars1_df['Rxns_zero']=bars1_df.index
@@ -237,7 +149,7 @@ bars1_df.columns=['Fluxes_zero','Rxns_zero']
 bars1_df["Rxns_zero"] = bars1_df["Rxns_zero"].apply(lambda x: x+'_zero')
 bars1_df.reset_index(drop=True, inplace=True)
 
-bars2 = round(data.iloc[50,:],2)
+bars2 = round(data.iloc[45,:],2)
 bars2_df=pd.DataFrame([bars2])
 bars2_df=bars2_df.T
 bars2_df['Rxns_half']=bars2_df.index
@@ -245,7 +157,7 @@ bars2_df.columns=['Fluxes_half','Rxns_half']
 bars2_df["Rxns_half"] = bars2_df["Rxns_half"].apply(lambda x: x+'_half')
 bars2_df.reset_index(drop=True, inplace=True)
 
-bars3 = round(data.iloc[75,:],2)
+bars3 = round(data.iloc[90,:],2)
 bars3_df=pd.DataFrame([bars3])
 bars3_df=bars3_df.T
 bars3_df['Rxns_max']=bars3_df.index

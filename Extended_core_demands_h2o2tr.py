@@ -320,6 +320,7 @@ reaction.upper_bound = 1000.  # This is the default
 reaction.add_metabolites({core_model.metabolites.get_by_id('HYDROGEN_PEROXIDE_v'): -1.0,core_model.metabolites.get_by_id('HYDROGEN_PEROXIDE_c'): 1.0})
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
+core_model.remove_reactions('RS_Plant_H2O2_tr_V')
 ##
 reaction = Reaction('H2O2_n_demand')
 reaction.name = 'HYDROGEN PEROXIDE nucleus demand'
