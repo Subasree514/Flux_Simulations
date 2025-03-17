@@ -233,9 +233,9 @@ core_model.add_reactions([reaction])
 reaction = Reaction('ROS_demand')
 reaction.name = 'Combined ROS Effect'
 reaction.subsystem = 'Overall damage'
-reaction.lower_bound =-1000.  # This is the default
+reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('HYDROGEN_PEROXIDE_cell'): -1.0,core_model.metabolites.get_by_id ('SUPER_OXIDE_cell'): -1.0,core_model.metabolites.get_by_id('CPD-12377_cell'): -1.0,core_model.metabolites.get_by_id ('ho2_rad_cell'): -1.0,core_model.metabolites.get_by_id ('Protein_oxidation_cost_c'): -1.0,core_model.metabolites.get_by_id ('DNA_damage_cost_c'): -1.0})
+reaction.add_metabolites({core_model.metabolites.get_by_id ('HYDROGEN_PEROXIDE_cell'): -1.0,core_model.metabolites.get_by_id ('SUPER_OXIDE_cell'): -1.0,core_model.metabolites.get_by_id('CPD-12377_cell'): -1.0,core_model.metabolites.get_by_id ('ho2_rad_cell'): -1.0})
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ##
@@ -244,9 +244,9 @@ core_model.add_reactions([reaction])
 reaction = Reaction('RNS_demand')
 reaction.name = 'Combined RNS Effect'
 reaction.subsystem = 'Ovarall damage'
-reaction.lower_bound =-1000.  # This is the default
+reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('CPD0-1395_cell'): -1.0,core_model.metabolites.get_by_id ('NITRIC-OXIDE_cell'): -1.0,core_model.metabolites.get_by_id ('Protein_oxidation_cost_c'): -1.0,core_model.metabolites.get_by_id ('DNA_damage_cost_c'): -1.0})
+reaction.add_metabolites({core_model.metabolites.get_by_id ('CPD0-1395_cell'): -1.0,core_model.metabolites.get_by_id ('NITRIC-OXIDE_cell'): -1.0})
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ##
