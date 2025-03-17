@@ -109,7 +109,14 @@ core_model.add_metabolites([
     compartment='cell',
     formula='HS',
     charge=-1
-    )  
+    ),
+    Metabolite(
+    'co3_r_cell',
+    name='Carbonate anion radical',
+    compartment='cell',
+    formula='CO3',
+    charge=-1
+    )   
 ])
 ## 1. NO demand
 core_model.add_boundary(core_model.metabolites.get_by_id("NITRIC-OXIDE_cell"), type="demand")
@@ -117,8 +124,8 @@ core_model.add_boundary(core_model.metabolites.get_by_id("NITRIC-OXIDE_cell"), t
 core_model.add_boundary(core_model.metabolites.get_by_id("HS_cell"), type="demand")
 ## 3. SUPER OXIDE DEMAND
 core_model.add_boundary(core_model.metabolites.get_by_id("SUPER_OXIDE_cell"), type="demand")
-## 4. OOH- DEMAND
-#core_model.add_boundary(core_model.metabolites.get_by_id("OOH-_cell"), type="demand")
+## 4. co3_r_c DEMAND
+core_model.add_boundary(core_model.metabolites.get_by_id("co3_r_cell"), type="demand")
 ## 5. HS ion
 core_model.add_boundary(core_model.metabolites.get_by_id("HC00250_cell"), type="demand")
 ## 6. PEROXYNITRITE
@@ -502,6 +509,15 @@ reaction.subsystem = 'RS demand'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 reaction.add_metabolites({core_model.metabolites.get_by_id('HC00250_m'): -1.0,core_model.metabolites.get_by_id('HC00250_cell'): 1.0})
+print(reaction.reaction) 
+core_model.add_reactions([reaction])
+## co3 radical anion
+reaction = Reaction('co3_r_c_demand')
+reaction.name = 'Carbonate anion radical demand'
+reaction.subsystem = 'RS demand'
+reaction.lower_bound =0.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+reaction.add_metabolites({core_model.metabolites.get_by_id('co3_r_c'): -1.0,core_model.metabolites.get_by_id('co3_r_cell'): 1.0})
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
 

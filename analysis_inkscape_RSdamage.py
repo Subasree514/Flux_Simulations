@@ -85,10 +85,10 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
             primary_12=['Ca_tx','H_tx','H2O_tx','K_tx','Mg_tx','Pi_tx','SO4_tx','Nitrate_tx']
             primary_13=['ATPase_tx','NADPHoxc_tx','NADPHoxm_tx','NADPHoxp_tx']
             primary_14=['CWINV1','Sucrose_tr','GLC_tr','FRU_tr']
-            tests=['ROS_demand','RNS_demand','DM_Protein_adduct_c','DM_DNA_adduct_c']
+            tests=['ROS_demand','RNS_demand']
             primary_dark=primary_1+primary_4
             primary_sugar=primary_2+primary_3
-            solution_primary.append(solution.fluxes[primary_anti_2])
+            solution_primary.append(solution.fluxes[primary_12])
             reaction_obj2.bounds = (0, 1000.0)
         elif metric == 'euclidean':
 
@@ -135,7 +135,7 @@ solution = core_model.optimize()
 print(solution.objective_value)
 
 ## plot pareto plot
-objective1 =  'DM_HYDROGEN_PEROXIDE_cell'#tput_tx AraCore_Biomass_tx DM_HS_cell DM_CPD0-1395_cell'DM_SUPER_OXIDE_cell'#'DM_NITRIC-OXIDE_cell'#'DM_CPD-12377_cell'#'DM_HYDROGEN_PEROXIDE_cell'
+objective1 =  'DM_HYDROGEN_PEROXIDE_cell'#Phloem_output_tx AraCore_Biomass_tx DM_HS_cell DM_CPD0-1395_cell'DM_SUPER_OXIDE_cell'#'DM_NITRIC-OXIDE_cell'#'DM_CPD-12377_cell'#'DM_HYDROGEN_PEROXIDE_cell'
 objective2 =  'AraCore_Biomass_tx'
 solution_primary=pareto_analysis(core_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
 #pd.DataFrame(result_list).to_excel('results.xlsx')
