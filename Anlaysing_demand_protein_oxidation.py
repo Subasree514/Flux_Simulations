@@ -146,7 +146,7 @@ core_model.add_metabolites([
     formula='',
     charge=0),
     ])
-# core_model.add_boundary(core_model.metabolites.get_by_id("DNA_damage_cost_c"), type="demand")
+#core_model.add_boundary(core_model.metabolites.get_by_id("DNA_damage_cost_c"), type="demand")
 #core_model.add_boundary(core_model.metabolites.get_by_id('Protein_oxidation_cost_c'), type="demand")
 #core_model.add_boundary(core_model.metabolites.get_by_id('Aminoacid_oxidation_cost_c'), type="demand")
 reaction = Reaction('CWINV1')
@@ -366,7 +366,7 @@ reaction.name = 'gtp:oh_rad'
 reaction.subsystem = 'DNA damage'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('CPD-12377_c'): -2.0,core_model.metabolites.get_by_id ('GTP_c'): -1.0,core_model.metabolites.get_by_id ('8ogtp_c'): 1.0,core_model.metabolites.get_by_id ('WATER_c'): 1.0,core_model.metabolites.get_by_id ('DNA_damage_cost_c'): -1.0})
+reaction.add_metabolites({core_model.metabolites.get_by_id ('CPD-12377_c'): -2.0,core_model.metabolites.get_by_id ('GTP_c'): -1.0,core_model.metabolites.get_by_id ('CPD-12366_c'): 1.0,core_model.metabolites.get_by_id ('WATER_c'): 1.0,core_model.metabolites.get_by_id ('DNA_damage_cost_c'): -1.0})
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
 #core_model.reactions.get_by_id('GUANYL_KIN_RXN_c').bounds=(0,0)
@@ -425,7 +425,7 @@ core_model.add_cons_vars([rubisco])
 solution = core_model.optimize()
 print(solution.objective_value)
 ## plot pareto plot
-objective1 =  'DM_CPD-12377_cell'
+objective1 =  'DM_ho2_rad_cell'
 objective2 =  'AraCore_Biomass_tx'
 solution_primary=pareto_analysis(core_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
 #pd.DataFrame(result_list).to_excel('results.xlsx')

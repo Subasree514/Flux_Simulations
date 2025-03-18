@@ -10,8 +10,9 @@ from cobra.io import load_json_model, save_json_model, load_matlab_model, save_m
 import os
 from os.path import join
 
-model_rs_1 = cobra.io.load_matlab_model(join('core_model_RS.mat'))
-core_model=model_rs_1
+#model_rs_1 = cobra.io.load_matlab_model(join('core_model_RS.mat'))
+core_model = cobra.io.load_matlab_model(join('alpha_day_RS_DM.mat'))
+
 #block_rs_1=cobra.flux_analysis.variability.find_blocked_reactions(model_rs_1,model_rs_1.reactions,open_exchanges=True)
 #for i in core_model.exchanges:
  #   print(i)
@@ -29,5 +30,5 @@ print(len(j))
 df=pd.DataFrame([fva.maximum[j],fva.minimum[j],fva.formulas[j]])            
 df_new=df.transpose()
 print(df_new)
-df_new.to_excel('/home/subasree/Desktop/Models_to_work/fva_RSdamage.xlsx')
-#
+#df_new.to_excel('/home/subasree/Desktop/Models_to_work/fva_RSdamage.xlsx')
+print(core_model.metabolites.get_by_id('8ogtp_c'))
