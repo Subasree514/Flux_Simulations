@@ -87,7 +87,7 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
             tests=['Protein_Polymerisation_c']
             primary_dark=primary_1+primary_4
             primary_sugar=primary_2+primary_3
-            solution_primary.append(solution.fluxes[tests])
+            solution_primary.append(solution.fluxes[primary_6])
             reaction_obj2.bounds = (0, 1000.0)
         elif metric == 'euclidean':
 
@@ -223,13 +223,13 @@ core_model.add_cons_vars([rubisco])
 #core_model.add_boundary(core_model.metabolites.get_by_id("FeII_e"), type="sink")
 
 ## plot pareto plot
-objective1 =  'DM_HYDROGEN_PEROXIDE_cell'#tput_tx AraCore_Biomass_tx DM_HS_cell DM_CPD0-1395_cell'DM_SUPER_OXIDE_cell'#'DM_NITRIC-OXIDE_cell'#'DM_CPD-12377_cell'#'DM_HYDROGEN_PEROXIDE_cell'
+objective1 =  'DM_CPD-12377_cell'#tput_tx AraCore_Biomass_tx DM_HS_cell DM_CPD0-1395_cell'DM_SUPER_OXIDE_cell'#'DM_NITRIC-OXIDE_cell'#'DM_CPD-12377_cell'#'DM_HYDROGEN_PEROXIDE_cell'
 objective2 =  'AraCore_Biomass_tx'
 solution_primary=pareto_analysis(core_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
 #pd.DataFrame(result_list).to_excel('results.xlsx')
 data=pd.DataFrame(solution_primary)
 
-bars1 = round(data.iloc[25,:],2)
+bars1 = round(data.iloc[0,:],2)
 bars1_df=pd.DataFrame([bars1])
 bars1_df=bars1_df.T
 bars1_df['Rxns_zero']=bars1_df.index
@@ -237,7 +237,7 @@ bars1_df.columns=['Fluxes_zero','Rxns_zero']
 bars1_df["Rxns_zero"] = bars1_df["Rxns_zero"].apply(lambda x: x+'_zero')
 bars1_df.reset_index(drop=True, inplace=True)
 
-bars2 = round(data.iloc[50,:],2)
+bars2 = round(data.iloc[45,:],2)
 bars2_df=pd.DataFrame([bars2])
 bars2_df=bars2_df.T
 bars2_df['Rxns_half']=bars2_df.index
@@ -245,7 +245,7 @@ bars2_df.columns=['Fluxes_half','Rxns_half']
 bars2_df["Rxns_half"] = bars2_df["Rxns_half"].apply(lambda x: x+'_half')
 bars2_df.reset_index(drop=True, inplace=True)
 
-bars3 = round(data.iloc[75,:],2)
+bars3 = round(data.iloc[90,:],2)
 bars3_df=pd.DataFrame([bars3])
 bars3_df=bars3_df.T
 bars3_df['Rxns_max']=bars3_df.index
@@ -265,4 +265,4 @@ df=pd.DataFrame([df_rxns,df_fluxes])
 df_n2=df.T
 df_n2.columns=['Reactions','Fluxes']
 print(df_n2)
-#df_n2.to_csv('/Users/subasrees/Desktop/FluxMap_Workshop/csvs/photon_oh.csv')
+df_n2.to_csv('/Users/subasrees/Desktop/FluxMap_Workshop/csvs/photon_oh.csv')

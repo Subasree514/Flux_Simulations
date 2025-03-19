@@ -96,16 +96,16 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
 rubisco = core_model.problem.Constraint(3 * core_model.reactions.get_by_id("RXN_961_p").flux_expression - core_model.reactions.get_by_id("RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p").flux_expression,lb=0, ub=0,)
 # Adding to model
 core_model.add_cons_vars([rubisco])
-core_model.reactions.get_by_id('LPG_biosynthesis_c').bounds=(0,0)
-objective1 =  'AraCore_Biomass_tx'
-objective2 =  'Phloem_output_tx'
+#core_model.reactions.get_by_id('LPG_biosynthesis_c').bounds=(0,0)
+objective1 =  'DM_HYDROGEN_PEROXIDE_cell'
+objective2 =  'AraCore_Biomass_tx'
 result_list=pareto_analysis(core_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
 data=pd.DataFrame(result_list)
 plt.plot(data[1],data[2])
 plt.xlabel('Biomass reaction')
 plt.ylabel('RS demand overall')
 plt.title("RS vs.Biomass analysis")
-#plt.savefig('/Users/subasrees/Desktop/RSmodule/September 24/Sep 16, 2024/Upload_Final/September 28/New Folder/Plant RS/RS_demand/o2s_p.pdf')
+plt.savefig('/Users/subasrees/Desktop/FluxMap_Workshop/h2o2_biomass.pdf')
 #plt.ticklabel_format(style='plain')
 plt.show()
 
