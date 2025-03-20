@@ -145,10 +145,61 @@ core_model.add_metabolites([
     compartment='c',
     formula='',
     charge=0),
+    Metabolite(
+    'CPD-12366_m',
+    name='7,8-dihydro-8-oxoguanosine 5-triphosphate',
+    compartment='m',
+    formula='C10H12N5O15P3',
+    charge=-4),
+    Metabolite(
+    'CPD-12366_p',
+    name='7,8-dihydro-8-oxoguanosine 5-triphosphate',
+    compartment='p',
+    formula='C10H12N5O15P3',
+    charge=-4),
+    Metabolite(
+    'CPD-12366_c',
+    name='7,8-dihydro-8-oxoguanosine 5-triphosphate',
+    compartment='c',
+    formula='C10H12N5O15P3',
+    charge=-4),
+    Metabolite(
+    'g5mp_adc_p',
+    name='Guanosine 5-monophosphate OH-adduct',
+    compartment='p',
+    formula='C10H13N5O9P',
+    charge=-2),
+    Metabolite(
+    'g5mp_adc_c',
+    name='Guanosine 5-monophosphate OH-adduct',
+    compartment='c',
+    formula='C10H13N5O9P',
+    charge=-2),
+    Metabolite(
+    '5-HYDROXY-CTP_m',
+    name='5-hydroxycytidine triphosphate',
+    compartment='m',
+    formula='C9H12N3O15P3',
+    charge=-4),
+    Metabolite(
+    '5-HYDROXY-CTP_p',
+    name='5-hydroxycytidine triphosphate',
+    compartment='p',
+    formula='C9H12N3O15P3',
+    charge=-4),
+    Metabolite(
+    'CPD-13851_p',
+    name='2-hydroxy-2-deoxyadenosine 5-triphosphate',
+    compartment='p',
+    formula='C10H12N5O13P3',
+    charge=-4),
+    Metabolite(
+    '8-Oxo-dGTP_p',
+    name='7,8-dihydro-8-oxo-2′-dGTP',
+    compartment='p',
+    formula='C10H12N5O14P3',
+    charge=-4),
     ])
-#core_model.add_boundary(core_model.metabolites.get_by_id("DNA_damage_cost_c"), type="demand")
-#core_model.add_boundary(core_model.metabolites.get_by_id('Protein_oxidation_cost_c'), type="demand")
-#core_model.add_boundary(core_model.metabolites.get_by_id('Aminoacid_oxidation_cost_c'), type="demand")
 reaction = Reaction('CWINV1')
 reaction.name = 'Extracellular invertase'
 reaction.subsystem = 'sucrosedegradationIII'
@@ -237,7 +288,7 @@ reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 reaction.add_metabolites({core_model.metabolites.get_by_id ('HYDROGEN_PEROXIDE_cell'): -1.0,core_model.metabolites.get_by_id ('SUPER_OXIDE_cell'): -1.0,core_model.metabolites.get_by_id('CPD-12377_cell'): -1.0,core_model.metabolites.get_by_id ('ho2_rad_cell'): -1.0})
 print(reaction.reaction) 
-core_model.add_reactions([reaction])
+#core_model.add_reactions([reaction])
 ##
 #core_model.add_boundary(core_model.metabolites.get_by_id("gsno_c"), type="demand")
 
@@ -248,7 +299,7 @@ reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 reaction.add_metabolites({core_model.metabolites.get_by_id ('CPD0-1395_cell'): -1.0,core_model.metabolites.get_by_id ('NITRIC-OXIDE_cell'): -1.0})
 print(reaction.reaction) 
-core_model.add_reactions([reaction])
+#core_model.add_reactions([reaction])
 ##
 core_model.remove_reactions('RS_171')
 reaction = Reaction('RS_171')
@@ -360,7 +411,65 @@ reaction.add_metabolites({core_model.metabolites.get_by_id ('CPD-12377_c'): -2.0
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ##
+core_model.remove_reactions('RS_22')
+reaction = Reaction('RS_22')
+reaction.name = 'ctp:oh_rad'
+reaction.subsystem = 'DNA damage'
+reaction.lower_bound =0.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+reaction.add_metabolites({core_model.metabolites.get_by_id ('CPD-12377_m'): -2.0,core_model.metabolites.get_by_id ('CTP_m'): -1.0,core_model.metabolites.get_by_id ('5-HYDROXY-CTP_m'): 1.0,core_model.metabolites.get_by_id ('WATER_m'): 1.0,core_model.metabolites.get_by_id ('DNA_damage_cost_c'): -1.0})
+print(reaction.reaction) 
+core_model.add_reactions([reaction])
+#core_model.reactions.get_by_id('GUANYL_KIN_RXN_c').bounds=(0,0)
+##
+reaction = Reaction('RS_22_p')
+reaction.name = 'ctp:oh_rad'
+reaction.subsystem = 'DNA damage'
+reaction.lower_bound =0.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+reaction.add_metabolites({core_model.metabolites.get_by_id ('CPD-12377_p'): -2.0,core_model.metabolites.get_by_id ('CTP_p'): -1.0,core_model.metabolites.get_by_id ('5-HYDROXY-CTP_p'): 1.0,core_model.metabolites.get_by_id ('WATER_p'): 1.0,core_model.metabolites.get_by_id ('DNA_damage_cost_c'): -1.0})
+print(reaction.reaction) 
+core_model.add_reactions([reaction])
+##
+core_model.remove_reactions('RS_23')
+reaction = Reaction('RS_23')
+reaction.name = 'datp:oh_rad'
+reaction.subsystem = 'DNA damage'
+reaction.lower_bound =0.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+reaction.add_metabolites({core_model.metabolites.get_by_id ('CPD-12377_p'): -2.0,core_model.metabolites.get_by_id ('DATP_p'): -1.0,core_model.metabolites.get_by_id ('CPD-13851_p'): 1.0,core_model.metabolites.get_by_id ('WATER_p'): 1.0,core_model.metabolites.get_by_id ('DNA_damage_cost_c'): -1.0})
+print(reaction.reaction) 
+core_model.add_reactions([reaction])
+##
+core_model.remove_reactions('RS_24')
+reaction = Reaction('RS_24')
+reaction.name = 'dgtp:oh_rad'
+reaction.subsystem = 'DNA damage'
+reaction.lower_bound =0.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+reaction.add_metabolites({core_model.metabolites.get_by_id ('CPD-12377_p'): -2.0,core_model.metabolites.get_by_id ('DGTP_p'): -1.0,core_model.metabolites.get_by_id ('8-Oxo-dGTP_p'): 1.0,core_model.metabolites.get_by_id ('WATER_p'): 1.0,core_model.metabolites.get_by_id ('DNA_damage_cost_c'): -1.0})
+print(reaction.reaction) 
+core_model.add_reactions([reaction])
+##
 core_model.remove_reactions('RS_30')
+reaction = Reaction('RS_30_m')
+reaction.name = 'gtp:oh_rad'
+reaction.subsystem = 'DNA damage'
+reaction.lower_bound =0.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+reaction.add_metabolites({core_model.metabolites.get_by_id ('CPD-12377_m'): -2.0,core_model.metabolites.get_by_id ('GTP_m'): -1.0,core_model.metabolites.get_by_id ('CPD-12366_m'): 1.0,core_model.metabolites.get_by_id ('WATER_m'): 1.0,core_model.metabolites.get_by_id ('DNA_damage_cost_c'): -1.0})
+print(reaction.reaction) 
+core_model.add_reactions([reaction])
+##
+reaction = Reaction('RS_30_p')
+reaction.name = 'gtp:oh_rad'
+reaction.subsystem = 'DNA damage'
+reaction.lower_bound =0.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+reaction.add_metabolites({core_model.metabolites.get_by_id ('CPD-12377_p'): -2.0,core_model.metabolites.get_by_id ('GTP_p'): -1.0,core_model.metabolites.get_by_id ('CPD-12366_p'): 1.0,core_model.metabolites.get_by_id ('WATER_p'): 1.0,core_model.metabolites.get_by_id ('DNA_damage_cost_c'): -1.0})
+print(reaction.reaction) 
+core_model.add_reactions([reaction])
+##
 reaction = Reaction('RS_30')
 reaction.name = 'gtp:oh_rad'
 reaction.subsystem = 'DNA damage'
@@ -369,7 +478,6 @@ reaction.upper_bound = 1000.  # This is the default
 reaction.add_metabolites({core_model.metabolites.get_by_id ('CPD-12377_c'): -2.0,core_model.metabolites.get_by_id ('GTP_c'): -1.0,core_model.metabolites.get_by_id ('CPD-12366_c'): 1.0,core_model.metabolites.get_by_id ('WATER_c'): 1.0,core_model.metabolites.get_by_id ('DNA_damage_cost_c'): -1.0})
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
-#core_model.reactions.get_by_id('GUANYL_KIN_RXN_c').bounds=(0,0)
 ##
 core_model.remove_reactions('RS_53')
 reaction = Reaction('RS_53')
@@ -378,6 +486,15 @@ reaction.subsystem = 'DNA damage'
 reaction.lower_bound =-1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 reaction.add_metabolites({core_model.metabolites.get_by_id ('g5mp_adc_c'): 1.0,core_model.metabolites.get_by_id ('GMP_c'): -1.0,core_model.metabolites.get_by_id ('CPD-12377_c'): -1.0,core_model.metabolites.get_by_id ('DNA_damage_cost_c'): -1.0})
+print(reaction.reaction) 
+core_model.add_reactions([reaction])
+##
+reaction = Reaction('RS_53_p')
+reaction.name = 'gmp:oh_rad'
+reaction.subsystem = 'DNA damage'
+reaction.lower_bound =-1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+reaction.add_metabolites({core_model.metabolites.get_by_id ('g5mp_adc_p'): 1.0,core_model.metabolites.get_by_id ('GMP_p'): -1.0,core_model.metabolites.get_by_id ('CPD-12377_p'): -1.0,core_model.metabolites.get_by_id ('DNA_damage_cost_c'): -1.0})
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ##
@@ -401,8 +518,7 @@ reaction.add_metabolites({core_model.metabolites.get_by_id ('co3_r_c'): -1.0,cor
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
 core_model_RS=core_model
-#save_matlab_model(core_model_RS, "core_model_RS.mat")
-
+save_matlab_model(core_model_RS, "core_model_RS.mat")
 ##Constraints
 rubisco = core_model.problem.Constraint(3 * core_model.reactions.get_by_id("RXN_961_p").flux_expression - core_model.reactions.get_by_id("RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p").flux_expression,lb=0, ub=0,)
 core_model.add_cons_vars([rubisco])
@@ -425,7 +541,7 @@ core_model.add_cons_vars([rubisco])
 solution = core_model.optimize()
 print(solution.objective_value)
 ## plot pareto plot
-objective1 =  'DM_ho2_rad_cell'
+objective1 =  'DM_HYDROGEN_PEROXIDE_cell'
 objective2 =  'AraCore_Biomass_tx'
 solution_primary=pareto_analysis(core_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
 #pd.DataFrame(result_list).to_excel('results.xlsx')
@@ -433,6 +549,6 @@ data=pd.DataFrame(solution_primary)
 #print(data)
 plt.plot(data[1],data[2]) 
 plt.show()
-#objs_rs=[DM_co3_r_cell AraCore_Biomass_tx 'Phloem_output_tx','DM_NITRIC-OXIDE_cell','DM_HS_cell','DM_SUPER_OXIDE_cell','DM_HC00250_cell','DM_CPD0-1395_cell','DM_SO3_cell','DM_CPD-12377_cell','DM_HYDROGEN_PEROXIDE_cell','DM_ho2_rad_cell']
+#objs_rs=[ho2_rad_p_demand DM_co3_r_cell AraCore_Biomass_tx 'Phloem_output_tx','DM_NITRIC-OXIDE_cell','DM_HS_cell','DM_SUPER_OXIDE_cell','DM_HC00250_cell','DM_CPD0-1395_cell','DM_SO3_cell','DM_CPD-12377_cell','DM_HYDROGEN_PEROXIDE_cell','DM_ho2_rad_cell']
 
 

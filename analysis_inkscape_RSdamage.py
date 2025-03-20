@@ -85,10 +85,10 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
             primary_12=['Ca_tx','H_tx','H2O_tx','K_tx','Mg_tx','Pi_tx','SO4_tx','Nitrate_tx']
             primary_13=['ATPase_tx','NADPHoxc_tx','NADPHoxm_tx','NADPHoxp_tx']
             primary_14=['CWINV1','Sucrose_tr','GLC_tr','FRU_tr']
-            tests=['ROS_demand','RNS_demand']
+            tests=['DM_Protein_oxidation_cost_c','DM_Aminoacid_oxidation_cost_c','DM_DNA_damage_cost_c']
             primary_dark=primary_1+primary_4
             primary_sugar=primary_2+primary_3
-            solution_primary.append(solution.fluxes[primary_9])
+            solution_primary.append(solution.fluxes[primary_dark])
             reaction_obj2.bounds = (0, 1000.0)
         elif metric == 'euclidean':
 
@@ -119,6 +119,11 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
 #model_rs = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/model_rs_dm.mat'))
 model_rs = cobra.io.load_matlab_model(join('core_model_RS.mat'))
 core_model=model_rs
+core_model.add_boundary(core_model.metabolites.get_by_id("DNA_damage_cost_c"), type="demand")
+core_model.add_boundary(core_model.metabolites.get_by_id('Protein_oxidation_cost_c'), type="demand")
+core_model.add_boundary(core_model.metabolites.get_by_id('Aminoacid_oxidation_cost_c'), type="demand")
+core_model.reactions.get_by_id('DM_CPD-12377_cell').add_metabolites({'DNA_damage_cost_c':1.0,'Protein_oxidation_cost_c':1.0})
+core_model.reactions.get_by_id('DM_CPD0-1395_cell').add_metabolites({'DNA_damage_cost_c':1.0})
 
 ##Constraints
 rubisco = core_model.problem.Constraint(3 * core_model.reactions.get_by_id("RXN_961_p").flux_expression - core_model.reactions.get_by_id("RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p").flux_expression,lb=0, ub=0,)
@@ -135,7 +140,7 @@ solution = core_model.optimize()
 print(solution.objective_value)
 
 ## plot pareto plot
-objective1 =  'DM_CPD-12377_cell'#Phloem_output_tx AraCore_Biomass_tx DM_HS_cell DM_CPD0-1395_cell'DM_SUPER_OXIDE_cell'#'DM_NITRIC-OXIDE_cell'#'DM_CPD-12377_cell'#'DM_HYDROGEN_PEROXIDE_cell'
+objective1 =  'ho2_rad_p_demand'# ho2_rad_p_demand AraCore_Biomass_tx DM_HS_cell DM_CPD0-1395_cell'DM_SUPER_OXIDE_cell'#'DM_NITRIC-OXIDE_cell'#'DM_CPD-12377_cell'#'DM_HYDROGEN_PEROXIDE_cell'
 objective2 =  'AraCore_Biomass_tx'
 solution_primary=pareto_analysis(core_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
 #pd.DataFrame(result_list).to_excel('results.xlsx')
