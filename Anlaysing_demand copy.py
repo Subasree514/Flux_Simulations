@@ -26,7 +26,7 @@ import matplotlib.pyplot as plt
 from cobra.io import load_json_model, save_json_model, load_matlab_model, save_matlab_model, read_sbml_model, write_sbml_model
 
 
-core_model = cobra.io.load_matlab_model(join('alpha_day_RS_DM.mat'))
+core_model = cobra.io.load_matlab_model(join('core_model_RS.mat'))
 #core_model = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/model_rs.mat'))
 
 ## Pareto function
@@ -105,7 +105,7 @@ plt.plot(data[1],data[2])
 plt.ylabel('Biomass reaction')
 plt.xlabel('RS demand overall')
 plt.title("RS vs.Biomass analysis")
-plt.savefig('/Users/subasrees/Desktop/FluxMap_Workshop/h2o2_biomass.pdf')
+plt.savefig('/Users/subasrees/Desktop/FluxMap_Workshop/h2o2_biomass_rscore.pdf')
 #plt.ticklabel_format(style='plain')
 plt.show()
 
