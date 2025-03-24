@@ -84,10 +84,10 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
             primary_11=['RXN1F_66_p','RXN_7674_p','RXN_7676_p','RXN_7677_p','RXN_7678_NADP_p','RXN_7678_NAD_p','RXN_7679_p']
             primary_12=['Ca_tx','H_tx','H2O_tx','K_tx','Mg_tx','Pi_tx','SO4_tx','Nitrate_tx']
             primary_13=['ATPase_tx','NADPHoxc_tx','NADPHoxm_tx','NADPHoxp_tx']
-            tests=['Protein_Polymerisation_c']
+            tests=['PYRUVATEORTHOPHOSPHATE_DIKINASE_RXN_p','ACONITATEHYDR_RXN_c','DSERDEAM_RXN_c','TRIOSEPISOMERIZATION_RXN_c']
             primary_dark=primary_1+primary_4
             primary_sugar=primary_2+primary_3
-            solution_primary.append(solution.fluxes[primary_6])
+            solution_primary.append(solution.fluxes[tests])
             reaction_obj2.bounds = (0, 1000.0)
         elif metric == 'euclidean':
 
@@ -223,7 +223,7 @@ core_model.add_cons_vars([rubisco])
 #core_model.add_boundary(core_model.metabolites.get_by_id("FeII_e"), type="sink")
 
 ## plot pareto plot
-objective1 =  'DM_CPD-12377_cell'#tput_tx AraCore_Biomass_tx DM_HS_cell DM_CPD0-1395_cell'DM_SUPER_OXIDE_cell'#'DM_NITRIC-OXIDE_cell'#'DM_CPD-12377_cell'#'DM_HYDROGEN_PEROXIDE_cell'
+objective1 =  'DM_HYDROGEN_PEROXIDE_cell'#ho2_rad_p_demand tput_tx AraCore_Biomass_tx DM_HS_cell DM_CPD0-1395_cell'DM_SUPER_OXIDE_cell'#'DM_NITRIC-OXIDE_cell'#'DM_CPD-12377_cell'#'DM_HYDROGEN_PEROXIDE_cell'
 objective2 =  'AraCore_Biomass_tx'
 solution_primary=pareto_analysis(core_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
 #pd.DataFrame(result_list).to_excel('results.xlsx')
@@ -265,4 +265,4 @@ df=pd.DataFrame([df_rxns,df_fluxes])
 df_n2=df.T
 df_n2.columns=['Reactions','Fluxes']
 print(df_n2)
-df_n2.to_csv('/Users/subasrees/Desktop/FluxMap_Workshop/csvs/photon_oh.csv')
+#df_n2.to_csv('/Users/subasrees/Desktop/FluxMap_Workshop/csvs/photon_oh.csv')

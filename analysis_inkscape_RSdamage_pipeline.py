@@ -61,35 +61,10 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
         reaction_obj2.bounds = (sol.get_primal_by_id(objective2), sol.get_primal_by_id(objective2))
         if metric == 'manhattan':
             solution = cobra.flux_analysis.pfba(model)
-            ## Calvin-Benson Cycle
-            primary_1=['CO2_tx','RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p','TRIOSEPISOMERIZATION_RXN_p','F16BDEPHOS_RXN_p','PHOSPHORIBULOKINASE_RXN_p',]
-            ## Starch synthesis pathway
-            primary_2=['F16BDEPHOS_RXN_p','PGLUCISOM_RXN_p','GLUC1PADENYLTRANS_RXN_p','GLYCOGENSYN_RXN_p']
-            ## Sucrose synthesis pathway
-            primary_3=['F16BDEPHOS_RXN_c','SUCROSE_PHOSPHATE_SYNTHASE_RXN_c','SUCROSE_PHOSPHATASE_RXN_c',]
-            ## Photorespiration
-            primary_4=['O2_tx','RXN_961_p','GPH_RXN_p','RXN_969_x','GLY3KIN_RXN_p','GLYCINE_AMINOTRANSFERASE_RXN_x']#hxk gox fab2
-            ## FA metabolism
-            primary_5=['Beta_Oxidation_x','ACETATE__COA_LIGASE_RXN_p','2_PERIOD_3_PERIOD_1_PERIOD_180_RXN_p','RXN_9661_p','RXN_9663_p','RXN_9549_p']#'GAPOXNPHOSPHN_RXN_p']
-            ## Light
-            primary_6=['Photon_tx','PSII_RXN_p','PLASTOQUINOL_PLASTOCYANIN_REDUCTASE_RXN_p','1_PERIOD_18_PERIOD_1_PERIOD_2_RXN_p']
-            ## N2 metabolism
-            primary_7=['Nitrate_tx','GLUTAMINESYN_RXN_p','GLUTAMATE_SYNTHASE_FERREDOXIN_RXN_p','GLN_GLU_mc','GLUTAMINESYN_RXN_m']
-            primary_8a= ['GLUCOKIN_RXN_p','6PFRUCTPHOS_RXN_p','3PGAREARR_RXN_p','2PGADEHYDRAT_RXN_p','PEPDEPHOS_RXN_p','PYRUVDEH_RXN_p']
-            primary_8b= ['OAA_xc','CITSYN_RXN_x','CIT_xc','ACONITATEDEHYDR_RXN_c','2KG_ACONITATE_mc','ACONITATEHYDR_RXN_m','ISOCITRATE_DEHYDROGENASE_NAD_RXN_m','ASPAMINOTRANS_RXN_c','MALSYN_RXN_x','MALATE_DEH_RXN_x']
-            primary_9=['NADH_DEHYDROG_A_RXN_mi','1_PERIOD_10_PERIOD_2_PERIOD_2_RXN_mi','SUCCINATE_DEHYDROGENASE_UBIQUINONE_RXN_mi','CYTOCHROME_C_OXIDASE_RXN_mi','Mitochondrial_ATP_Synthase_m']
-            primary_10=['2TRANSKETO_RXN_p','PGLUCISOM_RXN_c','GLU6PDEHYDROG_RXN_p','6PGLUCONOLACT_RXN_c','6PGLUCONDEHYDROG_RXN_p','RIBULP3EPIM_RXN_c']
-            primary_anti_1=['CATAL_RXN_x','L_ASCORBATE_PEROXIDASE_RXN_m','GLUTATHIONE_PEROXIDASE_RXN_p','L_ASCORBATE_PEROXIDASE_RXN_p','RXN66_1_c','RXN_3521_p','SUPEROX_DISMUT_RXN_c','SUPEROX_DISMUT_RXN_p']
-            primary_anti_2=['RS_Plant_APX_A','RS_Plant_APX_C','RS_Plant_APX_G','RS_Plant_APX_X','RS_Plant_CAT_M','RS_Plant_GPX_M3','RS_Plant_GPX2_C','RS_Plant_GPX2_N','RS_Plant_GPX5_Mb','RS_Plant_PER1_C','RS_Plant_PER1_CP','RS_Plant_PER1_N']
-            primary_11=['RXN1F_66_p','RXN_7674_p','RXN_7676_p','RXN_7677_p','RXN_7678_NADP_p','RXN_7678_NAD_p','RXN_7679_p']
-            primary_12=['Ca_tx','H_tx','H2O_tx','K_tx','Mg_tx','Pi_tx','SO4_tx','Nitrate_tx']
-            primary_13=['ATPase_tx','NADPHoxc_tx','NADPHoxm_tx','NADPHoxp_tx']
-            primary_14=['CWINV1','Sucrose_tr','GLC_tr','FRU_tr']
-            tests=['RXN66_3_m','GAP_Pi_pc']
-
-            primary_dark=primary_1+primary_4
-            primary_sugar=primary_2+primary_3
-            solution_primary.append(solution.fluxes[tests])
+            primary_dark=[]
+            for i in model.reactions:
+                primary_dark.append(i.id)
+            solution_primary.append(solution.fluxes[primary_dark])
             reaction_obj2.bounds = (0, 1000.0)
         elif metric == 'euclidean':
 
@@ -117,7 +92,6 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
     return solution_primary
 ## Plots
 #model = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/alpha_day_DM.mat'))
-#model_rs = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/model_rs_dm.mat'))
 model_rs = cobra.io.load_matlab_model(join('core_model_RS.mat'))
 core_model=model_rs
 core_model.add_boundary(core_model.metabolites.get_by_id("DNA_damage_cost_c"), type="demand")
@@ -129,23 +103,42 @@ core_model.reactions.get_by_id('DM_CPD0-1395_cell').add_metabolites({'DNA_damage
 ##Constraints
 rubisco = core_model.problem.Constraint(3 * core_model.reactions.get_by_id("RXN_961_p").flux_expression - core_model.reactions.get_by_id("RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p").flux_expression,lb=0, ub=0,)
 core_model.add_cons_vars([rubisco])
-#h2o2_m = core_model.problem.Constraint(50 * core_model.reactions.get_by_id("H2O2_m_demand").flux_expression - core_model.reactions.get_by_id("H2O2_x_demand").flux_expression,lb=0, ub=0,)
-#core_model.add_cons_vars([h2o2_m])
-#h2o2_p = core_model.problem.Constraint(2 * core_model.reactions.get_by_id("H2O2_p_demand").flux_expression - core_model.reactions.get_by_id("H2O2_x_demand").flux_expression,lb=0, ub=0,)
-#core_model.add_cons_vars([h2o2_p])
-#Ser_damage = core_model.problem.Constraint(core_model.reactions.get_by_id("pGLN_biomass").flux_expression - core_model.reactions.get_by_id("pGLN_biomass_incomplete").flux_expression,lb=0, ub=0,)
-#core_model.add_cons_vars([Ser_damage])
-#10.1111/pce.12932
-#core_model.add_boundary(core_model.metabolites.get_by_id("FeII_e"), type="sink")
-solution = core_model.optimize()
-print(solution.objective_value)
+
 
 ## plot pareto plot
-objective1 =  'DM_SUPER_OXIDE_cell'# ho2_rad_p_demand AraCore_Biomass_tx DM_HS_cell DM_CPD0-1395_cell'DM_SUPER_OXIDE_cell'#'DM_NITRIC-OXIDE_cell'#'DM_CPD-12377_cell'#'DM_HYDROGEN_PEROXIDE_cell'
+objective1 =  'DM_NITRIC-OXIDE_cell'# ho2_rad_p_demand AraCore_Biomass_tx DM_HS_cell DM_CPD0-1395_cell'DM_SUPER_OXIDE_cell'#'DM_NITRIC-OXIDE_cell'#'DM_CPD-12377_cell'#'DM_HYDROGEN_PEROXIDE_cell'
 objective2 =  'AraCore_Biomass_tx'
 solution_primary=pareto_analysis(core_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
 #pd.DataFrame(result_list).to_excel('results.xlsx')
 data=pd.DataFrame(solution_primary)
+data_t=data.T
+index_len=np.arange(0,len(data_t.index),1)
+indices=data_t.index
+rxns=[]
+for i in index_len:
+    if round(abs(data_t.iloc[i,0]),2) < round(abs(data_t.iloc[i,50]),2) and round(abs(data_t.iloc[i,90]),2) < round(abs(data_t.iloc[i,50]),2):
+        print(data_t.iloc[i,0])
+        print(data_t.iloc[i,50])
+        print(data_t.iloc[i,90])
+        rxns.append(indices[i])
+#print(len(rxns))
+#print(rxns)
+## add groups to the models from the alpha core model
+groups=[]
+names=[]
+for i in core_model.reactions:
+        for j in range(len(rxns)):
+            if rxns[j]==i.id:
+                a=core_model.get_associated_groups(i)
+                b=core_model.reactions.get_by_id(i.id).name
+                groups.append(a)
+                names.append(b)
+df=pd.DataFrame(rxns)
+df.columns=['reactions']
+df['groups']=groups
+df['names']=names
+print(df)
+df.to_csv('/Users/subasrees/Desktop/FluxMap_Workshop/csvs/no_diff.csv')
 
 bars1 = round(data.iloc[0,:],2)
 bars1_df=pd.DataFrame([bars1])
@@ -182,5 +175,5 @@ df_fluxes=pd.concat([f1, f2, f3],ignore_index=True)
 df=pd.DataFrame([df_rxns,df_fluxes])
 df_n2=df.T
 df_n2.columns=['Reactions','Fluxes']
-print(df_n2)
+#print(df_n2)
 #df_n2.to_csv('/Users/subasrees/Desktop/FluxMap_Workshop/csvs/photon_oh.csv')
