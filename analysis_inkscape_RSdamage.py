@@ -125,7 +125,7 @@ core_model.add_boundary(core_model.metabolites.get_by_id('Protein_oxidation_cost
 core_model.add_boundary(core_model.metabolites.get_by_id('Aminoacid_oxidation_cost_c'), type="demand")
 core_model.reactions.get_by_id('DM_CPD-12377_cell').add_metabolites({'DNA_damage_cost_c':1.0,'Protein_oxidation_cost_c':1.0})
 core_model.reactions.get_by_id('DM_CPD0-1395_cell').add_metabolites({'DNA_damage_cost_c':1.0})
-
+print(core_model.metabolites.get_by_id("DNA_damage_cost_c").reactions)
 ##Constraints
 rubisco = core_model.problem.Constraint(3 * core_model.reactions.get_by_id("RXN_961_p").flux_expression - core_model.reactions.get_by_id("RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p").flux_expression,lb=0, ub=0,)
 core_model.add_cons_vars([rubisco])

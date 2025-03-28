@@ -190,7 +190,7 @@ reaction.add_metabolites({core_model.metabolites.get_by_id ('GLY_c'): -1.0,core_
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ##
-reaction = Reaction('GLUTCYSLIG-RXN-1')
+reaction = Reaction('GLUTCYSLIG-RXN')
 reaction.name = 'γ-glutamylcysteine synthetase'
 reaction.subsystem = 'glutathionebiosynthesis'
 reaction.lower_bound =0.  # This is the default
@@ -199,14 +199,32 @@ reaction.add_metabolites({core_model.metabolites.get_by_id ('GLT_p'): -1.0,core_
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ##
-reaction = Reaction('GLUTCYSLIG-RXN-2')
-reaction.name = 'γ-glutamylcysteine synthetase'
-reaction.subsystem = 'glutathionebiosynthesis'
+reaction = Reaction('Glutathione_Tr_1')
+reaction.name = 'Glutathione transporter, chloroplastic'
+reaction.subsystem = 'Transport'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('GLT_c'): -1.0,core_model.metabolites.get_by_id ('CYS_c'): -1.0,core_model.metabolites.get_by_id ('ATP_c'): -1.0,core_model.metabolites.get_by_id ('L-GAMMA-GLUTAMYLCYSTEINE_c'): 1.0,core_model.metabolites.get_by_id ('ADP_c'): 1.0,core_model.metabolites.get_by_id ('Pi_c'): 1.0,core_model.metabolites.get_by_id ('PROTON_c'): 1.0})
+reaction.add_metabolites({core_model.metabolites.get_by_id('GLUTATHIONE_p'): -1.0,core_model.metabolites.get_by_id('ATP_p'): -1.0,core_model.metabolites.get_by_id('WATER_p'): -1.0,core_model.metabolites.get_by_id('Pi_p'): 1.0,core_model.metabolites.get_by_id('GLUTATHIONE_c'): 1.0})
 print(reaction.reaction) 
-#core_model.add_reactions([reaction])
+core_model.add_reactions([reaction])
+##
+reaction = Reaction('Glutathione_Tr_3')
+reaction.name = 'Glutathione transporter, vacuolar'
+reaction.subsystem = 'Transport'
+reaction.lower_bound =0.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+reaction.add_metabolites({core_model.metabolites.get_by_id('GLUTATHIONE_c'): -1.0,core_model.metabolites.get_by_id('ATP_c'): -1.0,core_model.metabolites.get_by_id('WATER_c'): -1.0,core_model.metabolites.get_by_id('Pi_c'): 1.0,core_model.metabolites.get_by_id('GLUTATHIONE_v'): 1.0})
+print(reaction.reaction) 
+core_model.add_reactions([reaction])
+##
+reaction = Reaction('Glutathione_Tr_2')
+reaction.name = 'Glutathione transporter, extracellular'
+reaction.subsystem = 'Transport'
+reaction.lower_bound =0.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+reaction.add_metabolites({core_model.metabolites.get_by_id('GLUTATHIONE_c'): -1.0,core_model.metabolites.get_by_id('ATP_c'): -1.0,core_model.metabolites.get_by_id('WATER_c'): -1.0,core_model.metabolites.get_by_id('Pi_c'): 1.0,core_model.metabolites.get_by_id('GLUTATHIONE_e'): 1.0})
+print(reaction.reaction) 
+core_model.add_reactions([reaction])
 ##
 reaction = Reaction('ROS_demand')
 reaction.name = 'Combined ROS Effect'
@@ -229,8 +247,8 @@ reaction.add_metabolites({core_model.metabolites.get_by_id ('CPD0-1395_cell'): -
 #core_model.add_reactions([reaction])
 ##
 ##Constraints
-rubisco = core_model.problem.Constraint(1 * core_model.reactions.get_by_id("RXN_961_p").flux_expression - core_model.reactions.get_by_id("RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p").flux_expression,lb=0, ub=0,)
-core_model.add_cons_vars([rubisco])
+rubisco = core_model.problem.Constraint(3 * core_model.reactions.get_by_id("RXN_961_p").flux_expression - core_model.reactions.get_by_id("RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p").flux_expression,lb=0, ub=0,)
+#core_model.add_cons_vars([rubisco])
 #h2o2_m = core_model.problem.Constraint(50 * core_model.reactions.get_by_id("H2O2_m_demand").flux_expression - core_model.reactions.get_by_id("H2O2_x_demand").flux_expression,lb=0, ub=0,)
 #core_model.add_cons_vars([h2o2_m])
 #h2o2_p = core_model.problem.Constraint(2 * core_model.reactions.get_by_id("H2O2_p_demand").flux_expression - core_model.reactions.get_by_id("H2O2_x_demand").flux_expression,lb=0, ub=0,)
