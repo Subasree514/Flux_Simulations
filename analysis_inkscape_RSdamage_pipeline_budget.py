@@ -113,79 +113,161 @@ solution_primary=pareto_analysis(core_model, objective1 = objective1, objective2
 #pd.DataFrame(result_list).to_excel('results.xlsx')
 data=pd.DataFrame(solution_primary)
 data_t=data.T
-index_len=np.arange(0,len(data_t.index),1)
-indices=data_t.index
-rxns=[]
-zero_rxns=[]
-half_rxns=[]
-max_rxns=[]
+solution_frame=pd.DataFrame(data_t.iloc[:,50])
+solution_frame.columns=['fluxes']
+#Creating an empty dataframe
+df_p = []
+df_c = []
+ATP = ["ATP_c", "ATP_m", "ATP_p", "ATP_x"]
+compartment = ["_c", "_m", "_p", "_x"]
+c3_model=core_model
+for (a,com) in zip(ATP,compartment):
+    i = c3_model.metabolites.get_by_id(a).summary()
+    p = i.producing_flux
+    c = i.consuming_flux
+    
+# Retrieving the reactions using pandas and filtering the transport reactions
+    #producer = p.loc[:,"reaction"].str.contains(com)
+    producer = p.loc[:,"reaction"].str.endswith(com)
+    producer = p[producer]
+    df_p.append(producer)
+    producer_df = pd.concat(df_p)
+        
+# Retrieving the reactions using pandas
+    consumer = c.loc[:,"reaction"].str.endswith(com)
+    consumer = c[consumer]
+    df_c.append(consumer)
+    consumer_df = pd.concat(df_c)
+    #print(consumer_df)
+consumers=list(consumer_df['reaction'])
+producers=list(producer_df.index)
+def budget_plot(solution_frame, producers, consumers):
+    
+    #Get flux values from the simulation for metabolite consuming/producing reactions
+    producers_df = solution_frame.loc[producers,:]
+    consumers_df = solution_frame.loc[consumers,:]
 
-for i in index_len:
-    #if data_t.iloc[i,90] == 0 and data_t.iloc[i,50] != 0 and data_t.iloc[i,0]==0 :
-    if round(abs(data_t.iloc[i,90]),2) > round(abs(data_t.iloc[i,50]),2) and round(abs(data_t.iloc[i,50]),2) < round(abs(data_t.iloc[i,0]),2):
-        zero_rxns.append(data_t.iloc[i,0])
-        half_rxns.append(data_t.iloc[i,50])
-        max_rxns.append(data_t.iloc[i,90])
-        rxns.append(indices[i])
-print(zero_rxns)
-print(max_rxns)
-print(half_rxns)
-#print(len(rxns))
-#print(rxns)
-## add groups to the models from the alpha core model
-groups=[]
-names=[]
-for i in core_model.reactions:
-        for j in range(len(rxns)):
-            if rxns[j]==i.id:
-                a=core_model.get_associated_groups(i)
-                b=core_model.reactions.get_by_id(i.id).name
-                groups.append(a)
-                names.append(b)
-df=pd.DataFrame(rxns)
-df.columns=['reactions']
-df['groups']=groups
-df['names']=names
-df['zero']=zero_rxns
-df['half']=half_rxns
-df['max']=max_rxns
-#print(df)
-df.to_csv('/Users/subasrees/Desktop/FluxMap_Workshop/csvs/h2o2_tri_inv.csv')
+    #Get values with negative flows: producing reactions with negative flow are consuming and vice-versa
+    negative_producers = list(producers_df[producers_df["fluxes"] < 0].index)
+    negative_consumers = list(consumers_df[consumers_df["fluxes"] < 0].index)
 
-bars1 = round(data.iloc[0,:],2)
-bars1_df=pd.DataFrame([bars1])
-bars1_df=bars1_df.T
-bars1_df['Rxns_zero']=bars1_df.index
-bars1_df.columns=['Fluxes_zero','Rxns_zero']
-bars1_df["Rxns_zero"] = bars1_df["Rxns_zero"].apply(lambda x: x+'_zero')
-bars1_df.reset_index(drop=True, inplace=True)
 
-bars2 = round(data.iloc[45,:],2)
-bars2_df=pd.DataFrame([bars2])
-bars2_df=bars2_df.T
-bars2_df['Rxns_half']=bars2_df.index
-bars2_df.columns=['Fluxes_half','Rxns_half']
-bars2_df["Rxns_half"] = bars2_df["Rxns_half"].apply(lambda x: x+'_half')
-bars2_df.reset_index(drop=True, inplace=True)
+    #Add reactions to correct list
+    consumers.extend(negative_producers)
+    producers.extend(negative_consumers)
 
-bars3 = round(data.iloc[90,:],2)
-bars3_df=pd.DataFrame([bars3])
-bars3_df=bars3_df.T
-bars3_df['Rxns_max']=bars3_df.index
-bars3_df.columns=['Fluxes_max','Rxns_max']
-bars3_df["Rxns_max"] = bars3_df["Rxns_max"].apply(lambda x: x+'_max')
-bars3_df.reset_index(drop=True, inplace=True)
+    #Remove reactions with negative flux from old list
+    def remove_items(test_list, item):
+        res = [i for i in test_list if i != item]
+        return res
 
-s1=pd.Series(bars1_df['Rxns_zero'])
-s2=pd.Series(bars2_df['Rxns_half'])
-s3=pd.Series(bars3_df['Rxns_max'])
-df_rxns=pd.concat([s1, s2,s3],ignore_index=True)
-f1=pd.Series(bars1_df['Fluxes_zero'])
-f2=pd.Series(bars2_df['Fluxes_half'])
-f3=pd.Series(bars3_df['Fluxes_max'])
-df_fluxes=pd.concat([f1, f2, f3],ignore_index=True)
-df=pd.DataFrame([df_rxns,df_fluxes])
-df_n2=df.T
-df_n2.columns=['Reactions','Fluxes']
-#print(df_n2)
-#df_n2.to_csv('/Users/subasrees/Desktop/FluxMap_Workshop/csvs/photon_oh.csv')
+    for item in negative_producers:
+        producers = remove_items(producers, item)
+
+    for item in negative_consumers:
+        consumers = remove_items(consumers, item)
+
+    """
+    Get producing reactions and fluxes
+    """
+
+    #Get flux values from the simulation for metabolite consuming/producing reactions (correct list)
+    producers_df = solution_frame.loc[producers,:]
+    #Make all values positive (disregard directionality)
+    print(producers_df)
+    producers_df["fluxes"] = producers_df["fluxes"].abs()
+    #Remove reactions with zero flux
+    producers_df = producers_df[(producers_df.T != 0).all()]
+    producers_df
+
+
+    """
+    Get consuming reactions and fluxes
+    """
+
+    #Get flux values from the simulation for metabolite consuming/producing reactions (correct list)
+    consumers_df = solution_frame.loc[consumers,:]
+    print(consumers_df)
+    #Make all values positive (disregard directionality)
+    consumers_df["fluxes"]  = consumers_df["fluxes"].abs()
+    #Remove reactions with zero flux3_P_SERINE_
+    consumers_df = consumers_df[(consumers_df.T != 0).all()]
+    consumers_df
+
+    """
+    Concatenate producer and consumer dataframes
+    """
+
+    producers_df["Status"] = "Producer"
+    consumers_df["Status"] = "Consumer"
+
+    frame = [producers_df, consumers_df]
+
+    all_reactions = pd.concat(frame)
+
+    all_reactions["label"] = all_reactions.index
+
+    #Export full dataframe to csv
+    #all_reactions.to_csv("budget_plot.csv", header=True)
+
+    #Correct Budget stoichiometry
+    atp_stoi=[]
+    for i in all_reactions['label']:
+        for met in budget_metabolites:
+            try:
+                rxn=c3_model.reactions.get_by_id(i).get_coefficient(met)
+                atp_stoi.append(abs(rxn))
+            except KeyError:
+                continue
+
+    new_flux = all_reactions["fluxes"] * atp_stoi
+
+    all_reactions.insert(3,'coefficient', atp_stoi)
+    all_reactions.insert(4,'new_flux', new_flux)
+
+    """
+    Fluxes in consumption and production should be equal
+    """
+
+    #Sum the flux values
+    print("Sum of fluxes: {}".format(all_reactions.groupby(["Status"]).new_flux.sum()))
+
+    """
+    Pick the colors - using random
+    """
+
+    import random
+    import matplotlib.pyplot as plt
+
+
+    #Defining the nº of colors
+    number_of_colors = len(all_reactions.index)
+
+    #Getting a list of colors
+    random.seed(177)
+    color = ["#"+''.join([random.choice('0123456789ABCDEF') for j in range(6)])
+                for i in range(number_of_colors)]
+
+    #Getting list of reactions
+    reaction_list = list(all_reactions.index)
+
+    #Build color dictionary
+    color_dict = {}
+    for i in range(len(reaction_list)):
+        color_dict[reaction_list[i]] = color[i]
+
+    """
+    Plot the pivot table and barplot
+    """
+
+    plt.style.use('fast')
+
+    chart = all_reactions.pivot_table(index="Status", columns="label", values="new_flux")
+    chart.plot.bar(rot = 0, stacked = True, legend = True, ylabel = "Flux", color = color_dict)
+    plt.legend(loc='best', bbox_to_anchor=(1.0, 0.5, 0.5, 0.5), ncol = 2)
+    #plt.title("Platoquinone Turnover in the Bundle Sheath Cell")
+    figsize = [11, 11] #To prevent the cropping of the image
+    plt.savefig('half_max_h2o2.png')
+    plt.show()
+    chart
+    budget_plot(solution_frame, producers, consumers)

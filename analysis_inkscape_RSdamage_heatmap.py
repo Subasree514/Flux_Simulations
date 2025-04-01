@@ -25,6 +25,7 @@ from cobra.flux_analysis import flux_variability_analysis
 import matplotlib.pyplot as plt
 from cobra.io import load_json_model, save_json_model, load_matlab_model, save_matlab_model, read_sbml_model, write_sbml_model
 import math
+import seaborn as sns
 ## pareto
 objective1={''}
 objective2={''}
@@ -107,85 +108,22 @@ core_model.add_cons_vars([rubisco])
 
 
 ## plot pareto plot
-objective1 =  'DM_HYDROGEN_PEROXIDE_cell' #ho2_rad_p_demand AraCore_Biomass_tx DM_HS_cell DM_CPD0-1395_cell'DM_SUPER_OXIDE_cell'#'DM_NITRIC-OXIDE_cell'#'DM_CPD-12377_cell'#'DM_HYDROGEN_PEROXIDE_cell'
+objective1 =  'DM_SUPER_OXIDE_cell' #ho2_rad_p_demand AraCore_Biomass_tx DM_HS_cell DM_CPD0-1395_cell'DM_SUPER_OXIDE_cell'#'DM_NITRIC-OXIDE_cell'#'DM_CPD-12377_cell'#'DM_HYDROGEN_PEROXIDE_cell'
 objective2 =  'AraCore_Biomass_tx'
 solution_primary=pareto_analysis(core_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
 #pd.DataFrame(result_list).to_excel('results.xlsx')
 data=pd.DataFrame(solution_primary)
 data_t=data.T
+print(data_t.head())
 index_len=np.arange(0,len(data_t.index),1)
 indices=data_t.index
-rxns=[]
-zero_rxns=[]
-half_rxns=[]
-max_rxns=[]
+data_new=pd.DataFrame([data_t.iloc[:,0],data_t.iloc[:,50],data_t.iloc[:,100]])
+df_new=data_new.T
+df_new.columns=['zero','half_max','full_max']
+df_new['maximum']=abs(df_new).max(1)
+df=df_new[(df_new['maximum']!=0)]
+print(df)
+fig=sns.heatmap(df)
+fig.show()
 
-for i in index_len:
-    #if data_t.iloc[i,90] == 0 and data_t.iloc[i,50] != 0 and data_t.iloc[i,0]==0 :
-    if round(abs(data_t.iloc[i,90]),2) > round(abs(data_t.iloc[i,50]),2) and round(abs(data_t.iloc[i,50]),2) < round(abs(data_t.iloc[i,0]),2):
-        zero_rxns.append(data_t.iloc[i,0])
-        half_rxns.append(data_t.iloc[i,50])
-        max_rxns.append(data_t.iloc[i,90])
-        rxns.append(indices[i])
-print(zero_rxns)
-print(max_rxns)
-print(half_rxns)
-#print(len(rxns))
-#print(rxns)
-## add groups to the models from the alpha core model
-groups=[]
-names=[]
-for i in core_model.reactions:
-        for j in range(len(rxns)):
-            if rxns[j]==i.id:
-                a=core_model.get_associated_groups(i)
-                b=core_model.reactions.get_by_id(i.id).name
-                groups.append(a)
-                names.append(b)
-df=pd.DataFrame(rxns)
-df.columns=['reactions']
-df['groups']=groups
-df['names']=names
-df['zero']=zero_rxns
-df['half']=half_rxns
-df['max']=max_rxns
-#print(df)
-df.to_csv('/Users/subasrees/Desktop/FluxMap_Workshop/csvs/h2o2_tri_inv.csv')
-
-bars1 = round(data.iloc[0,:],2)
-bars1_df=pd.DataFrame([bars1])
-bars1_df=bars1_df.T
-bars1_df['Rxns_zero']=bars1_df.index
-bars1_df.columns=['Fluxes_zero','Rxns_zero']
-bars1_df["Rxns_zero"] = bars1_df["Rxns_zero"].apply(lambda x: x+'_zero')
-bars1_df.reset_index(drop=True, inplace=True)
-
-bars2 = round(data.iloc[45,:],2)
-bars2_df=pd.DataFrame([bars2])
-bars2_df=bars2_df.T
-bars2_df['Rxns_half']=bars2_df.index
-bars2_df.columns=['Fluxes_half','Rxns_half']
-bars2_df["Rxns_half"] = bars2_df["Rxns_half"].apply(lambda x: x+'_half')
-bars2_df.reset_index(drop=True, inplace=True)
-
-bars3 = round(data.iloc[90,:],2)
-bars3_df=pd.DataFrame([bars3])
-bars3_df=bars3_df.T
-bars3_df['Rxns_max']=bars3_df.index
-bars3_df.columns=['Fluxes_max','Rxns_max']
-bars3_df["Rxns_max"] = bars3_df["Rxns_max"].apply(lambda x: x+'_max')
-bars3_df.reset_index(drop=True, inplace=True)
-
-s1=pd.Series(bars1_df['Rxns_zero'])
-s2=pd.Series(bars2_df['Rxns_half'])
-s3=pd.Series(bars3_df['Rxns_max'])
-df_rxns=pd.concat([s1, s2,s3],ignore_index=True)
-f1=pd.Series(bars1_df['Fluxes_zero'])
-f2=pd.Series(bars2_df['Fluxes_half'])
-f3=pd.Series(bars3_df['Fluxes_max'])
-df_fluxes=pd.concat([f1, f2, f3],ignore_index=True)
-df=pd.DataFrame([df_rxns,df_fluxes])
-df_n2=df.T
-df_n2.columns=['Reactions','Fluxes']
-#print(df_n2)
-#df_n2.to_csv('/Users/subasrees/Desktop/FluxMap_Workshop/csvs/photon_oh.csv')
+#df.to_excel('/Users/subasrees/Desktop/FluxMap_Workshop/heatmap_o2s.xlsx')

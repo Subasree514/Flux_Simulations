@@ -212,7 +212,7 @@ core_model.add_reactions([reaction])
 ## https://www.sciencedirect.com/science/article/pii/S1674205214605724#cesec40
 reaction = Reaction('Sucrose_tr')
 reaction.name = 'Sucrose transport'
-#reaction.subsystem = 'sucrosedegradationIII'
+reaction.subsystem = 'Arabidopsis thaliana col Transport Reactions'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 reaction.add_metabolites({core_model.metabolites.get_by_id ('SUCROSE_c'): -1.0,core_model.metabolites.get_by_id ('SUCROSE_e'): 1.0})
@@ -221,7 +221,7 @@ core_model.add_reactions([reaction])
 ## https://pmn.plantcyc.org/ARA/class-tree?object=Transport-Reactions#
 reaction = Reaction('GLC_tr')
 reaction.name = 'Glucose transport'
-#reaction.subsystem = 'sucrosedegradationIII'
+reaction.subsystem = 'Arabidopsis thaliana col Transport Reactions'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 reaction.add_metabolites({core_model.metabolites.get_by_id('GLC_c'): -1.0,core_model.metabolites.get_by_id ('GLC_e'): 1.0})
@@ -230,7 +230,7 @@ print(reaction.reaction)
 ##
 reaction = Reaction('FRU_tr')
 reaction.name = 'Fructose transport'
-#reaction.subsystem = 'sucrosedegradationIII'
+reaction.subsystem = 'Arabidopsis thaliana col Transport Reactions'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 reaction.add_metabolites({core_model.metabolites.get_by_id('FRU_c'): -1.0,core_model.metabolites.get_by_id ('FRU_e'): 1.0})
@@ -239,7 +239,7 @@ print(reaction.reaction)
 ##
 reaction = Reaction('MALTOSE_ec')
 reaction.name = 'Maltose transport'
-#reaction.subsystem = 'sucrosedegradationIII'
+reaction.subsystem = 'Arabidopsis thaliana col Transport Reactions'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 reaction.add_metabolites({core_model.metabolites.get_by_id('MALTOSE_c'): -1.0,core_model.metabolites.get_by_id ('MALTOSE_e'): 1.0})
