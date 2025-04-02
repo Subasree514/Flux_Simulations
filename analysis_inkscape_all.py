@@ -87,7 +87,7 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
             tests=['Glutathione_Tr_1','Glutathione_Tr_2','Glutathione_Tr_3','GLUTATHIONE-SYN-RXN-1','GLUTCYSLIG-RXN','DM_GLUTATHIONE_c']
             primary_dark=primary_1+primary_4
             primary_sugar=primary_2+primary_3
-            solution_primary.append(solution.fluxes[tests])
+            solution_primary.append(solution.fluxes[primary_dark])
             reaction_obj2.bounds = (0, 1000.0)
         elif metric == 'euclidean':
 
@@ -249,7 +249,7 @@ core_model.add_boundary(core_model.metabolites.get_by_id("GLUTATHIONE_c"), type=
 
 ##Constraints
 rubisco = core_model.problem.Constraint(3 * core_model.reactions.get_by_id("RXN_961_p").flux_expression - core_model.reactions.get_by_id("RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p").flux_expression,lb=0, ub=0,)
-#core_model.add_cons_vars([rubisco])
+core_model.add_cons_vars([rubisco])
 #h2o2_m = core_model.problem.Constraint(50 * core_model.reactions.get_by_id("H2O2_m_demand").flux_expression - core_model.reactions.get_by_id("H2O2_x_demand").flux_expression,lb=0, ub=0,)
 #core_model.add_cons_vars([h2o2_m])
 #h2o2_p = core_model.problem.Constraint(2 * core_model.reactions.get_by_id("H2O2_p_demand").flux_expression - core_model.reactions.get_by_id("H2O2_x_demand").flux_expression,lb=0, ub=0,)
@@ -282,7 +282,7 @@ bars2_df.columns=['Fluxes_half','Rxns_half']
 bars2_df["Rxns_half"] = bars2_df["Rxns_half"].apply(lambda x: x+'_half')
 bars2_df.reset_index(drop=True, inplace=True)
 
-bars3 = round(data.iloc[90,:],2)
+bars3 = round(data.iloc[100,:],2)
 bars3_df=pd.DataFrame([bars3])
 bars3_df=bars3_df.T
 bars3_df['Rxns_max']=bars3_df.index
