@@ -125,8 +125,6 @@ core_model.add_metabolites([
     formula='C10H16N3O6S',
     charge=-1),
     ])
-core_model.add_boundary(core_model.metabolites.get_by_id("TYR_c"), type="demand")
-core_model.add_boundary(core_model.metabolites.get_by_id("pTYR_c"), type="demand")
 reaction = Reaction('CWINV1')
 reaction.name = 'Extracellular invertase'
 reaction.subsystem = 'sucrosedegradationIII'
@@ -226,6 +224,9 @@ reaction.add_metabolites({core_model.metabolites.get_by_id('GLUTATHIONE_c'): -1.
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
 ##
+alpha_day_RS_DM=core_model
+save_matlab_model(alpha_day_RS_DM, "alpha_day_RS_DM.mat")
+##
 reaction = Reaction('ROS_demand')
 reaction.name = 'Combined ROS Effect'
 reaction.subsystem = 'Cellular damage'
@@ -265,8 +266,6 @@ rubisco = core_model.problem.Constraint(3 * core_model.reactions.get_by_id("RXN_
 #core_model.add_cons_vars([Cell_death])
 #https://doi.org/10.1093/jxb/erm298
 #core_model.add_boundary(core_model.metabolites.get_by_id("GLUTATHIONE_c"), type="demand")
-alpha_day_RS_DM=core_model
-save_matlab_model(alpha_day_RS_DM, "alpha_day_RS_DM.mat")
 ## plot pareto plot
 objective1 =  'DM_HYDROGEN_PEROXIDE_cell'
 objective2 =  'AraCore_Biomass_tx'
@@ -314,7 +313,7 @@ reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 reaction.add_metabolites({core_model.metabolites.get_by_id ('PROTON_c'): -1.0,core_model.metabolites.get_by_id ('TYR_tRNAs_c'): -1.0,core_model.metabolites.get_by_id ('tyr_L_r_c'): -1.0})
 #print(reaction.reaction) 
-core_model.add_reactions([reaction])
+#core_model.add_reactions([reaction])
 ##
 reaction = Reaction('pTYR_biomass_incomplete_2')
 reaction.name = 'pTYR_biomass_RS'
@@ -323,7 +322,7 @@ reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 reaction.add_metabolites({core_model.metabolites.get_by_id ('PROTON_c'): -1.0,core_model.metabolites.get_by_id ('TYR_tRNAs_c'): -1.0,core_model.metabolites.get_by_id ('C9H10BrNO3_c'): -1.0})
 #print(reaction.reaction) 
-core_model.add_reactions([reaction])
+#core_model.add_reactions([reaction])
 ##
 reaction = Reaction('pTRP_biomass_incomplete')
 reaction.name = 'pTRP_biomass_RS'
@@ -332,7 +331,7 @@ reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 reaction.add_metabolites({core_model.metabolites.get_by_id ('PROTON_c'): -1.0,core_model.metabolites.get_by_id ('TRP_tRNAs_c'): -1.0,core_model.metabolites.get_by_id ('trp-adduct_c'): -1.0})
 #print(reaction.reaction) 
-core_model.add_reactions([reaction])
+#core_model.add_reactions([reaction])
 ##
 reaction = Reaction('pPHE_biomass_incomplete_1')
 reaction.name = 'pPHE_biomass_RS'
@@ -341,7 +340,7 @@ reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 reaction.add_metabolites({core_model.metabolites.get_by_id ('PROTON_c'): -1.0,core_model.metabolites.get_by_id ('PHE_tRNAs_c'): -1.0,core_model.metabolites.get_by_id ('c9h11no3_c'): -1.0})
 #print(reaction.reaction) 
-core_model.add_reactions([reaction])
+#core_model.add_reactions([reaction])
 ##
 reaction = Reaction('pPHE_biomass_incomplete_2')
 reaction.name = 'pPHE_biomass_RS'
@@ -350,7 +349,7 @@ reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 reaction.add_metabolites({core_model.metabolites.get_by_id ('PROTON_c'): -1.0,core_model.metabolites.get_by_id ('PHE_tRNAs_c'): -1.0,core_model.metabolites.get_by_id ('c9h9n2o4_c'): -1.0})
 #print(reaction.reaction) 
-core_model.add_reactions([reaction])
+#core_model.add_reactions([reaction])
 ##
 reaction = Reaction('pVAL_biomass_incomplete')
 reaction.name = 'pVAL_biomass_RS'
@@ -359,4 +358,4 @@ reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 reaction.add_metabolites({core_model.metabolites.get_by_id ('PROTON_c'): -1.0,core_model.metabolites.get_by_id ('VAL_tRNAs_c'): -1.0,core_model.metabolites.get_by_id ('val-hydroperoxide_c'): -1.0})
 #print(reaction.reaction) 
-core_model.add_reactions([reaction])
+#core_model.add_reactions([reaction])

@@ -644,7 +644,7 @@ reaction.add_metabolites({core_model.metabolites.get_by_id('co3_r_c'): -1.0,core
 print(reaction.reaction) 
 core_model.add_reactions([reaction])
 alpha_day_RS_DM=core_model
-save_matlab_model(alpha_day_RS_DM, "/home/subasree/Desktop/Models_to_work/alpha_day_RS_DM.mat")
+#save_matlab_model(alpha_day_RS_DM, "/home/subasree/Desktop/Models_to_work/alpha_day_RS_DM.mat")
 save_matlab_model(alpha_day_RS_DM, "alpha_day_RS_DM.mat")
 
 sol = alpha_day_RS_DM.optimize()
