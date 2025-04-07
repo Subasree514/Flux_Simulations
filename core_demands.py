@@ -25,8 +25,8 @@ from cobra.flux_analysis import flux_variability_analysis
 import matplotlib.pyplot as plt
 from cobra.io import load_json_model, save_json_model, load_matlab_model, save_matlab_model, read_sbml_model, write_sbml_model
 
-alpha_day = cobra.io.load_matlab_model(join("/home/subasree/Desktop/Models_to_work/alpha_day.mat"))
-
+#alpha_day = cobra.io.load_matlab_model(join("/home/subasree/Desktop/Models_to_work/alpha_day.mat"))
+alpha_day = cobra.io.load_matlab_model(join("alpha_day.mat"))
 core_model=alpha_day
 
 ## Initialize demand metabolites for each RS
@@ -179,7 +179,7 @@ reaction.upper_bound = 1000.  # This is the default
 ##
 
 alpha_day_DM=core_model
-save_matlab_model(alpha_day_DM, "/home/subasree/Desktop/Models_to_work/alpha_day_DM.mat")
+#save_matlab_model(alpha_day_DM, "/home/subasree/Desktop/Models_to_work/alpha_day_DM.mat")
 save_matlab_model(alpha_day_DM, "alpha_day_DM.mat")
 
 sol = alpha_day_DM.optimize()
