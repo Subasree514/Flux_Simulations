@@ -93,7 +93,7 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
         reaction_obj2.bounds = (0, 1000.0)
     return result_list
 
-model_rs = cobra.io.load_matlab_model(join('alpha_day_RS_DM.mat'))
+model_rs = cobra.io.load_matlab_model(join('alpha_day_DM.mat'))
 core_model=model_rs
 
 ##
@@ -102,7 +102,7 @@ reaction.name = 'Combined ROS Effect'
 reaction.subsystem = 'Cellular damage'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('HYDROGEN_PEROXIDE_cell'): -1.0,core_model.metabolites.get_by_id ('SUPER_OXIDE_cell'): -1.0,core_model.metabolites.get_by_id('CPD-12377_cell'): -1.0,core_model.metabolites.get_by_id ('ho2_rad_p'): -1.0})
+#reaction.add_metabolites({core_model.metabolites.get_by_id ('HYDROGEN_PEROXIDE_cell'): -1.0,core_model.metabolites.get_by_id ('SUPER_OXIDE_cell'): -1.0,core_model.metabolites.get_by_id('CPD-12377_cell'): -1.0,core_model.metabolites.get_by_id ('ho2_rad_p'): -1.0})
 #print(reaction.reaction) 
 #core_model.add_reactions([reaction])
 ##
@@ -113,18 +113,19 @@ reaction.name = 'Combined RNS Effect'
 reaction.subsystem = 'Cellular damage'
 reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
-reaction.add_metabolites({core_model.metabolites.get_by_id ('CPD0-1395_cell'): -1.0,core_model.metabolites.get_by_id ('NITRIC-OXIDE_cell'): -1.0})#,core_model.metabolites.get_by_id ('no2_rad_cell'): -1.0})
+#reaction.add_metabolites({core_model.metabolites.get_by_id ('CPD0-1395_cell'): -1.0,core_model.metabolites.get_by_id ('NITRIC-OXIDE_cell'): -1.0})#,core_model.metabolites.get_by_id ('no2_rad_cell'): -1.0})
 #print(reaction.reaction) 
 #core_model.add_reactions([reaction])
 ##
 ##Constraints
 rubisco = core_model.problem.Constraint(3 * core_model.reactions.get_by_id("RXN_961_p").flux_expression - core_model.reactions.get_by_id("RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p").flux_expression,lb=0, ub=0,)
-#core_model.add_cons_vars([rubisco])
-#h2o2_m = core_model.problem.Constraint(50 * core_model.reactions.get_by_id("H2O2_m_demand").flux_expression - core_model.reactions.get_by_id("H2O2_x_demand").flux_expression,lb=0, ub=0,)
-#core_model.add_cons_vars([h2o2_m])
-#h2o2_p = core_model.problem.Constraint(2 * core_model.reactions.get_by_id("H2O2_p_demand").flux_expression - core_model.reactions.get_by_id("H2O2_x_demand").flux_expression,lb=0, ub=0,)
-#core_model.add_cons_vars([h2o2_p])
-#Cell_death = core_model.problem.Constraint(core_model.reactions.get_by_id("RNS_demand").flux_expression + core_model.reactions.get_by_id("ROS_demand").flux_expression - core_model.reactions.get_by_id("DM_HS_cell").flux_expression, lb=0, ub=0)
+core_model.add_cons_vars([rubisco])
+## 
+atp = core_model.problem.Constraint((0.0049*core_model.reactions.get_by_id("Photon_tx").flux_expression+2.7851)-core_model.reactions.get_by_id("ATPase_tx").flux_expression, lb=0, ub=0)
+core_model.add_cons_vars(atp)
+##
+atp_nadph_03 = core_model.problem.Constraint(3 * (core_model.reactions.get_by_id("NADPHoxm_tx").flux_expression + core_model.reactions.get_by_id("NADPHoxc_tx").flux_expression + core_model.reactions.get_by_id("NADPHoxp_tx").flux_expression) - core_model.reactions.get_by_id("ATPase_tx").flux_expression, lb=0, ub=0)
+core_model.add_cons_vars(atp_nadph_03)
 
 #GLN_damage = core_model.problem.Constraint(core_model.reactions.get_by_id("pGLN_biomass_incomplete").flux_expression - core_model.reactions.get_by_id("pGLN_biomass").flux_expression,lb=0, ub=0,)
 #core_model.add_cons_vars([GLN_damage])
@@ -138,7 +139,7 @@ rubisco = core_model.problem.Constraint(3 * core_model.reactions.get_by_id("RXN_
 #core_model.add_boundary(core_model.metabolites.get_by_id("GLUTATHIONE_c"), type="demand")
 ## plot pareto plot
 objective1 =  'DM_HYDROGEN_PEROXIDE_cell'
-objective2 =  'AraCore_Biomass_tx'
+objective2 =  'ATPase_tx'
 solution_primary=pareto_analysis(core_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
 #pd.DataFrame(result_list).to_excel('results.xlsx')
 data=pd.DataFrame(solution_primary)

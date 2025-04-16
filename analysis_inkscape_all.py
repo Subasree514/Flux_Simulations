@@ -84,10 +84,10 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
             primary_11=['RXN1F_66_p','RXN_7674_p','RXN_7676_p','RXN_7677_p','RXN_7678_NADP_p','RXN_7678_NAD_p','RXN_7679_p']
             primary_12=['Ca_tx','H_tx','H2O_tx','K_tx','Mg_tx','Pi_tx','SO4_tx','Nitrate_tx']
             primary_13=['ATPase_tx','NADPHoxc_tx','NADPHoxm_tx','NADPHoxp_tx']
-            tests=['Glutathione_Tr_1','Glutathione_Tr_2','Glutathione_Tr_3','GLUTATHIONE-SYN-RXN-1','GLUTCYSLIG-RXN','DM_GLUTATHIONE_c']
+            #tests=['Glutathione_Tr_1','Glutathione_Tr_2','Glutathione_Tr_3','GLUTATHIONE-SYN-RXN-1','GLUTCYSLIG-RXN','DM_GLUTATHIONE_c']
             primary_dark=primary_1+primary_4
             primary_sugar=primary_2+primary_3
-            solution_primary.append(solution.fluxes[primary_dark])
+            solution_primary.append(solution.fluxes[primary_anti_2])
             reaction_obj2.bounds = (0, 1000.0)
         elif metric == 'euclidean':
 
@@ -121,15 +121,15 @@ core_model=model_rs
 
 ##Constraints
 rubisco = core_model.problem.Constraint(3 * core_model.reactions.get_by_id("RXN_961_p").flux_expression - core_model.reactions.get_by_id("RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p").flux_expression,lb=0, ub=0,)
-#core_model.add_cons_vars([rubisco])
-#h2o2_m = core_model.problem.Constraint(50 * core_model.reactions.get_by_id("H2O2_m_demand").flux_expression - core_model.reactions.get_by_id("H2O2_x_demand").flux_expression,lb=0, ub=0,)
-#core_model.add_cons_vars([h2o2_m])
-#h2o2_p = core_model.problem.Constraint(2 * core_model.reactions.get_by_id("H2O2_p_demand").flux_expression - core_model.reactions.get_by_id("H2O2_x_demand").flux_expression,lb=0, ub=0,)
-#core_model.add_cons_vars([h2o2_p])
-#Ser_damage = core_model.problem.Constraint(core_model.reactions.get_by_id("pSER_biomass_incomplete").flux_expression - core_model.reactions.get_by_id("pSER_biomass").flux_expression,lb=0, ub=0,)
-#core_model.add_cons_vars([Ser_damage])
+core_model.add_cons_vars([rubisco])
+
+atp = core_model.problem.Constraint((0.0049*core_model.reactions.get_by_id("Photon_tx").flux_expression+2.7851)-core_model.reactions.get_by_id("ATPase_tx").flux_expression, lb=0, ub=0)
+core_model.add_cons_vars(atp)
+
+atp_nadph_03 = core_model.problem.Constraint(3 * (core_model.reactions.get_by_id("NADPHoxm_tx").flux_expression + core_model.reactions.get_by_id("NADPHoxc_tx").flux_expression + core_model.reactions.get_by_id("NADPHoxp_tx").flux_expression) - core_model.reactions.get_by_id("ATPase_tx").flux_expression, lb=0, ub=0)
+core_model.add_cons_vars(atp_nadph_03)
 #10.1111/pce.12932
-#core_model.add_boundary(core_model.metabolites.get_by_id("FeII_e"), type="sink")
+
 
 ## plot pareto plot
 objective1 =  'DM_HYDROGEN_PEROXIDE_cell'#ho2_rad_p_demand tput_tx AraCore_Biomass_tx DM_HS_cell DM_CPD0-1395_cell'DM_SUPER_OXIDE_cell'#'DM_NITRIC-OXIDE_cell'#'DM_CPD-12377_cell'#'DM_HYDROGEN_PEROXIDE_cell'
