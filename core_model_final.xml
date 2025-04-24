@@ -5968,6 +5968,8 @@
       <species id="M_CPD_330_c" name="L-galactono-1,4-lactone" compartment="c" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="0" fbc:chemicalFormula="C6H10O6"/>
       <species id="M_CPD_330_m" name="L-galactono-1,4-lactone" compartment="m" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="0" fbc:chemicalFormula="C6H10O6"/>
       <species id="M_ASCORBATE_c" name="ASCORBATE" compartment="c" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="-1" fbc:chemicalFormula="C6H7O6"/>
+      <species id="M_FRU_e" name="Fructose" compartment="e" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="0" fbc:chemicalFormula="C6H12O6"/>
+      <species id="M_MALTOSE_e" name="Maltose" compartment="e" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="0" fbc:chemicalFormula="C12H22O11"/>
     </listOfSpecies>
     <listOfParameters>
       <parameter sboTerm="SBO:0000626" id="cobra_default_lb" value="-1000" constant="true"/>
@@ -24249,66 +24251,70 @@
           <speciesReference species="M_GLUTATHIONE_m" stoichiometry="1" constant="true"/>
         </listOfProducts>
       </reaction>
-      <reaction id="R_Arabidopsis_biomass_tx" name="Arabidopsis biomass" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+      <reaction id="R_CWINV1" name="Extracellular invertase" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
         <listOfReactants>
-          <speciesReference species="M_STARCH_p" stoichiometry="9.632401392" constant="true"/>
-          <speciesReference species="M_MALTOSE_c" stoichiometry="0.0948548" constant="true"/>
-          <speciesReference species="M_GLC_c" stoichiometry="0.671675709" constant="true"/>
-          <speciesReference species="M_SUCROSE_c" stoichiometry="1.114754905" constant="true"/>
-          <speciesReference species="M_FRU_c" stoichiometry="0.437452783" constant="true"/>
-          <speciesReference species="M_CELLULOSE_c" stoichiometry="11.08634877" constant="true"/>
-          <speciesReference species="M_MAL_c" stoichiometry="1.853652418" constant="true"/>
-          <speciesReference species="M_PALMITATE_c" stoichiometry="0.945065797" constant="true"/>
-          <speciesReference species="M_GLN_c" stoichiometry="1.863389867" constant="true"/>
-          <speciesReference species="M_L_ASPARTATE_c" stoichiometry="3.672600202" constant="true"/>
-          <speciesReference species="M_GLT_c" stoichiometry="4.230769147" constant="true"/>
-          <speciesReference species="M_ASN_c" stoichiometry="2.564148885" constant="true"/>
-          <speciesReference species="M_SER_c" stoichiometry="5.361376804" constant="true"/>
-          <speciesReference species="M_CYS_c" stoichiometry="1.131082371" constant="true"/>
-          <speciesReference species="M_THR_c" stoichiometry="4.968250878" constant="true"/>
-          <speciesReference species="M_GLY_c" stoichiometry="9.940737468" constant="true"/>
-          <speciesReference species="M_MET_c" stoichiometry="1.221859939" constant="true"/>
-          <speciesReference species="M_PRO_c" stoichiometry="3.926998465" constant="true"/>
-          <speciesReference species="M_CTP_p" stoichiometry="0.01804276" constant="true"/>
-          <speciesReference species="M_GTP_c" stoichiometry="0.014713221" constant="true"/>
-          <speciesReference species="M_DATP_p" stoichiometry="0.024750183" constant="true"/>
-          <speciesReference species="M_DCTP_p" stoichiometry="0.01467251" constant="true"/>
-          <speciesReference species="M_DGTP_p" stoichiometry="0.013500265" constant="true"/>
-          <speciesReference species="M_DTTP_c" stoichiometry="0.025182732" constant="true"/>
-          <speciesReference species="M_L_ALPHA_ALANINE_c" stoichiometry="8.384587038" constant="true"/>
-          <speciesReference species="M_ARG_c" stoichiometry="2.714609903" constant="true"/>
-          <speciesReference species="M_LYS_c" stoichiometry="3.765488174" constant="true"/>
-          <speciesReference species="M_HIS_c" stoichiometry="1.208386572" constant="true"/>
-          <speciesReference species="M_ILE_c" stoichiometry="3.265088194" constant="true"/>
-          <speciesReference species="M_LEU_c" stoichiometry="5.771122439" constant="true"/>
-          <speciesReference species="M_PHE_c" stoichiometry="2.423066192" constant="true"/>
-          <speciesReference species="M_TRP_c" stoichiometry="0.613239747" constant="true"/>
-          <speciesReference species="M_TYR_c" stoichiometry="1.709449916" constant="true"/>
-          <speciesReference species="M_VAL_c" stoichiometry="5.316679553" constant="true"/>
+          <speciesReference species="M_SUCROSE_e" stoichiometry="1" constant="true"/>
+          <speciesReference species="M_WATER_e" stoichiometry="1" constant="true"/>
         </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="M_GLC_e" stoichiometry="1" constant="true"/>
+          <speciesReference species="M_FRU_e" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="R_Sucrose_tr" name="Sucrose transport" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+        <listOfReactants>
+          <speciesReference species="M_SUCROSE_c" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="M_SUCROSE_e" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="R_GLC_tr" name="Glucose transport" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+        <listOfReactants>
+          <speciesReference species="M_GLC_c" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="M_GLC_e" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="R_FRU_tr" name="Fructose transport" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+        <listOfReactants>
+          <speciesReference species="M_FRU_c" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="M_FRU_e" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="R_MALTOSE_ec" name="Maltose transport" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+        <listOfReactants>
+          <speciesReference species="M_MALTOSE_c" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="M_MALTOSE_e" stoichiometry="1" constant="true"/>
+        </listOfProducts>
       </reaction>
     </listOfReactions>
     <fbc:listOfObjectives fbc:activeObjective="obj">
       <fbc:objective fbc:id="obj" fbc:type="maximize">
         <fbc:listOfFluxObjectives>
-          <fbc:fluxObjective fbc:reaction="R_Arabidopsis_biomass_tx" fbc:coefficient="1"/>
+          <fbc:fluxObjective fbc:reaction="R_AraCore_Biomass_tx" fbc:coefficient="1"/>
         </fbc:listOfFluxObjectives>
       </fbc:objective>
     </fbc:listOfObjectives>
     <groups:listOfGroups>
       <groups:group groups:id="G_ALACAT2__45__PWY" groups:name="L-alanine degradation II (to D-lactate)" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="ALANINE-AMINOTRANSFERASE-RXN:Alanine aminotransferase" groups:idRef="R_ALANINE_AMINOTRANSFERASE_RXN_x"/>
+          <groups:member groups:name="GLUTAMATE-DEHYDROGENASE-RXN:Glutamate dehydrogenase" groups:idRef="R_GLUTAMATE_DEHYDROGENASE_RXN_m"/>
           <groups:member groups:name="ALANINE-AMINOTRANSFERASE-RXN:Alanine aminotransferase" groups:idRef="R_ALANINE_AMINOTRANSFERASE_RXN_m"/>
           <groups:member groups:name="ALANINE-AMINOTRANSFERASE-RXN:Alanine aminotransferase" groups:idRef="R_ALANINE_AMINOTRANSFERASE_RXN_c"/>
-          <groups:member groups:name="GLUTAMATE-DEHYDROGENASE-RXN:Glutamate dehydrogenase" groups:idRef="R_GLUTAMATE_DEHYDROGENASE_RXN_m"/>
+          <groups:member groups:name="ALANINE-AMINOTRANSFERASE-RXN:Alanine aminotransferase" groups:idRef="R_ALANINE_AMINOTRANSFERASE_RXN_x"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_ALANINE__45__SYN2__45__PWY" groups:name="L-alanine biosynthesis II" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="ALANINE-AMINOTRANSFERASE-RXN:Alanine aminotransferase" groups:idRef="R_ALANINE_AMINOTRANSFERASE_RXN_x"/>
           <groups:member groups:name="ALANINE-AMINOTRANSFERASE-RXN:Alanine aminotransferase" groups:idRef="R_ALANINE_AMINOTRANSFERASE_RXN_m"/>
           <groups:member groups:name="ALANINE-AMINOTRANSFERASE-RXN:Alanine aminotransferase" groups:idRef="R_ALANINE_AMINOTRANSFERASE_RXN_c"/>
+          <groups:member groups:name="ALANINE-AMINOTRANSFERASE-RXN:Alanine aminotransferase" groups:idRef="R_ALANINE_AMINOTRANSFERASE_RXN_x"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_ANAGLYCOLYSIS__45__PWY" groups:name="glycolysis III (from glucose)" groups:kind="collection">
@@ -24324,39 +24330,39 @@
       </groups:group>
       <groups:group groups:id="G_ARG__45__PRO__45__PWY" groups:name="L-arginine degradation VI (arginase 2 pathway)" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="PYRROLINECARBREDUCT-RXN:Pyrroline-5-carboxylate reductase" groups:idRef="R_PYRROLINECARBREDUCT_RXN_NAD_c"/>
-          <groups:member groups:name="SPONTPRO-RXN:NIL" groups:idRef="R_SPONTPRO_RXN_m"/>
-          <groups:member groups:name="PYRROLINECARBREDUCT-RXN:Pyrroline-5-carboxylate reductase" groups:idRef="R_PYRROLINECARBREDUCT_RXN_NADP_c"/>
           <groups:member groups:name="ORNITHINE-GLU-AMINOTRANSFORASE-RXN:Ornithine--oxo-acid aminotransferase" groups:idRef="R_ORNITHINE_GLU_AMINOTRANSFORASE_RXN_m"/>
+          <groups:member groups:name="PYRROLINECARBREDUCT-RXN:Pyrroline-5-carboxylate reductase" groups:idRef="R_PYRROLINECARBREDUCT_RXN_NADP_c"/>
           <groups:member groups:name="SPONTPRO-RXN:NIL" groups:idRef="R_SPONTPRO_RXN_c"/>
           <groups:member groups:name="ARGINASE-RXN:Arginase" groups:idRef="R_ARGINASE_RXN_m"/>
+          <groups:member groups:name="PYRROLINECARBREDUCT-RXN:Pyrroline-5-carboxylate reductase" groups:idRef="R_PYRROLINECARBREDUCT_RXN_NAD_c"/>
+          <groups:member groups:name="SPONTPRO-RXN:NIL" groups:idRef="R_SPONTPRO_RXN_m"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_ARGASEDEG__45__PWY" groups:name="L-arginine degradation I (arginase pathway)" groups:kind="collection">
         <groups:listOfMembers>
           <groups:member groups:name="ORNITHINE-GLU-AMINOTRANSFORASE-RXN:Ornithine--oxo-acid aminotransferase" groups:idRef="R_ORNITHINE_GLU_AMINOTRANSFORASE_RXN_m"/>
-          <groups:member groups:name="ARGINASE-RXN:Arginase" groups:idRef="R_ARGINASE_RXN_m"/>
-          <groups:member groups:name="SPONTPRO-RXN:NIL" groups:idRef="R_SPONTPRO_RXN_c"/>
           <groups:member groups:name="SPONTPRO-RXN:NIL" groups:idRef="R_SPONTPRO_RXN_m"/>
+          <groups:member groups:name="SPONTPRO-RXN:NIL" groups:idRef="R_SPONTPRO_RXN_c"/>
+          <groups:member groups:name="ARGINASE-RXN:Arginase" groups:idRef="R_ARGINASE_RXN_m"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_ARGSYN__45__PWY" groups:name="L-arginine biosynthesis I (via L-ornithine)" groups:kind="collection">
         <groups:listOfMembers>
           <groups:member groups:name="ORNITHINE-GLU-AMINOTRANSFORASE-RXN:Ornithine--oxo-acid aminotransferase" groups:idRef="R_ORNITHINE_GLU_AMINOTRANSFORASE_RXN_m"/>
-          <groups:member groups:name="ARGSUCCINSYN-RXN:argininosuccinate synthetase" groups:idRef="R_ARGSUCCINSYN_RXN_p"/>
-          <groups:member groups:name="ORNCARBAMTRANSFER-RXN:Ornithine carbamoyltransferase" groups:idRef="R_ORNCARBAMTRANSFER_RXN_p"/>
           <groups:member groups:name="ARGSUCCINLYA-RXN:Argininosuccinate lyase" groups:idRef="R_ARGSUCCINLYA_RXN_p"/>
+          <groups:member groups:name="ORNCARBAMTRANSFER-RXN:Ornithine carbamoyltransferase" groups:idRef="R_ORNCARBAMTRANSFER_RXN_p"/>
+          <groups:member groups:name="ARGSUCCINSYN-RXN:argininosuccinate synthetase" groups:idRef="R_ARGSUCCINSYN_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_ARGSYNBSUB__45__PWY" groups:name="L-arginine biosynthesis II (acetyl cycle)" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="ARGSUCCINSYN-RXN:argininosuccinate synthetase" groups:idRef="R_ARGSUCCINSYN_RXN_p"/>
-          <groups:member groups:name="ACETYLORNTRANSAM-RXN:Acetylornithine aminotransferase" groups:idRef="R_ACETYLORNTRANSAM_RXN_p"/>
-          <groups:member groups:name="ACETYLGLUTKIN-RXN:Acetylglutamate kinase" groups:idRef="R_ACETYLGLUTKIN_RXN_p"/>
-          <groups:member groups:name="N-ACETYLGLUTPREDUCT-RXN:N-acetyl-&amp;gamma;-glutamyl-phosphate reductase" groups:idRef="R_N_ACETYLGLUTPREDUCT_RXN_p"/>
-          <groups:member groups:name="ORNCARBAMTRANSFER-RXN:Ornithine carbamoyltransferase" groups:idRef="R_ORNCARBAMTRANSFER_RXN_p"/>
           <groups:member groups:name="GLUTAMATE-N-ACETYLTRANSFERASE-RXN:Glutamate N-acetyltransferase" groups:idRef="R_GLUTAMATE_N_ACETYLTRANSFERASE_RXN_p"/>
           <groups:member groups:name="ARGSUCCINLYA-RXN:Argininosuccinate lyase" groups:idRef="R_ARGSUCCINLYA_RXN_p"/>
+          <groups:member groups:name="ACETYLORNTRANSAM-RXN:Acetylornithine aminotransferase" groups:idRef="R_ACETYLORNTRANSAM_RXN_p"/>
+          <groups:member groups:name="ACETYLGLUTKIN-RXN:Acetylglutamate kinase" groups:idRef="R_ACETYLGLUTKIN_RXN_p"/>
+          <groups:member groups:name="ORNCARBAMTRANSFER-RXN:Ornithine carbamoyltransferase" groups:idRef="R_ORNCARBAMTRANSFER_RXN_p"/>
+          <groups:member groups:name="N-ACETYLGLUTPREDUCT-RXN:N-acetyl-&amp;gamma;-glutamyl-phosphate reductase" groups:idRef="R_N_ACETYLGLUTPREDUCT_RXN_p"/>
+          <groups:member groups:name="ARGSUCCINSYN-RXN:argininosuccinate synthetase" groups:idRef="R_ARGSUCCINSYN_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_ASPARAGINE__45__DEG1__45__PWY" groups:name="L-asparagine degradation I" groups:kind="collection">
@@ -24371,36 +24377,36 @@
       </groups:group>
       <groups:group groups:id="G_ASPARTATE__45__DEG" groups:name="L-aspartate Degradation" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="ASPAMINOTRANS-RXN:Aspartate aminotransferase" groups:idRef="R_ASPAMINOTRANS_RXN_x"/>
           <groups:member groups:name="ASPAMINOTRANS-RXN:Aspartate aminotransferase" groups:idRef="R_ASPAMINOTRANS_RXN_m"/>
+          <groups:member groups:name="ASPAMINOTRANS-RXN:Aspartate aminotransferase" groups:idRef="R_ASPAMINOTRANS_RXN_x"/>
+          <groups:member groups:name="ASPAMINOTRANS-RXN:Aspartate aminotransferase" groups:idRef="R_ASPAMINOTRANS_RXN_p"/>
           <groups:member groups:name="ASPAMINOTRANS-RXN:Aspartate aminotransferase" groups:idRef="R_ASPAMINOTRANS_RXN_c"/>
           <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_p"/>
-          <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_c"/>
-          <groups:member groups:name="ASPAMINOTRANS-RXN:Aspartate aminotransferase" groups:idRef="R_ASPAMINOTRANS_RXN_p"/>
-          <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_x"/>
           <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_m"/>
+          <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_c"/>
+          <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_x"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_CALVIN__45__PWY" groups:name="Calvin-Benson-Bassham cycle" groups:kind="collection">
         <groups:listOfMembers>
           <groups:member groups:name="SEDOBISALDOL-RXN:NIL" groups:idRef="R_SEDOBISALDOL_RXN_p"/>
-          <groups:member groups:name="1.2.1.13-RXN:Glyceraldehyde-3-phosphate dehydrogenase (NADP+) (phosphorylating)" groups:idRef="R_1_PERIOD_2_PERIOD_1_PERIOD_13_RXN_p"/>
-          <groups:member groups:name="F16BDEPHOS-RXN:Fructose-bisphosphatase" groups:idRef="R_F16BDEPHOS_RXN_c"/>
-          <groups:member groups:name="PHOSGLYPHOS-RXN:Phosphoglycerate kinase" groups:idRef="R_PHOSGLYPHOS_RXN_c"/>
           <groups:member groups:name="SEDOHEPTULOSE-BISPHOSPHATASE-RXN:Sedoheptulose-bisphosphatase" groups:idRef="R_SEDOHEPTULOSE_BISPHOSPHATASE_RXN_p"/>
-          <groups:member groups:name="RIBULP3EPIM-RXN:ribulose phosphate 3-epimerase" groups:idRef="R_RIBULP3EPIM_RXN_c"/>
-          <groups:member groups:name="TRIOSEPISOMERIZATION-RXN:Triosephosphate isomerase" groups:idRef="R_TRIOSEPISOMERIZATION_RXN_p"/>
-          <groups:member groups:name="F16BDEPHOS-RXN:Fructose-bisphosphatase" groups:idRef="R_F16BDEPHOS_RXN_p"/>
           <groups:member groups:name="RIBULP3EPIM-RXN:ribulose phosphate 3-epimerase" groups:idRef="R_RIBULP3EPIM_RXN_p"/>
-          <groups:member groups:name="RIBULOSE-BISPHOSPHATE-CARBOXYLASE-RXN:Ribulose-bisphosphate carboxylase" groups:idRef="R_RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p"/>
-          <groups:member groups:name="RIB5PISOM-RXN:Ribose 5-phosphate epimerase" groups:idRef="R_RIB5PISOM_RXN_p"/>
-          <groups:member groups:name="1TRANSKETO-RXN:Transketolase" groups:idRef="R_1TRANSKETO_RXN_p"/>
-          <groups:member groups:name="PHOSGLYPHOS-RXN:Phosphoglycerate kinase" groups:idRef="R_PHOSGLYPHOS_RXN_p"/>
-          <groups:member groups:name="TRIOSEPISOMERIZATION-RXN:Triosephosphate isomerase" groups:idRef="R_TRIOSEPISOMERIZATION_RXN_c"/>
-          <groups:member groups:name="F16ALDOLASE-RXN:Fructose-bisphosphate aldolase" groups:idRef="R_F16ALDOLASE_RXN_c"/>
-          <groups:member groups:name="2TRANSKETO-RXN:Transketolase" groups:idRef="R_2TRANSKETO_RXN_p"/>
-          <groups:member groups:name="PHOSPHORIBULOKINASE-RXN:Phosphoribulokinase" groups:idRef="R_PHOSPHORIBULOKINASE_RXN_p"/>
           <groups:member groups:name="F16ALDOLASE-RXN:Fructose-bisphosphate aldolase" groups:idRef="R_F16ALDOLASE_RXN_p"/>
+          <groups:member groups:name="1TRANSKETO-RXN:Transketolase" groups:idRef="R_1TRANSKETO_RXN_p"/>
+          <groups:member groups:name="F16BDEPHOS-RXN:Fructose-bisphosphatase" groups:idRef="R_F16BDEPHOS_RXN_p"/>
+          <groups:member groups:name="RIBULOSE-BISPHOSPHATE-CARBOXYLASE-RXN:Ribulose-bisphosphate carboxylase" groups:idRef="R_RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p"/>
+          <groups:member groups:name="2TRANSKETO-RXN:Transketolase" groups:idRef="R_2TRANSKETO_RXN_p"/>
+          <groups:member groups:name="RIBULP3EPIM-RXN:ribulose phosphate 3-epimerase" groups:idRef="R_RIBULP3EPIM_RXN_c"/>
+          <groups:member groups:name="PHOSPHORIBULOKINASE-RXN:Phosphoribulokinase" groups:idRef="R_PHOSPHORIBULOKINASE_RXN_p"/>
+          <groups:member groups:name="TRIOSEPISOMERIZATION-RXN:Triosephosphate isomerase" groups:idRef="R_TRIOSEPISOMERIZATION_RXN_c"/>
+          <groups:member groups:name="F16BDEPHOS-RXN:Fructose-bisphosphatase" groups:idRef="R_F16BDEPHOS_RXN_c"/>
+          <groups:member groups:name="1.2.1.13-RXN:Glyceraldehyde-3-phosphate dehydrogenase (NADP+) (phosphorylating)" groups:idRef="R_1_PERIOD_2_PERIOD_1_PERIOD_13_RXN_p"/>
+          <groups:member groups:name="RIB5PISOM-RXN:Ribose 5-phosphate epimerase" groups:idRef="R_RIB5PISOM_RXN_p"/>
+          <groups:member groups:name="PHOSGLYPHOS-RXN:Phosphoglycerate kinase" groups:idRef="R_PHOSGLYPHOS_RXN_p"/>
+          <groups:member groups:name="TRIOSEPISOMERIZATION-RXN:Triosephosphate isomerase" groups:idRef="R_TRIOSEPISOMERIZATION_RXN_p"/>
+          <groups:member groups:name="F16ALDOLASE-RXN:Fructose-bisphosphate aldolase" groups:idRef="R_F16ALDOLASE_RXN_c"/>
+          <groups:member groups:name="PHOSGLYPHOS-RXN:Phosphoglycerate kinase" groups:idRef="R_PHOSGLYPHOS_RXN_c"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_CITRULLINE__45__DEG__45__PWY" groups:name="L-citrulline degradation" groups:kind="collection">
@@ -24411,25 +24417,25 @@
       </groups:group>
       <groups:group groups:id="G_COLANSYN__45__PWY" groups:name="colanic acid building blocks biosynthesis" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="MANNPISOM-RXN:Mannose-6-phosphate isomerase" groups:idRef="R_MANNPISOM_RXN_c"/>
-          <groups:member groups:name="UGD-RXN:NIL" groups:idRef="R_UGD_RXN_c"/>
-          <groups:member groups:name="GLUC1PURIDYLTRANS-RXN:UTP--glucose-1-phosphate uridylyltransferase" groups:idRef="R_GLUC1PURIDYLTRANS_RXN_c"/>
           <groups:member groups:name="2.7.7.13-RXN:Mannose-1-phosphate guanylyltransferase" groups:idRef="R_2_PERIOD_7_PERIOD_7_PERIOD_13_RXN_c"/>
+          <groups:member groups:name="UGD-RXN:NIL" groups:idRef="R_UGD_RXN_c"/>
+          <groups:member groups:name="MANNPISOM-RXN:Mannose-6-phosphate isomerase" groups:idRef="R_MANNPISOM_RXN_c"/>
+          <groups:member groups:name="GLUC1PURIDYLTRANS-RXN:UTP--glucose-1-phosphate uridylyltransferase" groups:idRef="R_GLUC1PURIDYLTRANS_RXN_c"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_CYANCAT__45__PWY" groups:name="cyanate degradation" groups:kind="collection">
         <groups:listOfMembers>
           <groups:member groups:name="RXN0-5224:NIL" groups:idRef="R_RXN0_5224_c"/>
-          <groups:member groups:name="RXN0-5224:NIL" groups:idRef="R_RXN0_5224_m"/>
           <groups:member groups:name="RXN0-5224:NIL" groups:idRef="R_RXN0_5224_p"/>
+          <groups:member groups:name="RXN0-5224:NIL" groups:idRef="R_RXN0_5224_m"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_CYSTSYN__45__PWY" groups:name="L-cysteine biosynthesis I" groups:kind="collection">
         <groups:listOfMembers>
           <groups:member groups:name="SERINE-O-ACETTRAN-RXN:Serine O-acetyltransferase" groups:idRef="R_SERINE_O_ACETTRAN_RXN_c"/>
           <groups:member groups:name="ACSERLY-RXN:Cysteine synthase" groups:idRef="R_ACSERLY_RXN_p"/>
-          <groups:member groups:name="ACSERLY-RXN:Cysteine synthase" groups:idRef="R_ACSERLY_RXN_c"/>
           <groups:member groups:name="SERINE-O-ACETTRAN-RXN:Serine O-acetyltransferase" groups:idRef="R_SERINE_O_ACETTRAN_RXN_p"/>
+          <groups:member groups:name="ACSERLY-RXN:Cysteine synthase" groups:idRef="R_ACSERLY_RXN_c"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_Choline__45__Biosynthesis" groups:name="Choline Biosynthesis" groups:kind="collection">
@@ -24439,30 +24445,30 @@
       </groups:group>
       <groups:group groups:id="G_Chorismate__45__Biosynthesis" groups:name="Chorismate Biosynthesis" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="SHIKIMATE-5-DEHYDROGENASE-RXN:Shikimate 5-dehydrogenase" groups:idRef="R_SHIKIMATE_5_DEHYDROGENASE_RXN_p"/>
-          <groups:member groups:name="3-DEHYDROQUINATE-DEHYDRATASE-RXN:NIL" groups:idRef="R_3_DEHYDROQUINATE_DEHYDRATASE_RXN_p"/>
           <groups:member groups:name="CHORISMATE-SYNTHASE-RXN:Chorismate synthase" groups:idRef="R_CHORISMATE_SYNTHASE_RXN_p"/>
-          <groups:member groups:name="2.5.1.19-RXN:NIL" groups:idRef="R_2_PERIOD_5_PERIOD_1_PERIOD_19_RXN_p"/>
-          <groups:member groups:name="SHIKIMATE-KINASE-RXN:shikimate-kinase" groups:idRef="R_SHIKIMATE_KINASE_RXN_p"/>
-          <groups:member groups:name="DAHPSYN-RXN:2-dehydro-3-deoxyphosphoheptonate aldolase" groups:idRef="R_DAHPSYN_RXN_p"/>
+          <groups:member groups:name="SHIKIMATE-5-DEHYDROGENASE-RXN:Shikimate 5-dehydrogenase" groups:idRef="R_SHIKIMATE_5_DEHYDROGENASE_RXN_p"/>
           <groups:member groups:name="3-DEHYDROQUINATE-SYNTHASE-RXN:NIL" groups:idRef="R_3_DEHYDROQUINATE_SYNTHASE_RXN_p"/>
+          <groups:member groups:name="DAHPSYN-RXN:2-dehydro-3-deoxyphosphoheptonate aldolase" groups:idRef="R_DAHPSYN_RXN_p"/>
+          <groups:member groups:name="2.5.1.19-RXN:NIL" groups:idRef="R_2_PERIOD_5_PERIOD_1_PERIOD_19_RXN_p"/>
+          <groups:member groups:name="3-DEHYDROQUINATE-DEHYDRATASE-RXN:NIL" groups:idRef="R_3_DEHYDROQUINATE_DEHYDRATASE_RXN_p"/>
+          <groups:member groups:name="SHIKIMATE-KINASE-RXN:shikimate-kinase" groups:idRef="R_SHIKIMATE_KINASE_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_Citrulline__45__Biosynthesis" groups:name="L-citrulline Biosynthesis" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="SPONTPRO-RXN:NIL" groups:idRef="R_SPONTPRO_RXN_m"/>
-          <groups:member groups:name="GLUTKIN-RXN:Glutamate 5-kinase" groups:idRef="R_GLUTKIN_RXN_c"/>
-          <groups:member groups:name="ORNCARBAMTRANSFER-RXN:Ornithine carbamoyltransferase" groups:idRef="R_ORNCARBAMTRANSFER_RXN_p"/>
           <groups:member groups:name="ORNITHINE-GLU-AMINOTRANSFORASE-RXN:Ornithine--oxo-acid aminotransferase" groups:idRef="R_ORNITHINE_GLU_AMINOTRANSFORASE_RXN_m"/>
           <groups:member groups:name="SPONTPRO-RXN:NIL" groups:idRef="R_SPONTPRO_RXN_c"/>
           <groups:member groups:name="ARGINASE-RXN:Arginase" groups:idRef="R_ARGINASE_RXN_m"/>
+          <groups:member groups:name="GLUTKIN-RXN:Glutamate 5-kinase" groups:idRef="R_GLUTKIN_RXN_c"/>
+          <groups:member groups:name="ORNCARBAMTRANSFER-RXN:Ornithine carbamoyltransferase" groups:idRef="R_ORNCARBAMTRANSFER_RXN_p"/>
+          <groups:member groups:name="SPONTPRO-RXN:NIL" groups:idRef="R_SPONTPRO_RXN_m"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_DETOX1__45__PWY__45__1" groups:name="DETOX1-PWY-1" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="CATAL-RXN:Catalase" groups:idRef="R_CATAL_RXN_x"/>
-          <groups:member groups:name="SUPEROX-DISMUT-RXN:Superoxide dismutase" groups:idRef="R_SUPEROX_DISMUT_RXN_c"/>
           <groups:member groups:name="SUPEROX-DISMUT-RXN:Superoxide dismutase" groups:idRef="R_SUPEROX_DISMUT_RXN_p"/>
+          <groups:member groups:name="SUPEROX-DISMUT-RXN:Superoxide dismutase" groups:idRef="R_SUPEROX_DISMUT_RXN_c"/>
+          <groups:member groups:name="CATAL-RXN:Catalase" groups:idRef="R_CATAL_RXN_x"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_ETHYL__45__PWY" groups:name="ethene biosynthesis I (plants)" groups:kind="collection">
@@ -24472,74 +24478,74 @@
       </groups:group>
       <groups:group groups:id="G_Fatty__45__acid__45__biosynthesis" groups:name="Fatty Acid Biosynthesis" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="RXN-1224:UDP-sulfoquinovose synthase" groups:idRef="R_RXN_1224_p"/>
+          <groups:member groups:name="Arachidoyl-ACP desaturase" groups:idRef="R_Arachidoyl_ACP_desaturase_p"/>
+          <groups:member groups:name="RXN1G-320:3-hydroxyacyl-[acyl-carrier-protein] dehydratase" groups:idRef="R_RXN1G_320_p"/>
+          <groups:member groups:name="RXN-9660:Enoyl-[acyl-carrier protein] reductase (NADPH, B-specific)" groups:idRef="R_RXN_9660_p"/>
+          <groups:member groups:name="RXN-9657:Enoyl-[acyl-carrier protein] reductase (NADH)" groups:idRef="R_RXN_9657_p"/>
+          <groups:member groups:name="Octadecatrienoyl-ACP hydrolase" groups:idRef="R_Octadecatrienoyl_ACP_hydrolase_p"/>
+          <groups:member groups:name="RXN-9661:Enoyl-[acyl-carrier protein] reductase (NADPH, B-specific)" groups:idRef="R_RXN_9661_p"/>
+          <groups:member groups:name="Octadecadienoyl-ACP desaturase" groups:idRef="R_Octadecadienoyl_ACP_desaturase_p"/>
+          <groups:member groups:name="hexadecenoate_biosynthesis" groups:idRef="R_hexadecenoate_biosynthesis_p"/>
+          <groups:member groups:name="RXN1G-488:Trans-delta-2-behenoyl ACP reductase [NADH]" groups:idRef="R_RXN1G_488_p"/>
+          <groups:member groups:name="hexadecadienoate biosynthesis" groups:idRef="R_hexadecadienoate_biosynthesis_p"/>
+          <groups:member groups:name="GLUC1PURIDYLTRANS-RXN:UTP--glucose-1-phosphate uridylyltransferase" groups:idRef="R_GLUC1PURIDYLTRANS_RXN_p"/>
+          <groups:member groups:name="RXN-9663:Enoyl-[acyl-carrier protein] reductase (NADPH, B-specific)" groups:idRef="R_RXN_9663_p"/>
+          <groups:member groups:name="RXN-9523:3-oxoacyl-[acyl-carrier protein] synthase" groups:idRef="R_RXN_9523_p"/>
+          <groups:member groups:name="4.2.1.58-RXN:Crotonoyl-[acyl-carrier protein] hydratase" groups:idRef="R_4_PERIOD_2_PERIOD_1_PERIOD_58_RXN_p"/>
           <groups:member groups:name="RXN-9548:stearoyl ACP hydrolase" groups:idRef="R_RXN_9548_p"/>
-          <groups:member groups:name="RXN-9514:3-oxoacyl-[acyl-carrier protein] reductase" groups:idRef="R_RXN_9514_p"/>
+          <groups:member groups:name="RXN-7903:stearoyl-ACP desaturase" groups:idRef="R_RXN_7903_p"/>
+          <groups:member groups:name="RXN-9633:3-oxoacyl-[acyl-carrier-protein] reductase" groups:idRef="R_RXN_9633_p"/>
+          <groups:member groups:name="RXN-9634:3-hydroxyacyl-[acyl-carrier-protein] dehydratase" groups:idRef="R_RXN_9634_p"/>
+          <groups:member groups:name="RXN-9635:Octadec-2-enoyl-ACP reductase [NADH]" groups:idRef="R_RXN_9635_p"/>
+          <groups:member groups:name="RXN-9520:3-hydroxydecanoyl-[acyl-carrier protein] dehydratase" groups:idRef="R_RXN_9520_p"/>
+          <groups:member groups:name="RXN-9516:3-oxoacyl-[acyl-carrier protein] synthase" groups:idRef="R_RXN_9516_p"/>
+          <groups:member groups:name="RXN1G-368:3-ketoacyl-[acp] synthase" groups:idRef="R_RXN1G_368_p"/>
+          <groups:member groups:name="Octadecadienoyl-ACP hydrolase" groups:idRef="R_Octadecadienoyl_ACP_hydrolase_p"/>
+          <groups:member groups:name="Oleoyl-ACP desaturase" groups:idRef="R_Oleoyl_ACP_desaturase_p"/>
+          <groups:member groups:name="RXN-9655:NIL" groups:idRef="R_RXN_9655_p"/>
+          <groups:member groups:name="RXN-9535:3-oxoacyl-[acyl-carrier protein] synthase" groups:idRef="R_RXN_9535_p"/>
           <groups:member groups:name="RXN-9518:3-oxoacyl-[acyl-carrier protein] reductase" groups:idRef="R_RXN_9518_p"/>
           <groups:member groups:name="RXN-9531:3-oxoacyl-[acyl-carrier protein] synthase" groups:idRef="R_RXN_9531_p"/>
-          <groups:member groups:name="hexadecadienoate biosynthesis" groups:idRef="R_hexadecadienoate_biosynthesis_p"/>
-          <groups:member groups:name="RXN-9516:3-oxoacyl-[acyl-carrier protein] synthase" groups:idRef="R_RXN_9516_p"/>
-          <groups:member groups:name="RXN-9537:3-hydroxyoctanoyl-[acyl-carrier protein] dehydratase" groups:idRef="R_RXN_9537_p"/>
-          <groups:member groups:name="RXN-9635:Octadec-2-enoyl-ACP reductase [NADH]" groups:idRef="R_RXN_9635_p"/>
-          <groups:member groups:name="Octadecadienoyl-ACP desaturase" groups:idRef="R_Octadecadienoyl_ACP_desaturase_p"/>
-          <groups:member groups:name="RXN1G-445:3-ketoacyl-[acp] synthase" groups:idRef="R_RXN1G_445_p"/>
-          <groups:member groups:name="RXN-9633:3-oxoacyl-[acyl-carrier-protein] reductase" groups:idRef="R_RXN_9633_p"/>
-          <groups:member groups:name="palmitoyl-ACP desaturase" groups:idRef="R_palmitoyl_ACP_desaturase_p"/>
-          <groups:member groups:name="RXN-9524:3-oxoacyl-[acyl-carrier protein] reductase" groups:idRef="R_RXN_9524_p"/>
-          <groups:member groups:name="RXN-9540:3-oxoacyl-[acyl-carrier protein] reductase" groups:idRef="R_RXN_9540_p"/>
-          <groups:member groups:name="RXN1G-488:Trans-delta-2-behenoyl ACP reductase [NADH]" groups:idRef="R_RXN1G_488_p"/>
-          <groups:member groups:name="Arachidoyl-ACP desaturase" groups:idRef="R_Arachidoyl_ACP_desaturase_p"/>
-          <groups:member groups:name="4.2.1.61-RXN:a 3-hydroxypalmitoyl-[acyl-carrier protein] dehydratase" groups:idRef="R_4_PERIOD_2_PERIOD_1_PERIOD_61_RXN_p"/>
-          <groups:member groups:name="GLUC1PURIDYLTRANS-RXN:UTP--glucose-1-phosphate uridylyltransferase" groups:idRef="R_GLUC1PURIDYLTRANS_RXN_p"/>
-          <groups:member groups:name="4.2.1.59-RXN:3-hydroxyoctanoyl-[acyl-carrier protein] dehydratase" groups:idRef="R_4_PERIOD_2_PERIOD_1_PERIOD_59_RXN_p"/>
-          <groups:member groups:name="RXN-9539:3-oxoacyl-[acyl-carrier protein] synthase" groups:idRef="R_RXN_9539_p"/>
-          <groups:member groups:name="Octadecadienoyl-ACP hydrolase" groups:idRef="R_Octadecadienoyl_ACP_hydrolase_p"/>
-          <groups:member groups:name="RXN1G-469:3-oxoacyl-[acyl-carrier-protein] reductase" groups:idRef="R_RXN1G_469_p"/>
-          <groups:member groups:name="RXN-9532:3-oxoacyl-[acyl-carrier protein] reductase" groups:idRef="R_RXN_9532_p"/>
-          <groups:member groups:name="Octadecatrienoyl-ACP hydrolase" groups:idRef="R_Octadecatrienoyl_ACP_hydrolase_p"/>
-          <groups:member groups:name="RXN-9660:Enoyl-[acyl-carrier protein] reductase (NADPH, B-specific)" groups:idRef="R_RXN_9660_p"/>
-          <groups:member groups:name="RXN1G-395:Trans-delta-2-arachidoyl ACP reductase [NADH]" groups:idRef="R_RXN1G_395_p"/>
+          <groups:member groups:name="RXN-9514:3-oxoacyl-[acyl-carrier protein] reductase" groups:idRef="R_RXN_9514_p"/>
           <groups:member groups:name="RXN-9527:3-oxoacyl-[acyl-carrier protein] synthase" groups:idRef="R_RXN_9527_p"/>
-          <groups:member groups:name="arachidate biosynthesis" groups:idRef="R_arachidate_biosynthesis_p"/>
-          <groups:member groups:name="RXN-9658:Enoyl-[acyl-carrier protein] reductase (NADPH, B-specific)" groups:idRef="R_RXN_9658_p"/>
-          <groups:member groups:name="RXN-9523:3-oxoacyl-[acyl-carrier protein] synthase" groups:idRef="R_RXN_9523_p"/>
-          <groups:member groups:name="RXN-9533:3-hydroxyoctanoyl-[acyl-carrier protein] dehydratase" groups:idRef="R_RXN_9533_p"/>
-          <groups:member groups:name="RXN-9535:3-oxoacyl-[acyl-carrier protein] synthase" groups:idRef="R_RXN_9535_p"/>
-          <groups:member groups:name="RXN-9662:Enoyl-[acyl-carrier protein] reductase (NADPH, B-specific)" groups:idRef="R_RXN_9662_p"/>
-          <groups:member groups:name="RXN1G-363:3-hydroxyacyl-[acyl-carrier-protein] dehydratase" groups:idRef="R_RXN1G_363_p"/>
-          <groups:member groups:name="hexadecatrienoate biosynthesis" groups:idRef="R_hexadecatrienoate_biosynthesis_p"/>
-          <groups:member groups:name="RXN-9536:3-oxoacyl-[acyl-carrier protein] reductase" groups:idRef="R_RXN_9536_p"/>
-          <groups:member groups:name="gadoleic acid biosynthesis" groups:idRef="R_gadoleic_acid_biosynthesis_p"/>
-          <groups:member groups:name="docosanoate biosynthesis" groups:idRef="R_docosanoate_biosynthesis_p"/>
-          <groups:member groups:name="RXN-9661:Enoyl-[acyl-carrier protein] reductase (NADPH, B-specific)" groups:idRef="R_RXN_9661_p"/>
-          <groups:member groups:name="RXN-9528:3-oxoacyl-[acyl-carrier protein] reductase" groups:idRef="R_RXN_9528_p"/>
-          <groups:member groups:name="RXN-9549:NIL" groups:idRef="R_RXN_9549_p"/>
-          <groups:member groups:name="RXN1G-320:3-hydroxyacyl-[acyl-carrier-protein] dehydratase" groups:idRef="R_RXN1G_320_p"/>
-          <groups:member groups:name="4.2.1.58-RXN:Crotonoyl-[acyl-carrier protein] hydratase" groups:idRef="R_4_PERIOD_2_PERIOD_1_PERIOD_58_RXN_p"/>
-          <groups:member groups:name="Oleoyl-ACP desaturase" groups:idRef="R_Oleoyl_ACP_desaturase_p"/>
           <groups:member groups:name="RXN1G-349:3-oxoacyl-[acyl-carrier-protein] reductase" groups:idRef="R_RXN1G_349_p"/>
-          <groups:member groups:name="RXN1G-368:3-ketoacyl-[acp] synthase" groups:idRef="R_RXN1G_368_p"/>
-          <groups:member groups:name="RXN-9655:NIL" groups:idRef="R_RXN_9655_p"/>
           <groups:member groups:name="RXN-1223:UDP-sulfoquinovose synthase" groups:idRef="R_RXN_1223_p"/>
-          <groups:member groups:name="RXN-7903:stearoyl-ACP desaturase" groups:idRef="R_RXN_7903_p"/>
-          <groups:member groups:name="hexadecadienoate ACP desaturase" groups:idRef="R_hexadecadienoate_ACP_desaturase_p"/>
-          <groups:member groups:name="RXN-9659:Enoyl-[acyl-carrier protein] reductase (NADPH, B-specific)" groups:idRef="R_RXN_9659_p"/>
-          <groups:member groups:name="RXN-9520:3-hydroxydecanoyl-[acyl-carrier protein] dehydratase" groups:idRef="R_RXN_9520_p"/>
-          <groups:member groups:name="palmitoleoyl-ACP desaturase" groups:idRef="R_palmitoleoyl_ACP_desaturase_p"/>
-          <groups:member groups:name="hexadecenoate_biosynthesis" groups:idRef="R_hexadecenoate_biosynthesis_p"/>
-          <groups:member groups:name="RXN-9657:Enoyl-[acyl-carrier protein] reductase (NADH)" groups:idRef="R_RXN_9657_p"/>
-          <groups:member groups:name="RXN-9632:3-ketoacyl-[acp] synthase" groups:idRef="R_RXN_9632_p"/>
-          <groups:member groups:name="RXN-9663:Enoyl-[acyl-carrier protein] reductase (NADPH, B-specific)" groups:idRef="R_RXN_9663_p"/>
-          <groups:member groups:name="RXN-9634:3-hydroxyacyl-[acyl-carrier-protein] dehydratase" groups:idRef="R_RXN_9634_p"/>
+          <groups:member groups:name="hexadecatrienoate biosynthesis" groups:idRef="R_hexadecatrienoate_biosynthesis_p"/>
+          <groups:member groups:name="RXN-9549:NIL" groups:idRef="R_RXN_9549_p"/>
+          <groups:member groups:name="RXN-9536:3-oxoacyl-[acyl-carrier protein] reductase" groups:idRef="R_RXN_9536_p"/>
           <groups:member groups:name="3.1.2.14-RXN:Oleoyl-ACP hydrolase" groups:idRef="R_3_PERIOD_1_PERIOD_2_PERIOD_14_RXN_p"/>
+          <groups:member groups:name="RXN-9528:3-oxoacyl-[acyl-carrier protein] reductase" groups:idRef="R_RXN_9528_p"/>
+          <groups:member groups:name="RXN1G-395:Trans-delta-2-arachidoyl ACP reductase [NADH]" groups:idRef="R_RXN1G_395_p"/>
+          <groups:member groups:name="RXN-9524:3-oxoacyl-[acyl-carrier protein] reductase" groups:idRef="R_RXN_9524_p"/>
+          <groups:member groups:name="palmitoyl-ACP desaturase" groups:idRef="R_palmitoyl_ACP_desaturase_p"/>
+          <groups:member groups:name="RXN-9537:3-hydroxyoctanoyl-[acyl-carrier protein] dehydratase" groups:idRef="R_RXN_9537_p"/>
+          <groups:member groups:name="RXN-9532:3-oxoacyl-[acyl-carrier protein] reductase" groups:idRef="R_RXN_9532_p"/>
+          <groups:member groups:name="RXN-9662:Enoyl-[acyl-carrier protein] reductase (NADPH, B-specific)" groups:idRef="R_RXN_9662_p"/>
+          <groups:member groups:name="palmitoleoyl-ACP desaturase" groups:idRef="R_palmitoleoyl_ACP_desaturase_p"/>
+          <groups:member groups:name="RXN-9540:3-oxoacyl-[acyl-carrier protein] reductase" groups:idRef="R_RXN_9540_p"/>
+          <groups:member groups:name="RXN-1224:UDP-sulfoquinovose synthase" groups:idRef="R_RXN_1224_p"/>
+          <groups:member groups:name="RXN-9632:3-ketoacyl-[acp] synthase" groups:idRef="R_RXN_9632_p"/>
+          <groups:member groups:name="arachidate biosynthesis" groups:idRef="R_arachidate_biosynthesis_p"/>
+          <groups:member groups:name="docosanoate biosynthesis" groups:idRef="R_docosanoate_biosynthesis_p"/>
+          <groups:member groups:name="4.2.1.59-RXN:3-hydroxyoctanoyl-[acyl-carrier protein] dehydratase" groups:idRef="R_4_PERIOD_2_PERIOD_1_PERIOD_59_RXN_p"/>
+          <groups:member groups:name="4.2.1.61-RXN:a 3-hydroxypalmitoyl-[acyl-carrier protein] dehydratase" groups:idRef="R_4_PERIOD_2_PERIOD_1_PERIOD_61_RXN_p"/>
+          <groups:member groups:name="hexadecadienoate ACP desaturase" groups:idRef="R_hexadecadienoate_ACP_desaturase_p"/>
+          <groups:member groups:name="RXN1G-445:3-ketoacyl-[acp] synthase" groups:idRef="R_RXN1G_445_p"/>
+          <groups:member groups:name="RXN-9659:Enoyl-[acyl-carrier protein] reductase (NADPH, B-specific)" groups:idRef="R_RXN_9659_p"/>
+          <groups:member groups:name="RXN-9658:Enoyl-[acyl-carrier protein] reductase (NADPH, B-specific)" groups:idRef="R_RXN_9658_p"/>
+          <groups:member groups:name="gadoleic acid biosynthesis" groups:idRef="R_gadoleic_acid_biosynthesis_p"/>
+          <groups:member groups:name="RXN1G-469:3-oxoacyl-[acyl-carrier-protein] reductase" groups:idRef="R_RXN1G_469_p"/>
+          <groups:member groups:name="RXN-9539:3-oxoacyl-[acyl-carrier protein] synthase" groups:idRef="R_RXN_9539_p"/>
+          <groups:member groups:name="RXN-9533:3-hydroxyoctanoyl-[acyl-carrier protein] dehydratase" groups:idRef="R_RXN_9533_p"/>
+          <groups:member groups:name="RXN1G-363:3-hydroxyacyl-[acyl-carrier-protein] dehydratase" groups:idRef="R_RXN1G_363_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_GLUCOSE1PMETAB__45__PWY" groups:name="glucose and glucose-1-phosphate degradation" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="GLUCOKIN-RXN:Glucokinase" groups:idRef="R_GLUCOKIN_RXN_c"/>
-          <groups:member groups:name="GLUCOKIN-RXN:Glucokinase" groups:idRef="R_GLUCOKIN_RXN_p"/>
           <groups:member groups:name="PHOSPHOGLUCMUT-RXN:|Phosphoglucomutase|" groups:idRef="R_PHOSPHOGLUCMUT_RXN_c"/>
+          <groups:member groups:name="GLUCOKIN-RXN:Glucokinase" groups:idRef="R_GLUCOKIN_RXN_c"/>
           <groups:member groups:name="PHOSPHOGLUCMUT-RXN:|Phosphoglucomutase|" groups:idRef="R_PHOSPHOGLUCMUT_RXN_p"/>
+          <groups:member groups:name="GLUCOKIN-RXN:Glucokinase" groups:idRef="R_GLUCOKIN_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_GLUGLNSYN__45__PWY" groups:name="L-glutamate biosynthesis IV" groups:kind="collection">
@@ -24550,15 +24556,15 @@
       <groups:group groups:id="G_GLUTAMINE__45__SYN" groups:name="L-glutamine Biosynthesis" groups:kind="collection">
         <groups:listOfMembers>
           <groups:member groups:name="GLUTAMINESYN-RXN:Glutamate--ammonia ligase" groups:idRef="R_GLUTAMINESYN_RXN_m"/>
-          <groups:member groups:name="GLUTAMINESYN-RXN:Glutamate--ammonia ligase" groups:idRef="R_GLUTAMINESYN_RXN_c"/>
           <groups:member groups:name="GLUTAMINESYN-RXN:Glutamate--ammonia ligase" groups:idRef="R_GLUTAMINESYN_RXN_p"/>
+          <groups:member groups:name="GLUTAMINESYN-RXN:Glutamate--ammonia ligase" groups:idRef="R_GLUTAMINESYN_RXN_c"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_GLUTDEG__45__PWY" groups:name="L-glutamate degradation II" groups:kind="collection">
         <groups:listOfMembers>
+          <groups:member groups:name="ASPAMINOTRANS-RXN:Aspartate aminotransferase" groups:idRef="R_ASPAMINOTRANS_RXN_c"/>
           <groups:member groups:name="ASPAMINOTRANS-RXN:Aspartate aminotransferase" groups:idRef="R_ASPAMINOTRANS_RXN_x"/>
           <groups:member groups:name="ASPAMINOTRANS-RXN:Aspartate aminotransferase" groups:idRef="R_ASPAMINOTRANS_RXN_p"/>
-          <groups:member groups:name="ASPAMINOTRANS-RXN:Aspartate aminotransferase" groups:idRef="R_ASPAMINOTRANS_RXN_c"/>
           <groups:member groups:name="ASPAMINOTRANS-RXN:Aspartate aminotransferase" groups:idRef="R_ASPAMINOTRANS_RXN_m"/>
         </groups:listOfMembers>
       </groups:group>
@@ -24571,16 +24577,16 @@
       </groups:group>
       <groups:group groups:id="G_GLYCOCAT__45__PWY" groups:name="glycogen degradation I" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="GLUCOKIN-RXN:Glucokinase" groups:idRef="R_GLUCOKIN_RXN_c"/>
-          <groups:member groups:name="GLUCOKIN-RXN:Glucokinase" groups:idRef="R_GLUCOKIN_RXN_p"/>
           <groups:member groups:name="PHOSPHOGLUCMUT-RXN:|Phosphoglucomutase|" groups:idRef="R_PHOSPHOGLUCMUT_RXN_c"/>
+          <groups:member groups:name="GLUCOKIN-RXN:Glucokinase" groups:idRef="R_GLUCOKIN_RXN_c"/>
           <groups:member groups:name="PHOSPHOGLUCMUT-RXN:|Phosphoglucomutase|" groups:idRef="R_PHOSPHOGLUCMUT_RXN_p"/>
+          <groups:member groups:name="GLUCOKIN-RXN:Glucokinase" groups:idRef="R_GLUCOKIN_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_GLYCOGENSYNTH__45__PWY" groups:name="glycogen biosynthesis I (from ADP-D-Glucose)" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="GLYCOGENSYN-RXN:Starch (bacterial glycogen) synthase" groups:idRef="R_GLYCOGENSYN_RXN_p"/>
           <groups:member groups:name="GLUC1PADENYLTRANS-RXN:Glucose-1-phosphate adenylyltransferase" groups:idRef="R_GLUC1PADENYLTRANS_RXN_p"/>
+          <groups:member groups:name="GLYCOGENSYN-RXN:Starch (bacterial glycogen) synthase" groups:idRef="R_GLYCOGENSYN_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_GLYCOLATEMET__45__PWY" groups:name="glycolate and glyoxylate degradation I" groups:kind="collection">
@@ -24590,26 +24596,26 @@
       </groups:group>
       <groups:group groups:id="G_GLYCOLYSIS" groups:name="glycolysis I (from glucose 6-phosphate)" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="PHOSGLYPHOS-RXN:Phosphoglycerate kinase" groups:idRef="R_PHOSGLYPHOS_RXN_p"/>
-          <groups:member groups:name="TRIOSEPISOMERIZATION-RXN:Triosephosphate isomerase" groups:idRef="R_TRIOSEPISOMERIZATION_RXN_c"/>
-          <groups:member groups:name="PHOSGLYPHOS-RXN:Phosphoglycerate kinase" groups:idRef="R_PHOSGLYPHOS_RXN_c"/>
-          <groups:member groups:name="PEPDEPHOS-RXN:Pyruvate kinase" groups:idRef="R_PEPDEPHOS_RXN_p"/>
-          <groups:member groups:name="2PGADEHYDRAT-RXN:Phosphopyruvate hydratase" groups:idRef="R_2PGADEHYDRAT_RXN_c"/>
-          <groups:member groups:name="3PGAREARR-RXN:Phosphoglycerate mutase" groups:idRef="R_3PGAREARR_RXN_c"/>
-          <groups:member groups:name="PEPDEPHOS-RXN:Pyruvate kinase" groups:idRef="R_PEPDEPHOS_RXN_c"/>
-          <groups:member groups:name="6PFRUCTPHOS-RXN:NIL" groups:idRef="R_6PFRUCTPHOS_RXN_c"/>
-          <groups:member groups:name="2PGADEHYDRAT-RXN:Phosphopyruvate hydratase" groups:idRef="R_2PGADEHYDRAT_RXN_p"/>
           <groups:member groups:name="F16ALDOLASE-RXN:Fructose-bisphosphate aldolase" groups:idRef="R_F16ALDOLASE_RXN_p"/>
-          <groups:member groups:name="F16ALDOLASE-RXN:Fructose-bisphosphate aldolase" groups:idRef="R_F16ALDOLASE_RXN_c"/>
-          <groups:member groups:name="6PFRUCTPHOS-RXN:NIL" groups:idRef="R_6PFRUCTPHOS_RXN_p"/>
+          <groups:member groups:name="2PGADEHYDRAT-RXN:Phosphopyruvate hydratase" groups:idRef="R_2PGADEHYDRAT_RXN_p"/>
           <groups:member groups:name="3PGAREARR-RXN:Phosphoglycerate mutase" groups:idRef="R_3PGAREARR_RXN_p"/>
-          <groups:member groups:name="F16BDEPHOS-RXN:Fructose-bisphosphatase" groups:idRef="R_F16BDEPHOS_RXN_c"/>
+          <groups:member groups:name="6PFRUCTPHOS-RXN:NIL" groups:idRef="R_6PFRUCTPHOS_RXN_p"/>
+          <groups:member groups:name="TRIOSEPISOMERIZATION-RXN:Triosephosphate isomerase" groups:idRef="R_TRIOSEPISOMERIZATION_RXN_c"/>
+          <groups:member groups:name="PHOSGLYPHOS-RXN:Phosphoglycerate kinase" groups:idRef="R_PHOSGLYPHOS_RXN_p"/>
           <groups:member groups:name="GAPOXNPHOSPHN-RXN:Glyceraldehyde 3-phosphate dehydrogenase (phosphorylating)" groups:idRef="R_GAPOXNPHOSPHN_RXN_c"/>
-          <groups:member groups:name="PGLUCISOM-RXN:Glucose-6-phosphate isomerase" groups:idRef="R_PGLUCISOM_RXN_c"/>
-          <groups:member groups:name="TRIOSEPISOMERIZATION-RXN:Triosephosphate isomerase" groups:idRef="R_TRIOSEPISOMERIZATION_RXN_p"/>
+          <groups:member groups:name="PHOSGLYPHOS-RXN:Phosphoglycerate kinase" groups:idRef="R_PHOSGLYPHOS_RXN_c"/>
           <groups:member groups:name="F16BDEPHOS-RXN:Fructose-bisphosphatase" groups:idRef="R_F16BDEPHOS_RXN_p"/>
-          <groups:member groups:name="GAPOXNPHOSPHN-RXN:Glyceraldehyde 3-phosphate dehydrogenase (phosphorylating)" groups:idRef="R_GAPOXNPHOSPHN_RXN_p"/>
+          <groups:member groups:name="PGLUCISOM-RXN:Glucose-6-phosphate isomerase" groups:idRef="R_PGLUCISOM_RXN_c"/>
+          <groups:member groups:name="2PGADEHYDRAT-RXN:Phosphopyruvate hydratase" groups:idRef="R_2PGADEHYDRAT_RXN_c"/>
+          <groups:member groups:name="F16ALDOLASE-RXN:Fructose-bisphosphate aldolase" groups:idRef="R_F16ALDOLASE_RXN_c"/>
+          <groups:member groups:name="6PFRUCTPHOS-RXN:NIL" groups:idRef="R_6PFRUCTPHOS_RXN_c"/>
+          <groups:member groups:name="TRIOSEPISOMERIZATION-RXN:Triosephosphate isomerase" groups:idRef="R_TRIOSEPISOMERIZATION_RXN_p"/>
           <groups:member groups:name="PGLUCISOM-RXN:Glucose-6-phosphate isomerase" groups:idRef="R_PGLUCISOM_RXN_p"/>
+          <groups:member groups:name="F16BDEPHOS-RXN:Fructose-bisphosphatase" groups:idRef="R_F16BDEPHOS_RXN_c"/>
+          <groups:member groups:name="GAPOXNPHOSPHN-RXN:Glyceraldehyde 3-phosphate dehydrogenase (phosphorylating)" groups:idRef="R_GAPOXNPHOSPHN_RXN_p"/>
+          <groups:member groups:name="PEPDEPHOS-RXN:Pyruvate kinase" groups:idRef="R_PEPDEPHOS_RXN_p"/>
+          <groups:member groups:name="PEPDEPHOS-RXN:Pyruvate kinase" groups:idRef="R_PEPDEPHOS_RXN_c"/>
+          <groups:member groups:name="3PGAREARR-RXN:Phosphoglycerate mutase" groups:idRef="R_3PGAREARR_RXN_c"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_GLYCOLYSIS__45__TCA__45__GLYOX__45__BYPASS" groups:name="superpathway of glycolysis, pyruvate dehydrogenase, TCA, and glyoxylate bypass" groups:kind="collection">
@@ -24625,20 +24631,20 @@
       </groups:group>
       <groups:group groups:id="G_GLYOXYLATE__45__BYPASS" groups:name="glyoxylate cycle" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="PYRUVDEH-RXN:NIL" groups:idRef="R_PYRUVDEH_RXN_m"/>
-          <groups:member groups:name="ACONITATEDEHYDR-RXN:Aconitate hydratase" groups:idRef="R_ACONITATEDEHYDR_RXN_m"/>
-          <groups:member groups:name="ACONITATEDEHYDR-RXN:Aconitate hydratase" groups:idRef="R_ACONITATEDEHYDR_RXN_c"/>
-          <groups:member groups:name="PYRUVDEH-RXN:NIL" groups:idRef="R_PYRUVDEH_RXN_p"/>
-          <groups:member groups:name="MALSYN-RXN:NIL" groups:idRef="R_MALSYN_RXN_x"/>
-          <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_p"/>
-          <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_c"/>
-          <groups:member groups:name="CITSYN-RXN:Citrate (si)-synthase" groups:idRef="R_CITSYN_RXN_x"/>
-          <groups:member groups:name="CITSYN-RXN:Citrate (si)-synthase" groups:idRef="R_CITSYN_RXN_m"/>
-          <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_x"/>
-          <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_m"/>
           <groups:member groups:name="ISOCIT-CLEAV-RXN:Isocitrate lyase" groups:idRef="R_ISOCIT_CLEAV_RXN_x"/>
-          <groups:member groups:name="ACONITATEHYDR-RXN:NIL" groups:idRef="R_ACONITATEHYDR_RXN_c"/>
+          <groups:member groups:name="PYRUVDEH-RXN:NIL" groups:idRef="R_PYRUVDEH_RXN_p"/>
           <groups:member groups:name="ACONITATEHYDR-RXN:NIL" groups:idRef="R_ACONITATEHYDR_RXN_m"/>
+          <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_p"/>
+          <groups:member groups:name="ACONITATEDEHYDR-RXN:Aconitate hydratase" groups:idRef="R_ACONITATEDEHYDR_RXN_m"/>
+          <groups:member groups:name="CITSYN-RXN:Citrate (si)-synthase" groups:idRef="R_CITSYN_RXN_m"/>
+          <groups:member groups:name="ACONITATEDEHYDR-RXN:Aconitate hydratase" groups:idRef="R_ACONITATEDEHYDR_RXN_c"/>
+          <groups:member groups:name="CITSYN-RXN:Citrate (si)-synthase" groups:idRef="R_CITSYN_RXN_x"/>
+          <groups:member groups:name="MALSYN-RXN:NIL" groups:idRef="R_MALSYN_RXN_x"/>
+          <groups:member groups:name="ACONITATEHYDR-RXN:NIL" groups:idRef="R_ACONITATEHYDR_RXN_c"/>
+          <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_m"/>
+          <groups:member groups:name="PYRUVDEH-RXN:NIL" groups:idRef="R_PYRUVDEH_RXN_m"/>
+          <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_c"/>
+          <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_x"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_GLYSYN__45__ALA__45__PWY" groups:name="glycine biosynthesis III" groups:kind="collection">
@@ -24648,9 +24654,9 @@
       </groups:group>
       <groups:group groups:id="G_GLYSYN__45__PWY" groups:name="glycine biosynthesis I" groups:kind="collection">
         <groups:listOfMembers>
+          <groups:member groups:name="GLYOHMETRANS-RXN:NIL" groups:idRef="R_GLYOHMETRANS_RXN_m"/>
           <groups:member groups:name="GLYOHMETRANS-RXN:NIL" groups:idRef="R_GLYOHMETRANS_RXN_p"/>
           <groups:member groups:name="GLYOHMETRANS-RXN:NIL" groups:idRef="R_GLYOHMETRANS_RXN_c"/>
-          <groups:member groups:name="GLYOHMETRANS-RXN:NIL" groups:idRef="R_GLYOHMETRANS_RXN_m"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_GLYSYN__45__THR__45__PWY" groups:name="glycine biosynthesis IV" groups:kind="collection">
@@ -24660,51 +24666,51 @@
       </groups:group>
       <groups:group groups:id="G_Gluconeogenesis" groups:name="Gluconeogenesis" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="MALIC-NADP-RXN:Malate dehydrogenase (oxaloacetate decarboxylating) (NADP+)" groups:idRef="R_MALIC_NADP_RXN_p"/>
-          <groups:member groups:name="PHOSGLYPHOS-RXN:Phosphoglycerate kinase" groups:idRef="R_PHOSGLYPHOS_RXN_p"/>
-          <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_x"/>
-          <groups:member groups:name="PHOSGLYPHOS-RXN:Phosphoglycerate kinase" groups:idRef="R_PHOSGLYPHOS_RXN_c"/>
-          <groups:member groups:name="2PGADEHYDRAT-RXN:Phosphopyruvate hydratase" groups:idRef="R_2PGADEHYDRAT_RXN_c"/>
-          <groups:member groups:name="3PGAREARR-RXN:Phosphoglycerate mutase" groups:idRef="R_3PGAREARR_RXN_c"/>
-          <groups:member groups:name="PEPCARBOX-RXN:Phosphoenolpyruvate carboxylase" groups:idRef="R_PEPCARBOX_RXN_c"/>
-          <groups:member groups:name="2PGADEHYDRAT-RXN:Phosphopyruvate hydratase" groups:idRef="R_2PGADEHYDRAT_RXN_p"/>
-          <groups:member groups:name="MALIC-NAD-RXN:Malate dehydrogenase (oxaloacetate decarboxylating)" groups:idRef="R_1_PERIOD_1_PERIOD_1_PERIOD_39_RXN_m"/>
           <groups:member groups:name="F16ALDOLASE-RXN:Fructose-bisphosphate aldolase" groups:idRef="R_F16ALDOLASE_RXN_p"/>
-          <groups:member groups:name="PEPCARBOXYKIN-RXN:Phosphoenolpyruvate carboxykinase (ATP)" groups:idRef="R_PEPCARBOXYKIN_RXN_c"/>
-          <groups:member groups:name="F16ALDOLASE-RXN:Fructose-bisphosphate aldolase" groups:idRef="R_F16ALDOLASE_RXN_c"/>
+          <groups:member groups:name="2PGADEHYDRAT-RXN:Phosphopyruvate hydratase" groups:idRef="R_2PGADEHYDRAT_RXN_p"/>
           <groups:member groups:name="3PGAREARR-RXN:Phosphoglycerate mutase" groups:idRef="R_3PGAREARR_RXN_p"/>
-          <groups:member groups:name="F16BDEPHOS-RXN:Fructose-bisphosphatase" groups:idRef="R_F16BDEPHOS_RXN_c"/>
+          <groups:member groups:name="PHOSGLYPHOS-RXN:Phosphoglycerate kinase" groups:idRef="R_PHOSGLYPHOS_RXN_p"/>
+          <groups:member groups:name="MALIC-NADP-RXN:Malate dehydrogenase (oxaloacetate decarboxylating) (NADP+)" groups:idRef="R_MALIC_NADP_RXN_p"/>
           <groups:member groups:name="GAPOXNPHOSPHN-RXN:Glyceraldehyde 3-phosphate dehydrogenase (phosphorylating)" groups:idRef="R_GAPOXNPHOSPHN_RXN_c"/>
-          <groups:member groups:name="PGLUCISOM-RXN:Glucose-6-phosphate isomerase" groups:idRef="R_PGLUCISOM_RXN_c"/>
-          <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_p"/>
+          <groups:member groups:name="PHOSGLYPHOS-RXN:Phosphoglycerate kinase" groups:idRef="R_PHOSGLYPHOS_RXN_c"/>
           <groups:member groups:name="F16BDEPHOS-RXN:Fructose-bisphosphatase" groups:idRef="R_F16BDEPHOS_RXN_p"/>
-          <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_c"/>
-          <groups:member groups:name="GAPOXNPHOSPHN-RXN:Glyceraldehyde 3-phosphate dehydrogenase (phosphorylating)" groups:idRef="R_GAPOXNPHOSPHN_RXN_p"/>
+          <groups:member groups:name="PGLUCISOM-RXN:Glucose-6-phosphate isomerase" groups:idRef="R_PGLUCISOM_RXN_c"/>
+          <groups:member groups:name="2PGADEHYDRAT-RXN:Phosphopyruvate hydratase" groups:idRef="R_2PGADEHYDRAT_RXN_c"/>
+          <groups:member groups:name="F16ALDOLASE-RXN:Fructose-bisphosphate aldolase" groups:idRef="R_F16ALDOLASE_RXN_c"/>
+          <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_x"/>
+          <groups:member groups:name="MALIC-NAD-RXN:Malate dehydrogenase (oxaloacetate decarboxylating)" groups:idRef="R_1_PERIOD_1_PERIOD_1_PERIOD_39_RXN_m"/>
           <groups:member groups:name="PGLUCISOM-RXN:Glucose-6-phosphate isomerase" groups:idRef="R_PGLUCISOM_RXN_p"/>
-          <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_m"/>
+          <groups:member groups:name="F16BDEPHOS-RXN:Fructose-bisphosphatase" groups:idRef="R_F16BDEPHOS_RXN_c"/>
+          <groups:member groups:name="GAPOXNPHOSPHN-RXN:Glyceraldehyde 3-phosphate dehydrogenase (phosphorylating)" groups:idRef="R_GAPOXNPHOSPHN_RXN_p"/>
           <groups:member groups:name="MALIC-NADP-RXN:Malate dehydrogenase (oxaloacetate decarboxylating) (NADP+)" groups:idRef="R_MALIC_NADP_RXN_c"/>
+          <groups:member groups:name="PEPCARBOXYKIN-RXN:Phosphoenolpyruvate carboxykinase (ATP)" groups:idRef="R_PEPCARBOXYKIN_RXN_c"/>
+          <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_p"/>
+          <groups:member groups:name="PEPCARBOX-RXN:Phosphoenolpyruvate carboxylase" groups:idRef="R_PEPCARBOX_RXN_c"/>
+          <groups:member groups:name="3PGAREARR-RXN:Phosphoglycerate mutase" groups:idRef="R_3PGAREARR_RXN_c"/>
+          <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_m"/>
+          <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_c"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_HISTSYN__45__PWY" groups:name="L-histidine biosynthesis" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="HISTALDEHYD-RXN:Histidinol dehydrogenase" groups:idRef="R_HISTALDEHYD_RXN_p"/>
+          <groups:member groups:name="HISTAMINOTRANS-RXN:Histidinol-phosphate aminotransferase" groups:idRef="R_HISTAMINOTRANS_RXN_p"/>
+          <groups:member groups:name="PRIBFAICARPISOM-RXN:N-(5&apos;-phospho-D-ribosylformimino)-5-amino-1-(5&apos;&apos;-phosphoribosyl)-4- imidazole carboxamide isomerase" groups:idRef="R_PRIBFAICARPISOM_RXN_p"/>
+          <groups:member groups:name="HISTCYCLOHYD-RXN:Phosphoribosyl-AMP cyclohydrolase" groups:idRef="R_HISTCYCLOHYD_RXN_p"/>
+          <groups:member groups:name="ATPPHOSPHORIBOSYLTRANS-RXN:NIL" groups:idRef="R_ATPPHOSPHORIBOSYLTRANS_RXN_p"/>
+          <groups:member groups:name="HISTOLDEHYD-RXN:Histidinol dehydrogenase" groups:idRef="R_HISTOLDEHYD_RXN_p"/>
+          <groups:member groups:name="HISTIDPHOS-RXN:Histidinol-phosphatase" groups:idRef="R_HISTIDPHOS_RXN_p"/>
+          <groups:member groups:name="GLUTAMIDOTRANS-RXN:NIL" groups:idRef="R_GLUTAMIDOTRANS_RXN_p"/>
+          <groups:member groups:name="IMIDPHOSDEHYD-RXN:Imidazoleglycerol-phosphate dehydratase" groups:idRef="R_IMIDPHOSDEHYD_RXN_p"/>
           <groups:member groups:name="RXN-8001:NIL" groups:idRef="R_RXN_8001_p"/>
           <groups:member groups:name="HISTPRATPHYD-RXN:Phosphoribosyl-ATP pyrophosphatase" groups:idRef="R_HISTPRATPHYD_RXN_p"/>
-          <groups:member groups:name="PRIBFAICARPISOM-RXN:N-(5&apos;-phospho-D-ribosylformimino)-5-amino-1-(5&apos;&apos;-phosphoribosyl)-4- imidazole carboxamide isomerase" groups:idRef="R_PRIBFAICARPISOM_RXN_p"/>
-          <groups:member groups:name="IMIDPHOSDEHYD-RXN:Imidazoleglycerol-phosphate dehydratase" groups:idRef="R_IMIDPHOSDEHYD_RXN_p"/>
-          <groups:member groups:name="HISTOLDEHYD-RXN:Histidinol dehydrogenase" groups:idRef="R_HISTOLDEHYD_RXN_p"/>
-          <groups:member groups:name="HISTAMINOTRANS-RXN:Histidinol-phosphate aminotransferase" groups:idRef="R_HISTAMINOTRANS_RXN_p"/>
-          <groups:member groups:name="GLUTAMIDOTRANS-RXN:NIL" groups:idRef="R_GLUTAMIDOTRANS_RXN_p"/>
-          <groups:member groups:name="HISTCYCLOHYD-RXN:Phosphoribosyl-AMP cyclohydrolase" groups:idRef="R_HISTCYCLOHYD_RXN_p"/>
-          <groups:member groups:name="HISTIDPHOS-RXN:Histidinol-phosphatase" groups:idRef="R_HISTIDPHOS_RXN_p"/>
-          <groups:member groups:name="ATPPHOSPHORIBOSYLTRANS-RXN:NIL" groups:idRef="R_ATPPHOSPHORIBOSYLTRANS_RXN_p"/>
+          <groups:member groups:name="HISTALDEHYD-RXN:Histidinol dehydrogenase" groups:idRef="R_HISTALDEHYD_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_HOMOSER__45__METSYN__45__PWY" groups:name="L-methionine biosynthesis I" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="HOMOCYSMETB12-RXN:5-methyltetrahydrofolate--homocysteine S-methyltransferase" groups:idRef="R_HOMOCYSMETB12_RXN_p"/>
           <groups:member groups:name="CYSTATHIONINE-BETA-LYASE-RXN:Cystathionine &amp;beta;-lyase" groups:idRef="R_CYSTATHIONINE_BETA_LYASE_RXN_p"/>
           <groups:member groups:name="HOMOCYSMETB12-RXN:5-methyltetrahydrofolate--homocysteine S-methyltransferase" groups:idRef="R_HOMOCYSMETB12_RXN_c"/>
+          <groups:member groups:name="HOMOCYSMETB12-RXN:5-methyltetrahydrofolate--homocysteine S-methyltransferase" groups:idRef="R_HOMOCYSMETB12_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_HOMOSER__45__THRESYN__45__PWY" groups:name="L-threonine biosynthesis" groups:kind="collection">
@@ -24715,31 +24721,31 @@
       </groups:group>
       <groups:group groups:id="G_HOMOSERSYN__45__PWY" groups:name="L-homoserine biosynthesis" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="HOMOSERDEHYDROG-RXN:Homoserine dehydrogenase" groups:idRef="R_HOMOSERDEHYDROG_RXN_NAD_p"/>
           <groups:member groups:name="HOMOSERDEHYDROG-RXN:Homoserine dehydrogenase" groups:idRef="R_HOMOSERDEHYDROG_RXN_NADP_p"/>
-          <groups:member groups:name="ASPARTATEKIN-RXN:Aspartate kinase" groups:idRef="R_ASPARTATEKIN_RXN_p"/>
           <groups:member groups:name="ASPARTATE-SEMIALDEHYDE-DEHYDROGENASE-RXN:Aspartate-semialdehyde dehydrogenase" groups:idRef="R_ASPARTATE_SEMIALDEHYDE_DEHYDROGENASE_RXN_p"/>
+          <groups:member groups:name="HOMOSERDEHYDROG-RXN:Homoserine dehydrogenase" groups:idRef="R_HOMOSERDEHYDROG_RXN_NAD_p"/>
+          <groups:member groups:name="ASPARTATEKIN-RXN:Aspartate kinase" groups:idRef="R_ASPARTATEKIN_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_ILEUDEG__45__PWY" groups:name="L-isoleucine degradation I" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="TIGLYLCOA-HYDROXY-RXN:Enoyl-CoA hydratase" groups:idRef="R_TIGLYLCOA_HYDROXY_RXN_m"/>
-          <groups:member groups:name="1.1.1.178-RXN" groups:idRef="R_1_PERIOD_1_PERIOD_1_PERIOD_178_RXN_x"/>
-          <groups:member groups:name="BRANCHED-CHAINAMINOTRANSFERILEU-RXN:Branched-chain amino acid aminotransferase" groups:idRef="R_BRANCHED_CHAINAMINOTRANSFERILEU_RXN_p"/>
-          <groups:member groups:name="METHYLACETOACETYLCOATHIOL-RXN:Acetyl-CoA C-acyltransferase" groups:idRef="R_METHYLACETOACETYLCOATHIOL_RXN_m"/>
-          <groups:member groups:name="2KETO-3METHYLVALERATE-RXN:NIL" groups:idRef="R_2KETO_3METHYLVALERATE_RXN_m"/>
-          <groups:member groups:name="2-METHYLACYL-COA-DEHYDROGENASE-RXN:2-methylacyl-CoA dehydrogenase" groups:idRef="R_2_METHYLACYL_COA_DEHYDROGENASE_RXN_m"/>
           <groups:member groups:name="BRANCHED-CHAINAMINOTRANSFERILEU-RXN:Branched-chain amino acid aminotransferase" groups:idRef="R_BRANCHED_CHAINAMINOTRANSFERILEU_RXN_m"/>
+          <groups:member groups:name="METHYLACETOACETYLCOATHIOL-RXN:Acetyl-CoA C-acyltransferase" groups:idRef="R_METHYLACETOACETYLCOATHIOL_RXN_m"/>
+          <groups:member groups:name="BRANCHED-CHAINAMINOTRANSFERILEU-RXN:Branched-chain amino acid aminotransferase" groups:idRef="R_BRANCHED_CHAINAMINOTRANSFERILEU_RXN_p"/>
+          <groups:member groups:name="2KETO-3METHYLVALERATE-RXN:NIL" groups:idRef="R_2KETO_3METHYLVALERATE_RXN_m"/>
+          <groups:member groups:name="1.1.1.178-RXN" groups:idRef="R_1_PERIOD_1_PERIOD_1_PERIOD_178_RXN_x"/>
+          <groups:member groups:name="2-METHYLACYL-COA-DEHYDROGENASE-RXN:2-methylacyl-CoA dehydrogenase" groups:idRef="R_2_METHYLACYL_COA_DEHYDROGENASE_RXN_m"/>
+          <groups:member groups:name="TIGLYLCOA-HYDROXY-RXN:Enoyl-CoA hydratase" groups:idRef="R_TIGLYLCOA_HYDROXY_RXN_m"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_ILEUSYN__45__PWY" groups:name="L-isoleucine biosynthesis I (from threonine)" groups:kind="collection">
         <groups:listOfMembers>
+          <groups:member groups:name="ACETOOHBUTSYN-RXN:Acetolactate synthase" groups:idRef="R_ACETOOHBUTSYN_RXN_p"/>
+          <groups:member groups:name="THREDEHYD-RXN:Threonine dehydratase" groups:idRef="R_THREDEHYD_RXN_p"/>
           <groups:member groups:name="DIHYDROXYMETVALDEHYDRAT-RXN:Dihydroxy-acid dehydratase" groups:idRef="R_DIHYDROXYMETVALDEHYDRAT_RXN_p"/>
+          <groups:member groups:name="BRANCHED-CHAINAMINOTRANSFERILEU-RXN:Branched-chain amino acid aminotransferase" groups:idRef="R_BRANCHED_CHAINAMINOTRANSFERILEU_RXN_m"/>
           <groups:member groups:name="BRANCHED-CHAINAMINOTRANSFERILEU-RXN:Branched-chain amino acid aminotransferase" groups:idRef="R_BRANCHED_CHAINAMINOTRANSFERILEU_RXN_p"/>
           <groups:member groups:name="ACETOOHBUTREDUCTOISOM-RXN:Ketol-acid reductoisomerase" groups:idRef="R_ACETOOHBUTREDUCTOISOM_RXN_p"/>
-          <groups:member groups:name="THREDEHYD-RXN:Threonine dehydratase" groups:idRef="R_THREDEHYD_RXN_p"/>
-          <groups:member groups:name="ACETOOHBUTSYN-RXN:Acetolactate synthase" groups:idRef="R_ACETOOHBUTSYN_RXN_p"/>
-          <groups:member groups:name="BRANCHED-CHAINAMINOTRANSFERILEU-RXN:Branched-chain amino acid aminotransferase" groups:idRef="R_BRANCHED_CHAINAMINOTRANSFERILEU_RXN_m"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_LCYSDEG__45__PWY" groups:name="L-cysteine degradation II" groups:kind="collection">
@@ -24750,36 +24756,36 @@
       <groups:group groups:id="G_LEU__45__DEG2__45__PWY" groups:name="L-leucine degradation I" groups:kind="collection">
         <groups:listOfMembers>
           <groups:member groups:name="METHYLGLUTACONYL-COA-HYDRATASE-RXN:Methylglutaconyl-CoA hydratase" groups:idRef="R_METHYLGLUTACONYL_COA_HYDRATASE_RXN_m"/>
-          <groups:member groups:name="2KETO-4METHYL-PENTANOATE-DEHYDROG-RXN:NIL" groups:idRef="R_2KETO_4METHYL_PENTANOATE_DEHYDROG_RXN_m"/>
           <groups:member groups:name="HYDROXYMETHYLGLUTARYL-COA-LYASE-RXN:Hydroxymethylglutaryl-CoA lyase" groups:idRef="R_HYDROXYMETHYLGLUTARYL_COA_LYASE_RXN_m"/>
-          <groups:member groups:name="BRANCHED-CHAINAMINOTRANSFERLEU-RXN:Branched-chain amino acid aminotransferase" groups:idRef="R_BRANCHED_CHAINAMINOTRANSFERLEU_RXN_p"/>
-          <groups:member groups:name="METHYLCROTONYL-COA-CARBOXYLASE-RXN:Methylcrotonyl-CoA carboxylase" groups:idRef="R_METHYLCROTONYL_COA_CARBOXYLASE_RXN_m"/>
-          <groups:member groups:name="RXN0-2301:NIL" groups:idRef="R_RXN0_2301_m"/>
+          <groups:member groups:name="2KETO-4METHYL-PENTANOATE-DEHYDROG-RXN:NIL" groups:idRef="R_2KETO_4METHYL_PENTANOATE_DEHYDROG_RXN_m"/>
           <groups:member groups:name="BRANCHED-CHAINAMINOTRANSFERLEU-RXN:Branched-chain amino acid aminotransferase" groups:idRef="R_BRANCHED_CHAINAMINOTRANSFERLEU_RXN_m"/>
+          <groups:member groups:name="METHYLCROTONYL-COA-CARBOXYLASE-RXN:Methylcrotonyl-CoA carboxylase" groups:idRef="R_METHYLCROTONYL_COA_CARBOXYLASE_RXN_m"/>
+          <groups:member groups:name="BRANCHED-CHAINAMINOTRANSFERLEU-RXN:Branched-chain amino acid aminotransferase" groups:idRef="R_BRANCHED_CHAINAMINOTRANSFERLEU_RXN_p"/>
+          <groups:member groups:name="RXN0-2301:NIL" groups:idRef="R_RXN0_2301_m"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_LEUSYN__45__PWY" groups:name="L-leucine biosynthesis" groups:kind="collection">
         <groups:listOfMembers>
           <groups:member groups:name="RXN-8991:NIL" groups:idRef="R_RXN_8991_p"/>
-          <groups:member groups:name="2-ISOPROPYLMALATESYN-RXN:NIL" groups:idRef="R_2_ISOPROPYLMALATESYN_RXN_p"/>
-          <groups:member groups:name="BRANCHED-CHAINAMINOTRANSFERLEU-RXN:Branched-chain amino acid aminotransferase" groups:idRef="R_BRANCHED_CHAINAMINOTRANSFERLEU_RXN_p"/>
           <groups:member groups:name="3-ISOPROPYLMALDEHYDROG-RXN:3-isopropylmalate dehydrogenase" groups:idRef="R_3_ISOPROPYLMALDEHYDROG_RXN_p"/>
-          <groups:member groups:name="RXN-7800:NIL" groups:idRef="R_RXN_7800_p"/>
-          <groups:member groups:name="BRANCHED-CHAINAMINOTRANSFERLEU-RXN:Branched-chain amino acid aminotransferase" groups:idRef="R_BRANCHED_CHAINAMINOTRANSFERLEU_RXN_m"/>
           <groups:member groups:name="3-ISOPROPYLMALISOM-RXN:NIL" groups:idRef="R_3_ISOPROPYLMALISOM_RXN_p"/>
+          <groups:member groups:name="RXN-7800:NIL" groups:idRef="R_RXN_7800_p"/>
+          <groups:member groups:name="2-ISOPROPYLMALATESYN-RXN:NIL" groups:idRef="R_2_ISOPROPYLMALATESYN_RXN_p"/>
+          <groups:member groups:name="BRANCHED-CHAINAMINOTRANSFERLEU-RXN:Branched-chain amino acid aminotransferase" groups:idRef="R_BRANCHED_CHAINAMINOTRANSFERLEU_RXN_m"/>
+          <groups:member groups:name="BRANCHED-CHAINAMINOTRANSFERLEU-RXN:Branched-chain amino acid aminotransferase" groups:idRef="R_BRANCHED_CHAINAMINOTRANSFERLEU_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_LYSINE__45__DEG1__45__PWY" groups:name="L-lysine degradation XI" groups:kind="collection">
         <groups:listOfMembers>
           <groups:member groups:name="2-AMINOADIPATE-AMINOTRANSFERASE-RXN:2-aminoadipate aminotransferase" groups:idRef="R_2_AMINOADIPATE_AMINOTRANSFERASE_RXN_c"/>
-          <groups:member groups:name="ALLYSINE-DEHYDROG-RXN:NIL" groups:idRef="R_ALLYSINE_DEHYDROG_RXN_c"/>
           <groups:member groups:name="2-KETO-ADIPATE-DEHYDROG-RXN:NIL" groups:idRef="R_2_KETO_ADIPATE_DEHYDROG_RXN_m"/>
+          <groups:member groups:name="ALLYSINE-DEHYDROG-RXN:NIL" groups:idRef="R_ALLYSINE_DEHYDROG_RXN_c"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_Lysophosphatidylcholinebiosynthesis" groups:name="Lysophosphatidylcholinebiosynthesis" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="PHOSPHOLIPASE-A2-RXN:Phospholipase" groups:idRef="R_PHOSPHOLIPASE_A2_RXN_c"/>
           <groups:member groups:name="2.3.1.23-RXN:Lysophosphatidylcholine acyltransferase" groups:idRef="R_2_PERIOD_3_PERIOD_1_PERIOD_23_RXN_p"/>
+          <groups:member groups:name="PHOSPHOLIPASE-A2-RXN:Phospholipase" groups:idRef="R_PHOSPHOLIPASE_A2_RXN_c"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_Lysophosphatidylglycerolbiosynthesis" groups:name="Lysophosphatidylglycerolbiosynthesis" groups:kind="collection">
@@ -24789,89 +24795,89 @@
       </groups:group>
       <groups:group groups:id="G_MANNCAT__45__PWY" groups:name="D-mannose degradation I" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="MANNPISOM-RXN:Mannose-6-phosphate isomerase" groups:idRef="R_MANNPISOM_RXN_c"/>
           <groups:member groups:name="HEXOKINASE-RXN_MANNOSE_c" groups:idRef="R_HEXOKINASE_RXN_MANNOSE_c"/>
+          <groups:member groups:name="MANNPISOM-RXN:Mannose-6-phosphate isomerase" groups:idRef="R_MANNPISOM_RXN_c"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_METHIONINE__45__DEG1__45__PWY" groups:name="L-methionine degradation I (to L-homocysteine)" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="ADENOSYLHOMOCYSTEINASE-RXN:Adenosylhomocysteinase" groups:idRef="R_ADENOSYLHOMOCYSTEINASE_RXN_c"/>
           <groups:member groups:name="S-ADENMETSYN-RXN:Methionine adenosyltransferase" groups:idRef="R_S_ADENMETSYN_RXN_c"/>
+          <groups:member groups:name="ADENOSYLHOMOCYSTEINASE-RXN:Adenosylhomocysteinase" groups:idRef="R_ADENOSYLHOMOCYSTEINASE_RXN_c"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_NONOXIPENT__45__PWY" groups:name="pentose phosphate pathway (non-oxidative branch) I" groups:kind="collection">
         <groups:listOfMembers>
           <groups:member groups:name="TRANSALDOL-RXN:Transaldolase" groups:idRef="R_TRANSALDOL_RXN_p"/>
-          <groups:member groups:name="RIBULP3EPIM-RXN:ribulose phosphate 3-epimerase" groups:idRef="R_RIBULP3EPIM_RXN_c"/>
           <groups:member groups:name="RIBULP3EPIM-RXN:ribulose phosphate 3-epimerase" groups:idRef="R_RIBULP3EPIM_RXN_p"/>
           <groups:member groups:name="1TRANSKETO-RXN:Transketolase" groups:idRef="R_1TRANSKETO_RXN_p"/>
-          <groups:member groups:name="RIB5PISOM-RXN:Ribose 5-phosphate epimerase" groups:idRef="R_RIB5PISOM_RXN_p"/>
           <groups:member groups:name="2TRANSKETO-RXN:Transketolase" groups:idRef="R_2TRANSKETO_RXN_p"/>
+          <groups:member groups:name="RIBULP3EPIM-RXN:ribulose phosphate 3-epimerase" groups:idRef="R_RIBULP3EPIM_RXN_c"/>
+          <groups:member groups:name="RIB5PISOM-RXN:Ribose 5-phosphate epimerase" groups:idRef="R_RIB5PISOM_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_OXIDATIVEPENT__45__PWY" groups:name="pentose phosphate pathway (oxidative branch) I" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="6PGLUCONDEHYDROG-RXN:Phosphogluconate dehydrogenase (decarboxylating)" groups:idRef="R_6PGLUCONDEHYDROG_RXN_c"/>
-          <groups:member groups:name="GLU6PDEHYDROG-RXN:Glucose-6-phosphate 1-dehydrogenase" groups:idRef="R_GLU6PDEHYDROG_RXN_c"/>
-          <groups:member groups:name="6PGLUCONOLACT-RXN:NIL" groups:idRef="R_6PGLUCONOLACT_RXN_c"/>
           <groups:member groups:name="GLU6PDEHYDROG-RXN:Glucose-6-phosphate 1-dehydrogenase" groups:idRef="R_GLU6PDEHYDROG_RXN_p"/>
           <groups:member groups:name="6PGLUCONOLACT-RXN:NIL" groups:idRef="R_6PGLUCONOLACT_RXN_p"/>
+          <groups:member groups:name="6PGLUCONOLACT-RXN:NIL" groups:idRef="R_6PGLUCONOLACT_RXN_c"/>
+          <groups:member groups:name="6PGLUCONDEHYDROG-RXN:Phosphogluconate dehydrogenase (decarboxylating)" groups:idRef="R_6PGLUCONDEHYDROG_RXN_c"/>
           <groups:member groups:name="6PGLUCONDEHYDROG-RXN:Phosphogluconate dehydrogenase (decarboxylating)" groups:idRef="R_6PGLUCONDEHYDROG_RXN_p"/>
+          <groups:member groups:name="GLU6PDEHYDROG-RXN:Glucose-6-phosphate 1-dehydrogenase" groups:idRef="R_GLU6PDEHYDROG_RXN_c"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_P164__45__PWY" groups:name="purine nucleobases degradation I (anaerobic)" groups:kind="collection">
         <groups:listOfMembers>
           <groups:member groups:name="METHENYLTHFCYCLOHYDRO-RXN:Methenyltetrahydrofolate cyclohydrolase" groups:idRef="R_METHENYLTHFCYCLOHYDRO_RXN_c"/>
+          <groups:member groups:name="1.2.1.2-RXN:NIL" groups:idRef="R_1_PERIOD_2_PERIOD_1_PERIOD_2_RXN_m"/>
           <groups:member groups:name="1.2.1.2-RXN:NIL" groups:idRef="R_1_PERIOD_2_PERIOD_1_PERIOD_2_RXN_p"/>
           <groups:member groups:name="FORMATETHFLIG-RXN:Formate--tetrahydrofolate ligase" groups:idRef="R_FORMATETHFLIG_RXN_p"/>
-          <groups:member groups:name="1.2.1.2-RXN:NIL" groups:idRef="R_1_PERIOD_2_PERIOD_1_PERIOD_2_RXN_m"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_P185__45__PWY" groups:name="formaldehyde assimilation III (dihydroxyacetone cycle)" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="GAPOXNPHOSPHN-RXN:Glyceraldehyde 3-phosphate dehydrogenase (phosphorylating)" groups:idRef="R_GAPOXNPHOSPHN_RXN_p"/>
-          <groups:member groups:name="F16BDEPHOS-RXN:Fructose-bisphosphatase" groups:idRef="R_F16BDEPHOS_RXN_c"/>
-          <groups:member groups:name="GAPOXNPHOSPHN-RXN:Glyceraldehyde 3-phosphate dehydrogenase (phosphorylating)" groups:idRef="R_GAPOXNPHOSPHN_RXN_c"/>
           <groups:member groups:name="TRANSALDOL-RXN:Transaldolase" groups:idRef="R_TRANSALDOL_RXN_p"/>
-          <groups:member groups:name="PHOSGLYPHOS-RXN:Phosphoglycerate kinase" groups:idRef="R_PHOSGLYPHOS_RXN_c"/>
-          <groups:member groups:name="RIBULP3EPIM-RXN:ribulose phosphate 3-epimerase" groups:idRef="R_RIBULP3EPIM_RXN_c"/>
-          <groups:member groups:name="TRIOSEPISOMERIZATION-RXN:Triosephosphate isomerase" groups:idRef="R_TRIOSEPISOMERIZATION_RXN_p"/>
-          <groups:member groups:name="F16BDEPHOS-RXN:Fructose-bisphosphatase" groups:idRef="R_F16BDEPHOS_RXN_p"/>
           <groups:member groups:name="RIBULP3EPIM-RXN:ribulose phosphate 3-epimerase" groups:idRef="R_RIBULP3EPIM_RXN_p"/>
-          <groups:member groups:name="1TRANSKETO-RXN:Transketolase" groups:idRef="R_1TRANSKETO_RXN_p"/>
-          <groups:member groups:name="RIB5PISOM-RXN:Ribose 5-phosphate epimerase" groups:idRef="R_RIB5PISOM_RXN_p"/>
-          <groups:member groups:name="PHOSGLYPHOS-RXN:Phosphoglycerate kinase" groups:idRef="R_PHOSGLYPHOS_RXN_p"/>
-          <groups:member groups:name="TRIOSEPISOMERIZATION-RXN:Triosephosphate isomerase" groups:idRef="R_TRIOSEPISOMERIZATION_RXN_c"/>
-          <groups:member groups:name="F16ALDOLASE-RXN:Fructose-bisphosphate aldolase" groups:idRef="R_F16ALDOLASE_RXN_c"/>
-          <groups:member groups:name="2TRANSKETO-RXN:Transketolase" groups:idRef="R_2TRANSKETO_RXN_p"/>
           <groups:member groups:name="F16ALDOLASE-RXN:Fructose-bisphosphate aldolase" groups:idRef="R_F16ALDOLASE_RXN_p"/>
+          <groups:member groups:name="1TRANSKETO-RXN:Transketolase" groups:idRef="R_1TRANSKETO_RXN_p"/>
+          <groups:member groups:name="F16BDEPHOS-RXN:Fructose-bisphosphatase" groups:idRef="R_F16BDEPHOS_RXN_p"/>
+          <groups:member groups:name="2TRANSKETO-RXN:Transketolase" groups:idRef="R_2TRANSKETO_RXN_p"/>
+          <groups:member groups:name="RIBULP3EPIM-RXN:ribulose phosphate 3-epimerase" groups:idRef="R_RIBULP3EPIM_RXN_c"/>
+          <groups:member groups:name="TRIOSEPISOMERIZATION-RXN:Triosephosphate isomerase" groups:idRef="R_TRIOSEPISOMERIZATION_RXN_c"/>
+          <groups:member groups:name="F16BDEPHOS-RXN:Fructose-bisphosphatase" groups:idRef="R_F16BDEPHOS_RXN_c"/>
+          <groups:member groups:name="RIB5PISOM-RXN:Ribose 5-phosphate epimerase" groups:idRef="R_RIB5PISOM_RXN_p"/>
+          <groups:member groups:name="GAPOXNPHOSPHN-RXN:Glyceraldehyde 3-phosphate dehydrogenase (phosphorylating)" groups:idRef="R_GAPOXNPHOSPHN_RXN_p"/>
+          <groups:member groups:name="PHOSGLYPHOS-RXN:Phosphoglycerate kinase" groups:idRef="R_PHOSGLYPHOS_RXN_p"/>
+          <groups:member groups:name="GAPOXNPHOSPHN-RXN:Glyceraldehyde 3-phosphate dehydrogenase (phosphorylating)" groups:idRef="R_GAPOXNPHOSPHN_RXN_c"/>
+          <groups:member groups:name="TRIOSEPISOMERIZATION-RXN:Triosephosphate isomerase" groups:idRef="R_TRIOSEPISOMERIZATION_RXN_p"/>
+          <groups:member groups:name="F16ALDOLASE-RXN:Fructose-bisphosphate aldolase" groups:idRef="R_F16ALDOLASE_RXN_c"/>
+          <groups:member groups:name="PHOSGLYPHOS-RXN:Phosphoglycerate kinase" groups:idRef="R_PHOSGLYPHOS_RXN_c"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_P21__45__PWY" groups:name="pentose phosphate pathway (partial)" groups:kind="collection">
         <groups:listOfMembers>
           <groups:member groups:name="RIBULP3EPIM-RXN:ribulose phosphate 3-epimerase" groups:idRef="R_RIBULP3EPIM_RXN_p"/>
           <groups:member groups:name="1TRANSKETO-RXN:Transketolase" groups:idRef="R_1TRANSKETO_RXN_p"/>
-          <groups:member groups:name="RIBULP3EPIM-RXN:ribulose phosphate 3-epimerase" groups:idRef="R_RIBULP3EPIM_RXN_c"/>
           <groups:member groups:name="2TRANSKETO-RXN:Transketolase" groups:idRef="R_2TRANSKETO_RXN_p"/>
+          <groups:member groups:name="RIBULP3EPIM-RXN:ribulose phosphate 3-epimerase" groups:idRef="R_RIBULP3EPIM_RXN_c"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PHENYLPROPANOID__45__SYN" groups:name="Phenylpropanoid Derivative Biosynthesis" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="RXN-3422" groups:idRef="R_RXN_3422_c"/>
-          <groups:member groups:name="TRANS-CINNAMATE-4-MONOOXYGENASE-RXN" groups:idRef="R_TRANS_CINNAMATE_4_MONOOXYGENASE_RXN_c"/>
           <groups:member groups:name="4-COUMARATE--COA-LIGASE-RXN" groups:idRef="R_4_COUMARATE_COA_LIGASE_RXN_c"/>
-          <groups:member groups:name="HYPO Syringicacid biosynthesis" groups:idRef="R_SYRINGICACID_BIOSYNTHESIS_c"/>
-          <groups:member groups:name="RXN-1104" groups:idRef="R_RXN_1104_c"/>
-          <groups:member groups:name="6.2.1.34-RXN" groups:idRef="R_6_PERIOD_2_PERIOD_1_PERIOD_34_RXN_c"/>
-          <groups:member groups:name="2.3.1.133-RXN" groups:idRef="R_2_PERIOD_3_PERIOD_1_PERIOD_133_RXN_c"/>
-          <groups:member groups:name="RXN-2581" groups:idRef="R_RXN_2581_c"/>
-          <groups:member groups:name="RXN-2621" groups:idRef="R_RXN_2621_c"/>
-          <groups:member groups:name="RXN-1121" groups:idRef="R_RXN_1121_c"/>
-          <groups:member groups:name="HYPO Syringaldehyde biosynthesis" groups:idRef="R_SYRINGALDEHYDE_BIOSYNTHESIS_c"/>
-          <groups:member groups:name="RXN-1103" groups:idRef="R_RXN_1103_c"/>
-          <groups:member groups:name="1.1.1.194-coniferyl-alcohol dehydrogenase" groups:idRef="R_RXN_2602_c"/>
           <groups:member groups:name="Phenylalanine_Ammonia_Lyase" groups:idRef="R_PHE_NH4_Lyase_c"/>
+          <groups:member groups:name="RXN-2581" groups:idRef="R_RXN_2581_c"/>
           <groups:member groups:name="1.2.1.44-cinnamoyl-CoA reductase" groups:idRef="R_RXN_1106_c"/>
+          <groups:member groups:name="RXN-1103" groups:idRef="R_RXN_1103_c"/>
+          <groups:member groups:name="6.2.1.34-RXN" groups:idRef="R_6_PERIOD_2_PERIOD_1_PERIOD_34_RXN_c"/>
+          <groups:member groups:name="RXN-3422" groups:idRef="R_RXN_3422_c"/>
+          <groups:member groups:name="HYPO Syringicacid biosynthesis" groups:idRef="R_SYRINGICACID_BIOSYNTHESIS_c"/>
+          <groups:member groups:name="2.3.1.133-RXN" groups:idRef="R_2_PERIOD_3_PERIOD_1_PERIOD_133_RXN_c"/>
+          <groups:member groups:name="RXN-1104" groups:idRef="R_RXN_1104_c"/>
+          <groups:member groups:name="RXN-1121" groups:idRef="R_RXN_1121_c"/>
+          <groups:member groups:name="RXN-2621" groups:idRef="R_RXN_2621_c"/>
+          <groups:member groups:name="1.1.1.194-coniferyl-alcohol dehydrogenase" groups:idRef="R_RXN_2602_c"/>
+          <groups:member groups:name="TRANS-CINNAMATE-4-MONOOXYGENASE-RXN" groups:idRef="R_TRANS_CINNAMATE_4_MONOOXYGENASE_RXN_c"/>
+          <groups:member groups:name="HYPO Syringaldehyde biosynthesis" groups:idRef="R_SYRINGALDEHYDE_BIOSYNTHESIS_c"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PHESYN" groups:name="L-phenylalanine biosynthesis I" groups:kind="collection">
@@ -24881,19 +24887,19 @@
       </groups:group>
       <groups:group groups:id="G_PROSYN__45__PWY" groups:name="L-proline biosynthesis I (from L-glutamate)" groups:kind="collection">
         <groups:listOfMembers>
+          <groups:member groups:name="SPONTPRO-RXN:NIL" groups:idRef="R_SPONTPRO_RXN_c"/>
+          <groups:member groups:name="PYRROLINECARBREDUCT-RXN:Pyrroline-5-carboxylate reductase" groups:idRef="R_PYRROLINECARBREDUCT_RXN_NADP_c"/>
+          <groups:member groups:name="GLUTKIN-RXN:Glutamate 5-kinase" groups:idRef="R_GLUTKIN_RXN_c"/>
           <groups:member groups:name="PYRROLINECARBREDUCT-RXN:Pyrroline-5-carboxylate reductase" groups:idRef="R_PYRROLINECARBREDUCT_RXN_NAD_c"/>
           <groups:member groups:name="SPONTPRO-RXN:NIL" groups:idRef="R_SPONTPRO_RXN_m"/>
-          <groups:member groups:name="GLUTKIN-RXN:Glutamate 5-kinase" groups:idRef="R_GLUTKIN_RXN_c"/>
           <groups:member groups:name="GLUTSEMIALDEHYDROG-RXN" groups:idRef="R_GLUTSEMIALDEHYDROG_RXN_c"/>
-          <groups:member groups:name="PYRROLINECARBREDUCT-RXN:Pyrroline-5-carboxylate reductase" groups:idRef="R_PYRROLINECARBREDUCT_RXN_NADP_c"/>
-          <groups:member groups:name="SPONTPRO-RXN:NIL" groups:idRef="R_SPONTPRO_RXN_c"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PROUT__45__PWY" groups:name="L-proline degradation I" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="PYRROLINECARBDEHYDROG-RXN:NIL" groups:idRef="R_PYRROLINECARBDEHYDROG_RXN_m"/>
           <groups:member groups:name="RXN-14903" groups:idRef="R_RXN_14903_mi"/>
           <groups:member groups:name="RXN-14903" groups:idRef="R_RXN_14903_m"/>
+          <groups:member groups:name="PYRROLINECARBDEHYDROG-RXN:NIL" groups:idRef="R_PYRROLINECARBDEHYDROG_RXN_m"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__1001" groups:name="cellulose biosynthesis" groups:kind="collection">
@@ -24904,38 +24910,38 @@
       </groups:group>
       <groups:group groups:id="G_PWY__45__101" groups:name="photosynthesis light reactions" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="PLASTOQUINOL--PLASTOCYANIN-REDUCTASE-RXN:Plastoquinol--plastocyanin reductase" groups:idRef="R_PLASTOQUINOL_PLASTOCYANIN_REDUCTASE_RXN_p"/>
           <groups:member groups:name="1.18.1.2-RXN:Ferredoxin--NADP(+) reductase" groups:idRef="R_1_PERIOD_18_PERIOD_1_PERIOD_2_RXN_p"/>
           <groups:member groups:name="PSII-RXN:NIL" groups:idRef="R_PSII_RXN_p"/>
           <groups:member groups:name="RXN490-3650:NIL" groups:idRef="R_RXN490_3650_p"/>
+          <groups:member groups:name="PLASTOQUINOL--PLASTOCYANIN-REDUCTASE-RXN:Plastoquinol--plastocyanin reductase" groups:idRef="R_PLASTOQUINOL_PLASTOCYANIN_REDUCTASE_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__1042" groups:name="glycolysis IV" groups:kind="collection">
         <groups:listOfMembers>
           <groups:member groups:name="PHOSGLYPHOS-RXN:Phosphoglycerate kinase" groups:idRef="R_PHOSGLYPHOS_RXN_p"/>
-          <groups:member groups:name="GAPOXNPHOSPHN-RXN:Glyceraldehyde 3-phosphate dehydrogenase (phosphorylating)" groups:idRef="R_GAPOXNPHOSPHN_RXN_p"/>
-          <groups:member groups:name="3PGAREARR-RXN:Phosphoglycerate mutase" groups:idRef="R_3PGAREARR_RXN_p"/>
+          <groups:member groups:name="F16ALDOLASE-RXN:Fructose-bisphosphate aldolase" groups:idRef="R_F16ALDOLASE_RXN_p"/>
           <groups:member groups:name="GAPOXNPHOSPHN-RXN:Glyceraldehyde 3-phosphate dehydrogenase (phosphorylating)" groups:idRef="R_GAPOXNPHOSPHN_RXN_c"/>
-          <groups:member groups:name="PHOSGLYPHOS-RXN:Phosphoglycerate kinase" groups:idRef="R_PHOSGLYPHOS_RXN_c"/>
-          <groups:member groups:name="PEPDEPHOS-RXN:Pyruvate kinase" groups:idRef="R_PEPDEPHOS_RXN_p"/>
-          <groups:member groups:name="TRIOSEPISOMERIZATION-RXN:Triosephosphate isomerase" groups:idRef="R_TRIOSEPISOMERIZATION_RXN_c"/>
-          <groups:member groups:name="2PGADEHYDRAT-RXN:Phosphopyruvate hydratase" groups:idRef="R_2PGADEHYDRAT_RXN_c"/>
           <groups:member groups:name="1.2.1.9-RXN:Glyceraldehyde-3-phosphate dehydrogenase (NADP+)" groups:idRef="R_1_PERIOD_2_PERIOD_1_PERIOD_9_RXN_c"/>
-          <groups:member groups:name="TRIOSEPISOMERIZATION-RXN:Triosephosphate isomerase" groups:idRef="R_TRIOSEPISOMERIZATION_RXN_p"/>
-          <groups:member groups:name="3PGAREARR-RXN:Phosphoglycerate mutase" groups:idRef="R_3PGAREARR_RXN_c"/>
-          <groups:member groups:name="PEPDEPHOS-RXN:Pyruvate kinase" groups:idRef="R_PEPDEPHOS_RXN_c"/>
-          <groups:member groups:name="6PFRUCTPHOS-RXN:NIL" groups:idRef="R_6PFRUCTPHOS_RXN_c"/>
           <groups:member groups:name="2PGADEHYDRAT-RXN:Phosphopyruvate hydratase" groups:idRef="R_2PGADEHYDRAT_RXN_p"/>
-          <groups:member groups:name="F16ALDOLASE-RXN:Fructose-bisphosphate aldolase" groups:idRef="R_F16ALDOLASE_RXN_c"/>
+          <groups:member groups:name="3PGAREARR-RXN:Phosphoglycerate mutase" groups:idRef="R_3PGAREARR_RXN_p"/>
           <groups:member groups:name="6PFRUCTPHOS-RXN:NIL" groups:idRef="R_6PFRUCTPHOS_RXN_p"/>
           <groups:member groups:name="2.7.1.90-RXN:Diphosphate--fructose-6-phosphate 1-phosphotransferase" groups:idRef="R_2_PERIOD_7_PERIOD_1_PERIOD_90_RXN_c"/>
-          <groups:member groups:name="F16ALDOLASE-RXN:Fructose-bisphosphate aldolase" groups:idRef="R_F16ALDOLASE_RXN_p"/>
+          <groups:member groups:name="TRIOSEPISOMERIZATION-RXN:Triosephosphate isomerase" groups:idRef="R_TRIOSEPISOMERIZATION_RXN_c"/>
+          <groups:member groups:name="2PGADEHYDRAT-RXN:Phosphopyruvate hydratase" groups:idRef="R_2PGADEHYDRAT_RXN_c"/>
+          <groups:member groups:name="GAPOXNPHOSPHN-RXN:Glyceraldehyde 3-phosphate dehydrogenase (phosphorylating)" groups:idRef="R_GAPOXNPHOSPHN_RXN_p"/>
+          <groups:member groups:name="PEPDEPHOS-RXN:Pyruvate kinase" groups:idRef="R_PEPDEPHOS_RXN_c"/>
+          <groups:member groups:name="3PGAREARR-RXN:Phosphoglycerate mutase" groups:idRef="R_3PGAREARR_RXN_c"/>
+          <groups:member groups:name="PEPDEPHOS-RXN:Pyruvate kinase" groups:idRef="R_PEPDEPHOS_RXN_p"/>
+          <groups:member groups:name="6PFRUCTPHOS-RXN:NIL" groups:idRef="R_6PFRUCTPHOS_RXN_c"/>
+          <groups:member groups:name="TRIOSEPISOMERIZATION-RXN:Triosephosphate isomerase" groups:idRef="R_TRIOSEPISOMERIZATION_RXN_p"/>
+          <groups:member groups:name="F16ALDOLASE-RXN:Fructose-bisphosphate aldolase" groups:idRef="R_F16ALDOLASE_RXN_c"/>
+          <groups:member groups:name="PHOSGLYPHOS-RXN:Phosphoglycerate kinase" groups:idRef="R_PHOSGLYPHOS_RXN_c"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__116" groups:name="coniferin metabolism" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="CONIFERIN-BETA-GLUCOSIDASE-RXN:Coniferin &amp;beta;-glucosidase" groups:idRef="R_CONIFERIN_BETA_GLUCOSIDASE_RXN_c"/>
           <groups:member groups:name="2.4.1.111-RXN:Coniferyl-alcohol glucosyltransferase" groups:idRef="R_2_PERIOD_4_PERIOD_1_PERIOD_111_RXN_c"/>
+          <groups:member groups:name="CONIFERIN-BETA-GLUCOSIDASE-RXN:Coniferin &amp;beta;-glucosidase" groups:idRef="R_CONIFERIN_BETA_GLUCOSIDASE_RXN_c"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__1422" groups:name="vitamin E biosynthesis (tocopherols)" groups:kind="collection">
@@ -24945,56 +24951,56 @@
       </groups:group>
       <groups:group groups:id="G_PWY__45__2161" groups:name="folate polyglutamylation" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="GLYOHMETRANS-RXN:NIL" groups:idRef="R_GLYOHMETRANS_RXN_p"/>
-          <groups:member groups:name="FORMATETHFLIG-RXN:Formate--tetrahydrofolate ligase" groups:idRef="R_FORMATETHFLIG_RXN_p"/>
-          <groups:member groups:name="GLYOHMETRANS-RXN:NIL" groups:idRef="R_GLYOHMETRANS_RXN_c"/>
           <groups:member groups:name="GLYOHMETRANS-RXN:NIL" groups:idRef="R_GLYOHMETRANS_RXN_m"/>
+          <groups:member groups:name="GLYOHMETRANS-RXN:NIL" groups:idRef="R_GLYOHMETRANS_RXN_p"/>
+          <groups:member groups:name="GLYOHMETRANS-RXN:NIL" groups:idRef="R_GLYOHMETRANS_RXN_c"/>
+          <groups:member groups:name="FORMATETHFLIG-RXN:Formate--tetrahydrofolate ligase" groups:idRef="R_FORMATETHFLIG_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__2201" groups:name="folate transformations I" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="1.5.1.20-RXN:Methylenetetrahydrofolate reductase (NADPH)" groups:idRef="R_1_PERIOD_5_PERIOD_1_PERIOD_20_RXN_c"/>
-          <groups:member groups:name="METHENYLTHFCYCLOHYDRO-RXN:Methenyltetrahydrofolate cyclohydrolase" groups:idRef="R_METHENYLTHFCYCLOHYDRO_RXN_c"/>
-          <groups:member groups:name="DIHYDROFOLATEREDUCT-RXN:Dihydrofolate reductase" groups:idRef="R_DIHYDROFOLATEREDUCT_RXN_m"/>
-          <groups:member groups:name="HOMOCYSMETB12-RXN:5-methyltetrahydrofolate--homocysteine S-methyltransferase" groups:idRef="R_HOMOCYSMETB12_RXN_c"/>
+          <groups:member groups:name="THYMIDYLATESYN-RXN:Thymidylate synthase" groups:idRef="R_THYMIDYLATESYN_RXN_m"/>
+          <groups:member groups:name="HOMOCYSMETB12-RXN:5-methyltetrahydrofolate--homocysteine S-methyltransferase" groups:idRef="R_HOMOCYSMETB12_RXN_p"/>
           <groups:member groups:name="GCVMULTI-RXN:NIL" groups:idRef="R_GCVMULTI_RXN_m"/>
           <groups:member groups:name="GLYOHMETRANS-RXN:NIL" groups:idRef="R_GLYOHMETRANS_RXN_p"/>
-          <groups:member groups:name="FORMATETHFLIG-RXN:Formate--tetrahydrofolate ligase" groups:idRef="R_FORMATETHFLIG_RXN_p"/>
-          <groups:member groups:name="GLYOHMETRANS-RXN:NIL" groups:idRef="R_GLYOHMETRANS_RXN_m"/>
-          <groups:member groups:name="FORMYLTHFDEFORMYL-RXN:Formyltetrahydrofolate deformylase" groups:idRef="R_FORMYLTHFDEFORMYL_RXN_p"/>
-          <groups:member groups:name="HOMOCYSMETB12-RXN:5-methyltetrahydrofolate--homocysteine S-methyltransferase" groups:idRef="R_HOMOCYSMETB12_RXN_p"/>
           <groups:member groups:name="METHYLENETHFDEHYDROG-NADP-RXN:Methylenetetrahydrofolate dehydrogenase (NADP+)" groups:idRef="R_METHYLENETHFDEHYDROG_NADP_RXN_c"/>
-          <groups:member groups:name="THYMIDYLATESYN-RXN:Thymidylate synthase" groups:idRef="R_THYMIDYLATESYN_RXN_m"/>
+          <groups:member groups:name="1.5.1.20-RXN:Methylenetetrahydrofolate reductase (NADPH)" groups:idRef="R_1_PERIOD_5_PERIOD_1_PERIOD_20_RXN_c"/>
+          <groups:member groups:name="FORMYLTHFDEFORMYL-RXN:Formyltetrahydrofolate deformylase" groups:idRef="R_FORMYLTHFDEFORMYL_RXN_p"/>
+          <groups:member groups:name="FORMATETHFLIG-RXN:Formate--tetrahydrofolate ligase" groups:idRef="R_FORMATETHFLIG_RXN_p"/>
+          <groups:member groups:name="METHENYLTHFCYCLOHYDRO-RXN:Methenyltetrahydrofolate cyclohydrolase" groups:idRef="R_METHENYLTHFCYCLOHYDRO_RXN_c"/>
+          <groups:member groups:name="GLYOHMETRANS-RXN:NIL" groups:idRef="R_GLYOHMETRANS_RXN_m"/>
+          <groups:member groups:name="HOMOCYSMETB12-RXN:5-methyltetrahydrofolate--homocysteine S-methyltransferase" groups:idRef="R_HOMOCYSMETB12_RXN_c"/>
           <groups:member groups:name="GLYOHMETRANS-RXN:NIL" groups:idRef="R_GLYOHMETRANS_RXN_c"/>
+          <groups:member groups:name="DIHYDROFOLATEREDUCT-RXN:Dihydrofolate reductase" groups:idRef="R_DIHYDROFOLATEREDUCT_RXN_m"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__2261" groups:name="ascorbate glutathione cycle" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="RXN-3521:NIL" groups:idRef="R_RXN_3521_p"/>
-          <groups:member groups:name="1.8.5.1-RXN:Glutathione dehydrogenase (ascorbate)" groups:idRef="R_1_PERIOD_8_PERIOD_5_PERIOD_1_RXN_m"/>
           <groups:member groups:name="RXN-3523:NIL" groups:idRef="R_RXN_3523_p"/>
-          <groups:member groups:name="GLUTATHIONE-REDUCT-NADPH-RXN:Glutathione reductase (NADPH)" groups:idRef="R_GLUTATHIONE_REDUCT_NADPH_RXN_m"/>
+          <groups:member groups:name="L-ASCORBATE-PEROXIDASE-RXN:L-ascorbate peroxidase" groups:idRef="R_L_ASCORBATE_PEROXIDASE_RXN_m"/>
+          <groups:member groups:name="1.8.5.1-RXN:Glutathione dehydrogenase (ascorbate)" groups:idRef="R_1_PERIOD_8_PERIOD_5_PERIOD_1_RXN_m"/>
           <groups:member groups:name="RXN-3522:NIL" groups:idRef="R_RXN_3522_p"/>
-          <groups:member groups:name="MDA-FD-Ascorbate_p" groups:idRef="R_MDA_Fd_Ascorbate_p"/>
           <groups:member groups:name="GLUTATHIONE-REDUCT-NADPH-RXN:Glutathione reductase (NADPH)" groups:idRef="R_GLUTATHIONE_REDUCT_NADPH_RXN_p"/>
           <groups:member groups:name="L-ASCORBATE-PEROXIDASE-RXN:L-ascorbate peroxidase" groups:idRef="R_L_ASCORBATE_PEROXIDASE_RXN_p"/>
-          <groups:member groups:name="L-ASCORBATE-PEROXIDASE-RXN:L-ascorbate peroxidase" groups:idRef="R_L_ASCORBATE_PEROXIDASE_RXN_m"/>
+          <groups:member groups:name="MDA-FD-Ascorbate_p" groups:idRef="R_MDA_Fd_Ascorbate_p"/>
+          <groups:member groups:name="GLUTATHIONE-REDUCT-NADPH-RXN:Glutathione reductase (NADPH)" groups:idRef="R_GLUTATHIONE_REDUCT_NADPH_RXN_m"/>
+          <groups:member groups:name="RXN-3521:NIL" groups:idRef="R_RXN_3521_p"/>
           <groups:member groups:name="1.8.5.1-RXN:Glutathione dehydrogenase (ascorbate)" groups:idRef="R_1_PERIOD_8_PERIOD_5_PERIOD_1_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__2301" groups:name="myo-inositol biosynthesis" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="MYO-INOSITOL-1OR-4-MONOPHOSPHATASE-RXN:Myo-inositol-1(or 4)-monophosphatase" groups:idRef="R_MYO_INOSITOL_1OR_4_MONOPHOSPHATASE_RXN_c"/>
           <groups:member groups:name="MYO-INOSITOL-1-PHOSPHATE-SYNTHASE-RXN:myo-inositol-1-phosphate synthase" groups:idRef="R_MYO_INOSITOL_1_PHOSPHATE_SYNTHASE_RXN_c"/>
+          <groups:member groups:name="MYO-INOSITOL-1OR-4-MONOPHOSPHATASE-RXN:Myo-inositol-1(or 4)-monophosphatase" groups:idRef="R_MYO_INOSITOL_1OR_4_MONOPHOSPHATASE_RXN_c"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__241" groups:name="C4 photosynthetic carbon assimilation cycle, NADP-ME type" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="PYRUVATEORTHOPHOSPHATE-DIKINASE-RXN:Pyruvate,phosphate dikinase" groups:idRef="R_PYRUVATEORTHOPHOSPHATE_DIKINASE_RXN_p"/>
-          <groups:member groups:name="MALATE-DEHYDROGENASE-NADP-RXN" groups:idRef="R_MALATE_DEHYDROGENASE_NADP_RXN_p"/>
-          <groups:member groups:name="MALIC-NADP-RXN:Malate dehydrogenase (oxaloacetate decarboxylating) (NADP+)" groups:idRef="R_MALIC_NADP_RXN_p"/>
-          <groups:member groups:name="PEPCARBOX-RXN:Phosphoenolpyruvate carboxylase" groups:idRef="R_PEPCARBOX_RXN_c"/>
           <groups:member groups:name="PYRUVATEORTHOPHOSPHATE-DIKINASE-RXN:Pyruvate,phosphate dikinase" groups:idRef="R_PYRUVATEORTHOPHOSPHATE_DIKINASE_RXN_c"/>
+          <groups:member groups:name="MALATE-DEHYDROGENASE-NADP-RXN" groups:idRef="R_MALATE_DEHYDROGENASE_NADP_RXN_p"/>
+          <groups:member groups:name="PYRUVATEORTHOPHOSPHATE-DIKINASE-RXN:Pyruvate,phosphate dikinase" groups:idRef="R_PYRUVATEORTHOPHOSPHATE_DIKINASE_RXN_p"/>
+          <groups:member groups:name="PEPCARBOX-RXN:Phosphoenolpyruvate carboxylase" groups:idRef="R_PEPCARBOX_RXN_c"/>
+          <groups:member groups:name="MALIC-NADP-RXN:Malate dehydrogenase (oxaloacetate decarboxylating) (NADP+)" groups:idRef="R_MALIC_NADP_RXN_p"/>
           <groups:member groups:name="MALIC-NADP-RXN:Malate dehydrogenase (oxaloacetate decarboxylating) (NADP+)" groups:idRef="R_MALIC_NADP_RXN_c"/>
         </groups:listOfMembers>
       </groups:group>
@@ -25006,27 +25012,27 @@
       </groups:group>
       <groups:group groups:id="G_PWY__45__3341" groups:name="L-proline biosynthesis III (from L-ornithine)" groups:kind="collection">
         <groups:listOfMembers>
+          <groups:member groups:name="ORNITHINE-GLU-AMINOTRANSFORASE-RXN:Ornithine--oxo-acid aminotransferase" groups:idRef="R_ORNITHINE_GLU_AMINOTRANSFORASE_RXN_m"/>
+          <groups:member groups:name="PYRROLINECARBREDUCT-RXN:Pyrroline-5-carboxylate reductase" groups:idRef="R_PYRROLINECARBREDUCT_RXN_NADP_c"/>
+          <groups:member groups:name="SPONTPRO-RXN:NIL" groups:idRef="R_SPONTPRO_RXN_c"/>
           <groups:member groups:name="PYRROLINECARBREDUCT-RXN:Pyrroline-5-carboxylate reductase" groups:idRef="R_PYRROLINECARBREDUCT_RXN_NAD_c"/>
           <groups:member groups:name="SPONTPRO-RXN:NIL" groups:idRef="R_SPONTPRO_RXN_m"/>
-          <groups:member groups:name="PYRROLINECARBREDUCT-RXN:Pyrroline-5-carboxylate reductase" groups:idRef="R_PYRROLINECARBREDUCT_RXN_NADP_c"/>
-          <groups:member groups:name="ORNITHINE-GLU-AMINOTRANSFORASE-RXN:Ornithine--oxo-acid aminotransferase" groups:idRef="R_ORNITHINE_GLU_AMINOTRANSFORASE_RXN_m"/>
-          <groups:member groups:name="SPONTPRO-RXN:NIL" groups:idRef="R_SPONTPRO_RXN_c"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__3385" groups:name="choline biosynthesis I" groups:kind="collection">
         <groups:listOfMembers>
           <groups:member groups:name="RXN-5641:NIL" groups:idRef="R_RXN_5641_c"/>
-          <groups:member groups:name="RXN-5643:NIL" groups:idRef="R_RXN_5643_c"/>
           <groups:member groups:name="RXN-5642:NIL" groups:idRef="R_RXN_5642_c"/>
           <groups:member groups:name="ETHANOLAMINE-KINASE-RXN:Ethanolamine kinase" groups:idRef="R_ETHANOLAMINE_KINASE_RXN_c"/>
+          <groups:member groups:name="RXN-5643:NIL" groups:idRef="R_RXN_5643_c"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__3461" groups:name="L-tyrosine biosynthesis II" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="RXN-5682:NIL" groups:idRef="R_RXN_5682_p"/>
-          <groups:member groups:name="CHORISMATEMUT-RXN:Chorismate mutase" groups:idRef="R_CHORISMATEMUT_RXN_p"/>
-          <groups:member groups:name="PREPHENATE-TRANSAMINE-RXN:glutamate-prephenate aminotransferase" groups:idRef="R_PREPHENATE_TRANSAMINE_RXN_p"/>
           <groups:member groups:name="PREPHENATE_DEHYDROGENASE_NADP_RXN_p" groups:idRef="R_PREPHENATE_DEHYDROGENASE_NADP_RXN_p"/>
+          <groups:member groups:name="CHORISMATEMUT-RXN:Chorismate mutase" groups:idRef="R_CHORISMATEMUT_RXN_p"/>
+          <groups:member groups:name="RXN-5682:NIL" groups:idRef="R_RXN_5682_p"/>
+          <groups:member groups:name="PREPHENATE-TRANSAMINE-RXN:glutamate-prephenate aminotransferase" groups:idRef="R_PREPHENATE_TRANSAMINE_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__3462" groups:name="L-phenylalanine biosynthesis II" groups:kind="collection">
@@ -25043,30 +25049,30 @@
       </groups:group>
       <groups:group groups:id="G_PWY__45__3781" groups:name="aerobic respiration I (cytochrome c)" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="SUCCINATE-DEHYDROGENASE-UBIQUINONE-RXN:Succinate dehydrogenase (ubiquinone)" groups:idRef="R_SUCCINATE_DEHYDROGENASE_UBIQUINONE_RXN_mc"/>
-          <groups:member groups:name="1.10.2.2-RXN:Ubiquinol--cytochrome c reductase" groups:idRef="R_1_PERIOD_10_PERIOD_2_PERIOD_2_RXN_mi"/>
+          <groups:member groups:name="NADH-DEHYDROG-A-RXN:NADH dehydrogenase (ubiquinone)" groups:idRef="R_NADH_DEHYDROG_A_RXN_mi"/>
           <groups:member groups:name="RXN0-5330:NADH dehydrogenase (ubiquinone)" groups:idRef="R_RXN0_5330_NAD_c"/>
-          <groups:member groups:name="CYTOCHROME-C-OXIDASE-RXN:Cytochrome-c oxidase" groups:idRef="R_CYTOCHROME_C_OXIDASE_RXN_mc"/>
           <groups:member groups:name="1.10.2.2-RXN:Ubiquinol--cytochrome c reductase" groups:idRef="R_1_PERIOD_10_PERIOD_2_PERIOD_2_RXN_mc"/>
+          <groups:member groups:name="1.10.2.2-RXN:Ubiquinol--cytochrome c reductase" groups:idRef="R_1_PERIOD_10_PERIOD_2_PERIOD_2_RXN_mi"/>
+          <groups:member groups:name="NADH-DEHYDROG-A-RXN:NADH dehydrogenase (ubiquinone)" groups:idRef="R_NADH_DEHYDROG_A_RXN_mc"/>
+          <groups:member groups:name="SUCCINATE-DEHYDROGENASE-UBIQUINONE-RXN:Succinate dehydrogenase (ubiquinone)" groups:idRef="R_SUCCINATE_DEHYDROGENASE_UBIQUINONE_RXN_mc"/>
+          <groups:member groups:name="CYTOCHROME-C-OXIDASE-RXN:Cytochrome-c oxidase" groups:idRef="R_CYTOCHROME_C_OXIDASE_RXN_mc"/>
           <groups:member groups:name="SUCCINATE-DEHYDROGENASE-UBIQUINONE-RXN:Succinate dehydrogenase (ubiquinone)" groups:idRef="R_SUCCINATE_DEHYDROGENASE_UBIQUINONE_RXN_mi"/>
           <groups:member groups:name="CYTOCHROME-C-OXIDASE-RXN:Cytochrome-c oxidase" groups:idRef="R_CYTOCHROME_C_OXIDASE_RXN_mi"/>
-          <groups:member groups:name="NADH-DEHYDROG-A-RXN:NADH dehydrogenase (ubiquinone)" groups:idRef="R_NADH_DEHYDROG_A_RXN_mi"/>
-          <groups:member groups:name="NADH-DEHYDROG-A-RXN:NADH dehydrogenase (ubiquinone)" groups:idRef="R_NADH_DEHYDROG_A_RXN_mc"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__3801" groups:name="sucrose degradation II (sucrose synthase)" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="GLUC1PURIDYLTRANS-RXN:UTP--glucose-1-phosphate uridylyltransferase" groups:idRef="R_GLUC1PURIDYLTRANS_RXN_c"/>
           <groups:member groups:name="SUCROSE-SYNTHASE-RXN:Sucrose synthase" groups:idRef="R_SUCROSE_SYNTHASE_RXN_c"/>
+          <groups:member groups:name="GLUC1PURIDYLTRANS-RXN:UTP--glucose-1-phosphate uridylyltransferase" groups:idRef="R_GLUC1PURIDYLTRANS_RXN_c"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__381" groups:name="nitrate reduction II (assimilatory)" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="FERREDOXIN--NITRITE-REDUCTASE-RXN:Ferredoxin--nitrite reductase" groups:idRef="R_FERREDOXIN_NITRITE_REDUCTASE_RXN_p"/>
-          <groups:member groups:name="GLUTAMINESYN-RXN:Glutamate--ammonia ligase" groups:idRef="R_GLUTAMINESYN_RXN_c"/>
-          <groups:member groups:name="GLUTAMINESYN-RXN:Glutamate--ammonia ligase" groups:idRef="R_GLUTAMINESYN_RXN_p"/>
-          <groups:member groups:name="NITRATE-REDUCTASE-NADH-RXN:NIL" groups:idRef="R_NITRATE_REDUCTASE_NADH_RXN_c"/>
           <groups:member groups:name="GLUTAMINESYN-RXN:Glutamate--ammonia ligase" groups:idRef="R_GLUTAMINESYN_RXN_m"/>
+          <groups:member groups:name="GLUTAMINESYN-RXN:Glutamate--ammonia ligase" groups:idRef="R_GLUTAMINESYN_RXN_c"/>
+          <groups:member groups:name="NITRATE-REDUCTASE-NADH-RXN:NIL" groups:idRef="R_NITRATE_REDUCTASE_NADH_RXN_c"/>
+          <groups:member groups:name="FERREDOXIN--NITRITE-REDUCTASE-RXN:Ferredoxin--nitrite reductase" groups:idRef="R_FERREDOXIN_NITRITE_REDUCTASE_RXN_p"/>
+          <groups:member groups:name="GLUTAMINESYN-RXN:Glutamate--ammonia ligase" groups:idRef="R_GLUTAMINESYN_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__3861" groups:name="mannitol degradation II" groups:kind="collection">
@@ -25077,16 +25083,16 @@
       </groups:group>
       <groups:group groups:id="G_PWY__45__3941" groups:name="&amp;beta;-alanine biosynthesis II" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="RXN-6383:NIL" groups:idRef="R_RXN_6383_x"/>
-          <groups:member groups:name="RXN-6384:NIL" groups:idRef="R_RXN_6384_x"/>
-          <groups:member groups:name="3-HYDROXYPROPIONATE-DEHYDROGENASE-RXN:NIL" groups:idRef="R_3_HYDROXYPROPIONATE_DEHYDROGENASE_RXN_m"/>
           <groups:member groups:name="PROPCOASYN-RXN:NIL" groups:idRef="R_PROPCOASYN_RXN_x"/>
+          <groups:member groups:name="3-HYDROXYPROPIONATE-DEHYDROGENASE-RXN:NIL" groups:idRef="R_3_HYDROXYPROPIONATE_DEHYDROGENASE_RXN_m"/>
+          <groups:member groups:name="RXN-6384:NIL" groups:idRef="R_RXN_6384_x"/>
+          <groups:member groups:name="RXN-6383:NIL" groups:idRef="R_RXN_6383_x"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__401" groups:name="galactolipid biosynthesis I" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="RXN-1225:digalactosyldiacylglycerol synthase" groups:idRef="R_RXN_1225_p"/>
           <groups:member groups:name="2.4.1.46-RXN:UDP-galactose:DAG galactosyltransferase" groups:idRef="R_2_PERIOD_4_PERIOD_1_PERIOD_46_RXN_p"/>
+          <groups:member groups:name="RXN-1225:digalactosyldiacylglycerol synthase" groups:idRef="R_RXN_1225_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__4081" groups:name="glutathione-peroxide redox reactions" groups:kind="collection">
@@ -25098,13 +25104,13 @@
       </groups:group>
       <groups:group groups:id="G_PWY__45__4302" groups:name="aerobic respiration III (alternative oxidase pathway)" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="RXN-6883:NIL" groups:idRef="R_RXN_6883_mc"/>
+          <groups:member groups:name="NADH-DEHYDROG-A-RXN:NADH dehydrogenase (ubiquinone)" groups:idRef="R_NADH_DEHYDROG_A_RXN_mi"/>
+          <groups:member groups:name="RXN-6884:NIL" groups:idRef="R_RXN_6884_m"/>
+          <groups:member groups:name="NADH-DEHYDROG-A-RXN:NADH dehydrogenase (ubiquinone)" groups:idRef="R_NADH_DEHYDROG_A_RXN_mc"/>
           <groups:member groups:name="SUCCINATE-DEHYDROGENASE-UBIQUINONE-RXN:Succinate dehydrogenase (ubiquinone)" groups:idRef="R_SUCCINATE_DEHYDROGENASE_UBIQUINONE_RXN_mc"/>
           <groups:member groups:name="RXN-6883:NIL" groups:idRef="R_RXN_6883_mi"/>
-          <groups:member groups:name="RXN-6884:NIL" groups:idRef="R_RXN_6884_m"/>
+          <groups:member groups:name="RXN-6883:NIL" groups:idRef="R_RXN_6883_mc"/>
           <groups:member groups:name="SUCCINATE-DEHYDROGENASE-UBIQUINONE-RXN:Succinate dehydrogenase (ubiquinone)" groups:idRef="R_SUCCINATE_DEHYDROGENASE_UBIQUINONE_RXN_mi"/>
-          <groups:member groups:name="NADH-DEHYDROG-A-RXN:NADH dehydrogenase (ubiquinone)" groups:idRef="R_NADH_DEHYDROG_A_RXN_mi"/>
-          <groups:member groups:name="NADH-DEHYDROG-A-RXN:NADH dehydrogenase (ubiquinone)" groups:idRef="R_NADH_DEHYDROG_A_RXN_mc"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__4341" groups:name="L-glutamate biosynthesis V" groups:kind="collection">
@@ -25114,9 +25120,9 @@
       </groups:group>
       <groups:group groups:id="G_PWY__45__4381" groups:name="fatty acid biosynthesis initiation (type II)" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="2.3.1.180-RXN:Beta-ketoacyl-acyl-carrier-protein synthase III" groups:idRef="R_2_PERIOD_3_PERIOD_1_PERIOD_180_RXN_p"/>
           <groups:member groups:name="ACETYL-COA-CARBOXYLTRANSFER-RXN:Acetyl-CoA carboxylase" groups:idRef="R_ACETYL_COA_CARBOXYLTRANSFER_RXN_p"/>
           <groups:member groups:name="MALONYL-COA-ACP-TRANSACYL-RXN:[Acyl-carrier protein] S-malonyltransferase" groups:idRef="R_MALONYL_COA_ACP_TRANSACYL_RXN_p"/>
+          <groups:member groups:name="2.3.1.180-RXN:Beta-ketoacyl-acyl-carrier-protein synthase III" groups:idRef="R_2_PERIOD_3_PERIOD_1_PERIOD_180_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__4821" groups:name="UDP-&amp;alpha;-D-xylose biosynthesis" groups:kind="collection">
@@ -25128,33 +25134,33 @@
       <groups:group groups:id="G_PWY__45__4841" groups:name="UDP-&amp;alpha;-D-glucuronate biosynthesis (from myo-inositol)" groups:kind="collection">
         <groups:listOfMembers>
           <groups:member groups:name="GLUCURONOKINASE-RXN:Glucuronokinase" groups:idRef="R_GLUCURONOKINASE_RXN_c"/>
-          <groups:member groups:name="2.7.7.44-RXN:Glucuronate-1-phosphate uridylyltransferase" groups:idRef="R_2_PERIOD_7_PERIOD_7_PERIOD_44_RXN_c"/>
           <groups:member groups:name="MYO-INOSITOL-OXYGENASE-RXN:Myo-inositol oxygenase" groups:idRef="R_MYO_INOSITOL_OXYGENASE_RXN_c"/>
+          <groups:member groups:name="2.7.7.44-RXN:Glucuronate-1-phosphate uridylyltransferase" groups:idRef="R_2_PERIOD_7_PERIOD_7_PERIOD_44_RXN_c"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__4981" groups:name="L-proline biosynthesis II (from arginine)" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="PYRROLINECARBREDUCT-RXN:Pyrroline-5-carboxylate reductase" groups:idRef="R_PYRROLINECARBREDUCT_RXN_NAD_c"/>
-          <groups:member groups:name="SPONTPRO-RXN:NIL" groups:idRef="R_SPONTPRO_RXN_m"/>
-          <groups:member groups:name="ORNCARBAMTRANSFER-RXN:Ornithine carbamoyltransferase" groups:idRef="R_ORNCARBAMTRANSFER_RXN_p"/>
-          <groups:member groups:name="PYRROLINECARBREDUCT-RXN:Pyrroline-5-carboxylate reductase" groups:idRef="R_PYRROLINECARBREDUCT_RXN_NADP_c"/>
           <groups:member groups:name="ORNITHINE-GLU-AMINOTRANSFORASE-RXN:Ornithine--oxo-acid aminotransferase" groups:idRef="R_ORNITHINE_GLU_AMINOTRANSFORASE_RXN_m"/>
+          <groups:member groups:name="PYRROLINECARBREDUCT-RXN:Pyrroline-5-carboxylate reductase" groups:idRef="R_PYRROLINECARBREDUCT_RXN_NADP_c"/>
           <groups:member groups:name="SPONTPRO-RXN:NIL" groups:idRef="R_SPONTPRO_RXN_c"/>
+          <groups:member groups:name="PYRROLINECARBREDUCT-RXN:Pyrroline-5-carboxylate reductase" groups:idRef="R_PYRROLINECARBREDUCT_RXN_NAD_c"/>
+          <groups:member groups:name="ORNCARBAMTRANSFER-RXN:Ornithine carbamoyltransferase" groups:idRef="R_ORNCARBAMTRANSFER_RXN_p"/>
+          <groups:member groups:name="SPONTPRO-RXN:NIL" groups:idRef="R_SPONTPRO_RXN_m"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__4983" groups:name="nitric oxide biosynthesis II" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="ARGSUCCINSYN-RXN:argininosuccinate synthetase" groups:idRef="R_ARGSUCCINSYN_RXN_p"/>
           <groups:member groups:name="ARGSUCCINLYA-RXN:Argininosuccinate lyase" groups:idRef="R_ARGSUCCINLYA_RXN_p"/>
+          <groups:member groups:name="ARGSUCCINSYN-RXN:argininosuccinate synthetase" groups:idRef="R_ARGSUCCINSYN_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__4984" groups:name="urea cycle" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="ARGSUCCINSYN-RXN:argininosuccinate synthetase" groups:idRef="R_ARGSUCCINSYN_RXN_p"/>
-          <groups:member groups:name="ORNCARBAMTRANSFER-RXN:Ornithine carbamoyltransferase" groups:idRef="R_ORNCARBAMTRANSFER_RXN_p"/>
-          <groups:member groups:name="RXN-13202:carbamoyl-phosphate synthetase I" groups:idRef="R_RXN_13202_p"/>
-          <groups:member groups:name="ARGINASE-RXN:Arginase" groups:idRef="R_ARGINASE_RXN_m"/>
           <groups:member groups:name="ARGSUCCINLYA-RXN:Argininosuccinate lyase" groups:idRef="R_ARGSUCCINLYA_RXN_p"/>
+          <groups:member groups:name="ARGINASE-RXN:Arginase" groups:idRef="R_ARGINASE_RXN_m"/>
+          <groups:member groups:name="RXN-13202:carbamoyl-phosphate synthetase I" groups:idRef="R_RXN_13202_p"/>
+          <groups:member groups:name="ORNCARBAMTRANSFER-RXN:Ornithine carbamoyltransferase" groups:idRef="R_ORNCARBAMTRANSFER_RXN_p"/>
+          <groups:member groups:name="ARGSUCCINSYN-RXN:argininosuccinate synthetase" groups:idRef="R_ARGSUCCINSYN_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__5044" groups:name="purine nucleotides degradation I (plants)" groups:kind="collection">
@@ -25182,11 +25188,11 @@
       </groups:group>
       <groups:group groups:id="G_PWY__45__5068" groups:name="chlorophyll cycle" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="RXN1F-66:NIL" groups:idRef="R_RXN1F_66_p"/>
-          <groups:member groups:name="RXN-7678:NIL" groups:idRef="R_RXN_7678_NAD_p"/>
-          <groups:member groups:name="RXN-7677:Chlorophyllide-a oxygenase" groups:idRef="R_RXN_7677_p"/>
           <groups:member groups:name="RXN-7679:NIL" groups:idRef="R_RXN_7679_p"/>
           <groups:member groups:name="RXN-7678:NIL" groups:idRef="R_RXN_7678_NADP_p"/>
+          <groups:member groups:name="RXN1F-66:NIL" groups:idRef="R_RXN1F_66_p"/>
+          <groups:member groups:name="RXN-7677:Chlorophyllide-a oxygenase" groups:idRef="R_RXN_7677_p"/>
+          <groups:member groups:name="RXN-7678:NIL" groups:idRef="R_RXN_7678_NAD_p"/>
           <groups:member groups:name="RXN-7674:NIL" groups:idRef="R_RXN_7674_p"/>
           <groups:member groups:name="RXN-7676:Chlorophyllide-a oxygenase" groups:idRef="R_RXN_7676_p"/>
         </groups:listOfMembers>
@@ -25198,8 +25204,8 @@
       </groups:group>
       <groups:group groups:id="G_PWY__45__5076" groups:name="L-leucine degradation III" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="BRANCHED-CHAINAMINOTRANSFERLEU-RXN:Branched-chain amino acid aminotransferase" groups:idRef="R_BRANCHED_CHAINAMINOTRANSFERLEU_RXN_p"/>
           <groups:member groups:name="BRANCHED-CHAINAMINOTRANSFERLEU-RXN:Branched-chain amino acid aminotransferase" groups:idRef="R_BRANCHED_CHAINAMINOTRANSFERLEU_RXN_m"/>
+          <groups:member groups:name="BRANCHED-CHAINAMINOTRANSFERLEU-RXN:Branched-chain amino acid aminotransferase" groups:idRef="R_BRANCHED_CHAINAMINOTRANSFERLEU_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__5078" groups:name="L-isoleucine degradation II" groups:kind="collection">
@@ -25210,40 +25216,40 @@
       </groups:group>
       <groups:group groups:id="G_PWY__45__5083" groups:name="NAD(P)/NADPH interconversion" groups:kind="collection">
         <groups:listOfMembers>
+          <groups:member groups:name="NADH-DEHYDROG-A-RXN:NADH dehydrogenase (ubiquinone)" groups:idRef="R_NADH_DEHYDROG_A_RXN_mc"/>
           <groups:member groups:name="NADH-DEHYDROG-A-RXN:NADH dehydrogenase (ubiquinone)" groups:idRef="R_NADH_DEHYDROG_A_RXN_mi"/>
           <groups:member groups:name="RXN-7703:NIL" groups:idRef="R_RXN_7703_c"/>
           <groups:member groups:name="NADH-KINASE-RXN:NIL" groups:idRef="R_NADH_KINASE_RXN_c"/>
-          <groups:member groups:name="NADH-DEHYDROG-A-RXN:NADH dehydrogenase (ubiquinone)" groups:idRef="R_NADH_DEHYDROG_A_RXN_mc"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__5097" groups:name="L-lysine biosynthesis VI" groups:kind="collection">
         <groups:listOfMembers>
           <groups:member groups:name="RXN-7737:NIL" groups:idRef="R_RXN_7737_p"/>
-          <groups:member groups:name="ASPARTATEKIN-RXN:Aspartate kinase" groups:idRef="R_ASPARTATEKIN_RXN_p"/>
           <groups:member groups:name="DIAMINOPIMDECARB-RXN:Diaminopimelate decarboxylase" groups:idRef="R_DIAMINOPIMDECARB_RXN_p"/>
-          <groups:member groups:name="DIHYDROPICRED-RXN:Dihydrodipicolinate reductase" groups:idRef="R_DIHYDROPICRED_RXN_NADP_p"/>
-          <groups:member groups:name="DIHYDROPICRED-RXN:Dihydrodipicolinate reductase" groups:idRef="R_DIHYDROPICRED_RXN_NAD_p"/>
-          <groups:member groups:name="ASPARTATE-SEMIALDEHYDE-DEHYDROGENASE-RXN:Aspartate-semialdehyde dehydrogenase" groups:idRef="R_ASPARTATE_SEMIALDEHYDE_DEHYDROGENASE_RXN_p"/>
-          <groups:member groups:name="DIAMINOPIMEPIM-RXN:Diaminopimelate epimerase" groups:idRef="R_DIAMINOPIMEPIM_RXN_p"/>
           <groups:member groups:name="DIHYDRODIPICSYN-RXN:dihydrodipicolinate synthase" groups:idRef="R_DIHYDRODIPICSYN_RXN_p"/>
+          <groups:member groups:name="DIHYDROPICRED-RXN:Dihydrodipicolinate reductase" groups:idRef="R_DIHYDROPICRED_RXN_NAD_p"/>
+          <groups:member groups:name="DIAMINOPIMEPIM-RXN:Diaminopimelate epimerase" groups:idRef="R_DIAMINOPIMEPIM_RXN_p"/>
+          <groups:member groups:name="DIHYDROPICRED-RXN:Dihydrodipicolinate reductase" groups:idRef="R_DIHYDROPICRED_RXN_NADP_p"/>
+          <groups:member groups:name="ASPARTATE-SEMIALDEHYDE-DEHYDROGENASE-RXN:Aspartate-semialdehyde dehydrogenase" groups:idRef="R_ASPARTATE_SEMIALDEHYDE_DEHYDROGENASE_RXN_p"/>
+          <groups:member groups:name="ASPARTATEKIN-RXN:Aspartate kinase" groups:idRef="R_ASPARTATEKIN_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__5104" groups:name="L-isoleucine biosynthesis IV" groups:kind="collection">
         <groups:listOfMembers>
+          <groups:member groups:name="ACETOOHBUTSYN-RXN:Acetolactate synthase" groups:idRef="R_ACETOOHBUTSYN_RXN_p"/>
           <groups:member groups:name="DIHYDROXYMETVALDEHYDRAT-RXN:Dihydroxy-acid dehydratase" groups:idRef="R_DIHYDROXYMETVALDEHYDRAT_RXN_p"/>
+          <groups:member groups:name="BRANCHED-CHAINAMINOTRANSFERILEU-RXN:Branched-chain amino acid aminotransferase" groups:idRef="R_BRANCHED_CHAINAMINOTRANSFERILEU_RXN_m"/>
           <groups:member groups:name="BRANCHED-CHAINAMINOTRANSFERILEU-RXN:Branched-chain amino acid aminotransferase" groups:idRef="R_BRANCHED_CHAINAMINOTRANSFERILEU_RXN_p"/>
           <groups:member groups:name="ACETOOHBUTREDUCTOISOM-RXN:Ketol-acid reductoisomerase" groups:idRef="R_ACETOOHBUTREDUCTOISOM_RXN_p"/>
-          <groups:member groups:name="ACETOOHBUTSYN-RXN:Acetolactate synthase" groups:idRef="R_ACETOOHBUTSYN_RXN_p"/>
-          <groups:member groups:name="BRANCHED-CHAINAMINOTRANSFERILEU-RXN:Branched-chain amino acid aminotransferase" groups:idRef="R_BRANCHED_CHAINAMINOTRANSFERILEU_RXN_m"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__5154" groups:name="L-arginine biosynthesis III (via N-acetyl-L-citrulline)" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="ARGSUCCINSYN-RXN:argininosuccinate synthetase" groups:idRef="R_ARGSUCCINSYN_RXN_p"/>
+          <groups:member groups:name="ARGSUCCINLYA-RXN:Argininosuccinate lyase" groups:idRef="R_ARGSUCCINLYA_RXN_p"/>
           <groups:member groups:name="ACETYLORNTRANSAM-RXN:Acetylornithine aminotransferase" groups:idRef="R_ACETYLORNTRANSAM_RXN_p"/>
           <groups:member groups:name="ACETYLGLUTKIN-RXN:Acetylglutamate kinase" groups:idRef="R_ACETYLGLUTKIN_RXN_p"/>
           <groups:member groups:name="N-ACETYLGLUTPREDUCT-RXN:N-acetyl-&amp;gamma;-glutamyl-phosphate reductase" groups:idRef="R_N_ACETYLGLUTPREDUCT_RXN_p"/>
-          <groups:member groups:name="ARGSUCCINLYA-RXN:Argininosuccinate lyase" groups:idRef="R_ARGSUCCINLYA_RXN_p"/>
+          <groups:member groups:name="ARGSUCCINSYN-RXN:argininosuccinate synthetase" groups:idRef="R_ARGSUCCINSYN_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__5172" groups:name="acetyl-CoA biosynthesis from citrate" groups:kind="collection">
@@ -25284,45 +25290,45 @@
       </groups:group>
       <groups:group groups:id="G_PWY__45__5497" groups:name="purine nucleobases degradation II (anaerobic)" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="METHENYLTHFCYCLOHYDRO-RXN:Methenyltetrahydrofolate cyclohydrolase" groups:idRef="R_METHENYLTHFCYCLOHYDRO_RXN_c"/>
           <groups:member groups:name="1.2.1.2-RXN:NIL" groups:idRef="R_1_PERIOD_2_PERIOD_1_PERIOD_2_RXN_m"/>
-          <groups:member groups:name="GLYOHMETRANS-RXN:NIL" groups:idRef="R_GLYOHMETRANS_RXN_p"/>
           <groups:member groups:name="1.2.1.2-RXN:NIL" groups:idRef="R_1_PERIOD_2_PERIOD_1_PERIOD_2_RXN_p"/>
-          <groups:member groups:name="FORMATETHFLIG-RXN:Formate--tetrahydrofolate ligase" groups:idRef="R_FORMATETHFLIG_RXN_p"/>
-          <groups:member groups:name="GLYOHMETRANS-RXN:NIL" groups:idRef="R_GLYOHMETRANS_RXN_m"/>
+          <groups:member groups:name="GLYOHMETRANS-RXN:NIL" groups:idRef="R_GLYOHMETRANS_RXN_p"/>
           <groups:member groups:name="METHYLENETHFDEHYDROG-NADP-RXN:Methylenetetrahydrofolate dehydrogenase (NADP+)" groups:idRef="R_METHYLENETHFDEHYDROG_NADP_RXN_c"/>
+          <groups:member groups:name="FORMATETHFLIG-RXN:Formate--tetrahydrofolate ligase" groups:idRef="R_FORMATETHFLIG_RXN_p"/>
+          <groups:member groups:name="METHENYLTHFCYCLOHYDRO-RXN:Methenyltetrahydrofolate cyclohydrolase" groups:idRef="R_METHENYLTHFCYCLOHYDRO_RXN_c"/>
+          <groups:member groups:name="GLYOHMETRANS-RXN:NIL" groups:idRef="R_GLYOHMETRANS_RXN_m"/>
           <groups:member groups:name="GLYOHMETRANS-RXN:NIL" groups:idRef="R_GLYOHMETRANS_RXN_c"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__561" groups:name="superpathway of glyoxylate cycle and fatty acid degradation" groups:kind="collection">
         <groups:listOfMembers>
           <groups:member groups:name="FUMHYDR-RXN:Fumarate hydratase" groups:idRef="R_FUMHYDR_RXN_m"/>
-          <groups:member groups:name="SUCCINATE-DEHYDROGENASE-UBIQUINONE-RXN:Succinate dehydrogenase (ubiquinone)" groups:idRef="R_SUCCINATE_DEHYDROGENASE_UBIQUINONE_RXN_mc"/>
-          <groups:member groups:name="PEPCARBOXYKIN-RXN:Phosphoenolpyruvate carboxykinase (ATP)" groups:idRef="R_PEPCARBOXYKIN_RXN_c"/>
-          <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_p"/>
-          <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_c"/>
-          <groups:member groups:name="SUCCINATE-DEHYDROGENASE-UBIQUINONE-RXN:Succinate dehydrogenase (ubiquinone)" groups:idRef="R_SUCCINATE_DEHYDROGENASE_UBIQUINONE_RXN_mi"/>
-          <groups:member groups:name="FUMHYDR-RXN:Fumarate hydratase" groups:idRef="R_FUMHYDR_RXN_c"/>
-          <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_x"/>
-          <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_m"/>
           <groups:member groups:name="Beta-Oxidation" groups:idRef="R_Beta_Oxidation_x"/>
+          <groups:member groups:name="PEPCARBOXYKIN-RXN:Phosphoenolpyruvate carboxykinase (ATP)" groups:idRef="R_PEPCARBOXYKIN_RXN_c"/>
+          <groups:member groups:name="SUCCINATE-DEHYDROGENASE-UBIQUINONE-RXN:Succinate dehydrogenase (ubiquinone)" groups:idRef="R_SUCCINATE_DEHYDROGENASE_UBIQUINONE_RXN_mc"/>
+          <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_p"/>
+          <groups:member groups:name="SUCCINATE-DEHYDROGENASE-UBIQUINONE-RXN:Succinate dehydrogenase (ubiquinone)" groups:idRef="R_SUCCINATE_DEHYDROGENASE_UBIQUINONE_RXN_mi"/>
+          <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_m"/>
+          <groups:member groups:name="FUMHYDR-RXN:Fumarate hydratase" groups:idRef="R_FUMHYDR_RXN_c"/>
+          <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_c"/>
+          <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_x"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__5659" groups:name="GDP-mannose biosynthesis" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="PGLUCISOM-RXN:Glucose-6-phosphate isomerase" groups:idRef="R_PGLUCISOM_RXN_p"/>
-          <groups:member groups:name="MANNPISOM-RXN:Mannose-6-phosphate isomerase" groups:idRef="R_MANNPISOM_RXN_c"/>
           <groups:member groups:name="2.7.7.13-RXN:Mannose-1-phosphate guanylyltransferase" groups:idRef="R_2_PERIOD_7_PERIOD_7_PERIOD_13_RXN_c"/>
           <groups:member groups:name="PGLUCISOM-RXN:Glucose-6-phosphate isomerase" groups:idRef="R_PGLUCISOM_RXN_c"/>
+          <groups:member groups:name="MANNPISOM-RXN:Mannose-6-phosphate isomerase" groups:idRef="R_MANNPISOM_RXN_c"/>
+          <groups:member groups:name="PGLUCISOM-RXN:Glucose-6-phosphate isomerase" groups:idRef="R_PGLUCISOM_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__5661" groups:name="GDP-&amp;alpha;-D-glucose biosynthesis" groups:kind="collection">
         <groups:listOfMembers>
+          <groups:member groups:name="PHOSPHOGLUCMUT-RXN:|Phosphoglucomutase|" groups:idRef="R_PHOSPHOGLUCMUT_RXN_p"/>
           <groups:member groups:name="GLUCOKIN-RXN:Glucokinase" groups:idRef="R_GLUCOKIN_RXN_c"/>
+          <groups:member groups:name="PHOSPHOGLUCMUT-RXN:|Phosphoglucomutase|" groups:idRef="R_PHOSPHOGLUCMUT_RXN_c"/>
           <groups:member groups:name="2.7.7.34-RXN:Glucose-1-phosphate guanylyltransferase" groups:idRef="R_2_PERIOD_7_PERIOD_7_PERIOD_34_RXN_c"/>
           <groups:member groups:name="GLUCOKIN-RXN:Glucokinase" groups:idRef="R_GLUCOKIN_RXN_p"/>
-          <groups:member groups:name="PHOSPHOGLUCMUT-RXN:|Phosphoglucomutase|" groups:idRef="R_PHOSPHOGLUCMUT_RXN_c"/>
-          <groups:member groups:name="PHOSPHOGLUCMUT-RXN:|Phosphoglucomutase|" groups:idRef="R_PHOSPHOGLUCMUT_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__5667" groups:name="CDP-diacylglycerol biosynthesis I" groups:kind="collection">
@@ -25333,42 +25339,42 @@
       </groups:group>
       <groups:group groups:id="G_PWY__45__5686" groups:name="UMP biosynthesis I" groups:kind="collection">
         <groups:listOfMembers>
+          <groups:member groups:name="OROPRIBTRANS-RXN:Orotate phosphoribosyltransferase" groups:idRef="R_OROPRIBTRANS_RXN_p"/>
           <groups:member groups:name="OROTPDECARB-RXN:Orotidine-5&apos;-phosphate decarboxylase" groups:idRef="R_OROTPDECARB_RXN_p"/>
           <groups:member groups:name="DIHYDROOROT-RXN:Dihydroorotase" groups:idRef="R_DIHYDROOROT_RXN_p"/>
           <groups:member groups:name="OROTATE-REDUCTASE-NADH-RXN" groups:idRef="R_OROTATE_REDUCTASE_NADH_RXN_p"/>
           <groups:member groups:name="ASPCARBTRANS-RXN:Aspartate carbamoyltransferase" groups:idRef="R_ASPCARBTRANS_RXN_p"/>
-          <groups:member groups:name="OROPRIBTRANS-RXN:Orotate phosphoribosyltransferase" groups:idRef="R_OROPRIBTRANS_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__5690" groups:name="TCA cycle II (plants)" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="FUMHYDR-RXN:Fumarate hydratase" groups:idRef="R_FUMHYDR_RXN_m"/>
-          <groups:member groups:name="SUCCCOASYN-RXN:Succinate--CoA ligase (ADP-forming)" groups:idRef="R_SUCCCOASYN_RXN_m"/>
-          <groups:member groups:name="ASPAMINOTRANS-RXN:Aspartate aminotransferase" groups:idRef="R_ASPAMINOTRANS_RXN_p"/>
-          <groups:member groups:name="CITSYN-RXN:Citrate (si)-synthase" groups:idRef="R_CITSYN_RXN_m"/>
-          <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_x"/>
-          <groups:member groups:name="ISOCITDEH-RXN:Isocitrate dehydrogenase (NADP+)" groups:idRef="R_ISOCITDEH_RXN_x"/>
-          <groups:member groups:name="ACONITATEHYDR-RXN:NIL" groups:idRef="R_ACONITATEHYDR_RXN_m"/>
-          <groups:member groups:name="ISOCITDEH-RXN:Isocitrate dehydrogenase (NADP+)" groups:idRef="R_ISOCITDEH_RXN_m"/>
-          <groups:member groups:name="ASPAMINOTRANS-RXN:Aspartate aminotransferase" groups:idRef="R_ASPAMINOTRANS_RXN_x"/>
-          <groups:member groups:name="SUCCINATE-DEHYDROGENASE-UBIQUINONE-RXN:Succinate dehydrogenase (ubiquinone)" groups:idRef="R_SUCCINATE_DEHYDROGENASE_UBIQUINONE_RXN_mc"/>
-          <groups:member groups:name="ACONITATEDEHYDR-RXN:Aconitate hydratase" groups:idRef="R_ACONITATEDEHYDR_RXN_m"/>
-          <groups:member groups:name="ISOCITDEH-RXN:Isocitrate dehydrogenase (NADP+)" groups:idRef="R_ISOCITDEH_RXN_c"/>
-          <groups:member groups:name="ISOCITRATE-DEHYDROGENASE-NAD+-RXN:Isocitrate dehydrogenase (NAD+)" groups:idRef="R_ISOCITRATE_DEHYDROGENASE_NAD_RXN_m"/>
           <groups:member groups:name="ASPAMINOTRANS-RXN:Aspartate aminotransferase" groups:idRef="R_ASPAMINOTRANS_RXN_m"/>
+          <groups:member groups:name="ISOCITRATE-DEHYDROGENASE-NAD+-RXN:Isocitrate dehydrogenase (NAD+)" groups:idRef="R_ISOCITRATE_DEHYDROGENASE_NAD_RXN_m"/>
+          <groups:member groups:name="SUCCINATE-DEHYDROGENASE-UBIQUINONE-RXN:Succinate dehydrogenase (ubiquinone)" groups:idRef="R_SUCCINATE_DEHYDROGENASE_UBIQUINONE_RXN_mc"/>
+          <groups:member groups:name="FUMHYDR-RXN:Fumarate hydratase" groups:idRef="R_FUMHYDR_RXN_c"/>
+          <groups:member groups:name="ASPAMINOTRANS-RXN:Aspartate aminotransferase" groups:idRef="R_ASPAMINOTRANS_RXN_p"/>
           <groups:member groups:name="ASPAMINOTRANS-RXN:Aspartate aminotransferase" groups:idRef="R_ASPAMINOTRANS_RXN_c"/>
-          <groups:member groups:name="PEPCARBOX-RXN:Phosphoenolpyruvate carboxylase" groups:idRef="R_PEPCARBOX_RXN_c"/>
-          <groups:member groups:name="SUCCINYL-COA-HYDROLASE-RXN:Succinyl-CoA hydrolase" groups:idRef="R_SUCCINYL_COA_HYDROLASE_RXN_m"/>
-          <groups:member groups:name="ACONITATEHYDR-RXN:NIL" groups:idRef="R_ACONITATEHYDR_RXN_c"/>
           <groups:member groups:name="INORGPYROPHOSPHAT-RXN:Inorganic pyrophosphatase" groups:idRef="R_INORGPYROPHOSPHAT_RXN_m"/>
           <groups:member groups:name="SUCCINATE-DEHYDROGENASE-UBIQUINONE-RXN:Succinate dehydrogenase (ubiquinone)" groups:idRef="R_SUCCINATE_DEHYDROGENASE_UBIQUINONE_RXN_mi"/>
-          <groups:member groups:name="FUMHYDR-RXN:Fumarate hydratase" groups:idRef="R_FUMHYDR_RXN_c"/>
-          <groups:member groups:name="ACONITATEDEHYDR-RXN:Aconitate hydratase" groups:idRef="R_ACONITATEDEHYDR_RXN_c"/>
-          <groups:member groups:name="2OXOGLUTARATEDEH-RXN:NIL" groups:idRef="R_2OXOGLUTARATEDEH_RXN_m"/>
-          <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_p"/>
-          <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_c"/>
+          <groups:member groups:name="ISOCITDEH-RXN:Isocitrate dehydrogenase (NADP+)" groups:idRef="R_ISOCITDEH_RXN_c"/>
+          <groups:member groups:name="ACONITATEHYDR-RXN:NIL" groups:idRef="R_ACONITATEHYDR_RXN_c"/>
+          <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_x"/>
           <groups:member groups:name="CITSYN-RXN:Citrate (si)-synthase" groups:idRef="R_CITSYN_RXN_x"/>
+          <groups:member groups:name="2OXOGLUTARATEDEH-RXN:NIL" groups:idRef="R_2OXOGLUTARATEDEH_RXN_m"/>
+          <groups:member groups:name="FUMHYDR-RXN:Fumarate hydratase" groups:idRef="R_FUMHYDR_RXN_m"/>
+          <groups:member groups:name="ASPAMINOTRANS-RXN:Aspartate aminotransferase" groups:idRef="R_ASPAMINOTRANS_RXN_x"/>
+          <groups:member groups:name="CITSYN-RXN:Citrate (si)-synthase" groups:idRef="R_CITSYN_RXN_m"/>
+          <groups:member groups:name="ISOCITDEH-RXN:Isocitrate dehydrogenase (NADP+)" groups:idRef="R_ISOCITDEH_RXN_x"/>
+          <groups:member groups:name="SUCCINYL-COA-HYDROLASE-RXN:Succinyl-CoA hydrolase" groups:idRef="R_SUCCINYL_COA_HYDROLASE_RXN_m"/>
+          <groups:member groups:name="ACONITATEHYDR-RXN:NIL" groups:idRef="R_ACONITATEHYDR_RXN_m"/>
+          <groups:member groups:name="SUCCCOASYN-RXN:Succinate--CoA ligase (ADP-forming)" groups:idRef="R_SUCCCOASYN_RXN_m"/>
+          <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_p"/>
+          <groups:member groups:name="ACONITATEDEHYDR-RXN:Aconitate hydratase" groups:idRef="R_ACONITATEDEHYDR_RXN_m"/>
+          <groups:member groups:name="ACONITATEDEHYDR-RXN:Aconitate hydratase" groups:idRef="R_ACONITATEDEHYDR_RXN_c"/>
+          <groups:member groups:name="PEPCARBOX-RXN:Phosphoenolpyruvate carboxylase" groups:idRef="R_PEPCARBOX_RXN_c"/>
+          <groups:member groups:name="ISOCITDEH-RXN:Isocitrate dehydrogenase (NADP+)" groups:idRef="R_ISOCITDEH_RXN_m"/>
           <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_m"/>
+          <groups:member groups:name="MALATE-DEH-RXN:Malate dehydrogenase" groups:idRef="R_MALATE_DEH_RXN_c"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__5695" groups:name="inosine 5&apos;-phosphate degradation" groups:kind="collection">
@@ -25383,20 +25389,20 @@
       </groups:group>
       <groups:group groups:id="G_PWY__45__5723" groups:name="Rubisco shunt" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="3PGAREARR-RXN:Phosphoglycerate mutase" groups:idRef="R_3PGAREARR_RXN_p"/>
           <groups:member groups:name="TRANSALDOL-RXN:Transaldolase" groups:idRef="R_TRANSALDOL_RXN_p"/>
-          <groups:member groups:name="PEPDEPHOS-RXN:Pyruvate kinase" groups:idRef="R_PEPDEPHOS_RXN_p"/>
-          <groups:member groups:name="2PGADEHYDRAT-RXN:Phosphopyruvate hydratase" groups:idRef="R_2PGADEHYDRAT_RXN_c"/>
-          <groups:member groups:name="RIBULP3EPIM-RXN:ribulose phosphate 3-epimerase" groups:idRef="R_RIBULP3EPIM_RXN_c"/>
-          <groups:member groups:name="3PGAREARR-RXN:Phosphoglycerate mutase" groups:idRef="R_3PGAREARR_RXN_c"/>
-          <groups:member groups:name="1TRANSKETO-RXN:Transketolase" groups:idRef="R_1TRANSKETO_RXN_p"/>
           <groups:member groups:name="RIBULP3EPIM-RXN:ribulose phosphate 3-epimerase" groups:idRef="R_RIBULP3EPIM_RXN_p"/>
-          <groups:member groups:name="RIBULOSE-BISPHOSPHATE-CARBOXYLASE-RXN:Ribulose-bisphosphate carboxylase" groups:idRef="R_RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p"/>
-          <groups:member groups:name="PEPDEPHOS-RXN:Pyruvate kinase" groups:idRef="R_PEPDEPHOS_RXN_c"/>
-          <groups:member groups:name="RIB5PISOM-RXN:Ribose 5-phosphate epimerase" groups:idRef="R_RIB5PISOM_RXN_p"/>
           <groups:member groups:name="2PGADEHYDRAT-RXN:Phosphopyruvate hydratase" groups:idRef="R_2PGADEHYDRAT_RXN_p"/>
+          <groups:member groups:name="3PGAREARR-RXN:Phosphoglycerate mutase" groups:idRef="R_3PGAREARR_RXN_p"/>
+          <groups:member groups:name="1TRANSKETO-RXN:Transketolase" groups:idRef="R_1TRANSKETO_RXN_p"/>
           <groups:member groups:name="2TRANSKETO-RXN:Transketolase" groups:idRef="R_2TRANSKETO_RXN_p"/>
+          <groups:member groups:name="RIBULP3EPIM-RXN:ribulose phosphate 3-epimerase" groups:idRef="R_RIBULP3EPIM_RXN_c"/>
           <groups:member groups:name="PHOSPHORIBULOKINASE-RXN:Phosphoribulokinase" groups:idRef="R_PHOSPHORIBULOKINASE_RXN_p"/>
+          <groups:member groups:name="RIB5PISOM-RXN:Ribose 5-phosphate epimerase" groups:idRef="R_RIB5PISOM_RXN_p"/>
+          <groups:member groups:name="2PGADEHYDRAT-RXN:Phosphopyruvate hydratase" groups:idRef="R_2PGADEHYDRAT_RXN_c"/>
+          <groups:member groups:name="PEPDEPHOS-RXN:Pyruvate kinase" groups:idRef="R_PEPDEPHOS_RXN_c"/>
+          <groups:member groups:name="3PGAREARR-RXN:Phosphoglycerate mutase" groups:idRef="R_3PGAREARR_RXN_c"/>
+          <groups:member groups:name="PEPDEPHOS-RXN:Pyruvate kinase" groups:idRef="R_PEPDEPHOS_RXN_p"/>
+          <groups:member groups:name="RIBULOSE-BISPHOSPHATE-CARBOXYLASE-RXN:Ribulose-bisphosphate carboxylase" groups:idRef="R_RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__5800" groups:name="xylan biosynthesis" groups:kind="collection">
@@ -25432,10 +25438,10 @@
       </groups:group>
       <groups:group groups:id="G_PWY__45__5945" groups:name="violaxanthin, antheraxanthin and zeaxanthin interconversion" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="RXN-7978:NIL" groups:idRef="R_RXN_7978_p"/>
           <groups:member groups:name="RXN-7985:NIL" groups:idRef="R_RXN_7985_p"/>
-          <groups:member groups:name="RXN-7984:NIL" groups:idRef="R_RXN_7984_p"/>
           <groups:member groups:name="RXN-7979:NIL" groups:idRef="R_RXN_7979_p"/>
+          <groups:member groups:name="RXN-7984:NIL" groups:idRef="R_RXN_7984_p"/>
+          <groups:member groups:name="RXN-7978:NIL" groups:idRef="R_RXN_7978_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__6120" groups:name="L-tyrosine biosynthesis III" groups:kind="collection">
@@ -25446,11 +25452,11 @@
       </groups:group>
       <groups:group groups:id="G_PWY__45__6122" groups:name="5-aminoimidazole ribonucleotide biosynthesis II" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="GLYRIBONUCSYN-RXN:Phosphoribosylamine--glycine ligase" groups:idRef="R_GLYRIBONUCSYN_RXN_p"/>
+          <groups:member groups:name="GART-RXN:Phosphoribosylglycinamide formyltransferase" groups:idRef="R_GART_RXN_p"/>
           <groups:member groups:name="PRPPAMIDOTRANS-RXN:Amidophosphoribosyltransferase" groups:idRef="R_PRPPAMIDOTRANS_RXN_p"/>
           <groups:member groups:name="AIRS-RXN:NIL" groups:idRef="R_AIRS_RXN_p"/>
           <groups:member groups:name="FGAMSYN-RXN:phosphoribosylformylglycinamidine synthetase" groups:idRef="R_FGAMSYN_RXN_p"/>
-          <groups:member groups:name="GART-RXN:Phosphoribosylglycinamide formyltransferase" groups:idRef="R_GART_RXN_p"/>
+          <groups:member groups:name="GLYRIBONUCSYN-RXN:Phosphoribosylamine--glycine ligase" groups:idRef="R_GLYRIBONUCSYN_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__6123" groups:name="inosine-5&apos;-phosphate biosynthesis I" groups:kind="collection">
@@ -25463,35 +25469,35 @@
       </groups:group>
       <groups:group groups:id="G_PWY__45__6124" groups:name="inosine-5&apos;-phosphate biosynthesis II" groups:kind="collection">
         <groups:listOfMembers>
+          <groups:member groups:name="AIRCARBOXY-RXN:Phosphoribosylaminoimidazole carboxylase" groups:idRef="R_AIRCARBOXY_RXN_p"/>
           <groups:member groups:name="AICARTRANSFORM-RXN:Phosphoribosylaminoimidazolecarboxamide formyltransferase" groups:idRef="R_AICARTRANSFORM_RXN_p"/>
           <groups:member groups:name="AICARSYN-RXN:Adenylosuccinate lyase" groups:idRef="R_AICARSYN_RXN_p"/>
-          <groups:member groups:name="IMPCYCLOHYDROLASE-RXN:NIL" groups:idRef="R_IMPCYCLOHYDROLASE_RXN_p"/>
-          <groups:member groups:name="AIRCARBOXY-RXN:Phosphoribosylaminoimidazole carboxylase" groups:idRef="R_AIRCARBOXY_RXN_p"/>
           <groups:member groups:name="SAICARSYN-RXN:Phosphoribosylaminoimidazole-succinocarboxamide synthetase" groups:idRef="R_SAICARSYN_RXN_p"/>
+          <groups:member groups:name="IMPCYCLOHYDROLASE-RXN:NIL" groups:idRef="R_IMPCYCLOHYDROLASE_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__621" groups:name="sucrose degradation III (sucrose invertase)" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="GLUC1PURIDYLTRANS-RXN:UTP--glucose-1-phosphate uridylyltransferase" groups:idRef="R_GLUC1PURIDYLTRANS_RXN_c"/>
-          <groups:member groups:name="SUCROSE-SYNTHASE-RXN:Sucrose synthase" groups:idRef="R_SUCROSE_SYNTHASE_RXN_c"/>
+          <groups:member groups:name="3.2.1.48-RXN:NIL" groups:idRef="R_3_PERIOD_2_PERIOD_1_PERIOD_48_RXN_v"/>
+          <groups:member groups:name="PHOSPHOGLUCMUT-RXN:|Phosphoglucomutase|" groups:idRef="R_PHOSPHOGLUCMUT_RXN_p"/>
+          <groups:member groups:name="PGLUCISOM-RXN:Glucose-6-phosphate isomerase" groups:idRef="R_PGLUCISOM_RXN_p"/>
+          <groups:member groups:name="RXN-1781" groups:idRef="R_RXN_1781_v"/>
+          <groups:member groups:name="PHOSPHOGLUCMUT-RXN:|Phosphoglucomutase|" groups:idRef="R_PHOSPHOGLUCMUT_RXN_c"/>
           <groups:member groups:name="PGLUCISOM-RXN:Glucose-6-phosphate isomerase" groups:idRef="R_PGLUCISOM_RXN_c"/>
           <groups:member groups:name="FRUCTOKINASE-RXN:Fructokinase" groups:idRef="R_FRUCTOKINASE_RXN_c"/>
-          <groups:member groups:name="3.2.1.48-RXN:NIL" groups:idRef="R_3_PERIOD_2_PERIOD_1_PERIOD_48_RXN_v"/>
-          <groups:member groups:name="PHOSPHOGLUCMUT-RXN:|Phosphoglucomutase|" groups:idRef="R_PHOSPHOGLUCMUT_RXN_c"/>
-          <groups:member groups:name="PHOSPHOGLUCMUT-RXN:|Phosphoglucomutase|" groups:idRef="R_PHOSPHOGLUCMUT_RXN_p"/>
-          <groups:member groups:name="RXN-1781" groups:idRef="R_RXN_1781_v"/>
-          <groups:member groups:name="PGLUCISOM-RXN:Glucose-6-phosphate isomerase" groups:idRef="R_PGLUCISOM_RXN_p"/>
+          <groups:member groups:name="SUCROSE-SYNTHASE-RXN:Sucrose synthase" groups:idRef="R_SUCROSE_SYNTHASE_RXN_c"/>
           <groups:member groups:name="3.2.1.48-RXN:NIL" groups:idRef="R_3_PERIOD_2_PERIOD_1_PERIOD_48_RXN_c"/>
+          <groups:member groups:name="GLUC1PURIDYLTRANS-RXN:UTP--glucose-1-phosphate uridylyltransferase" groups:idRef="R_GLUC1PURIDYLTRANS_RXN_c"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__622" groups:name="starch biosynthesis" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="PGLUCISOM-RXN:Glucose-6-phosphate isomerase" groups:idRef="R_PGLUCISOM_RXN_c"/>
-          <groups:member groups:name="PHOSPHOGLUCMUT-RXN:|Phosphoglucomutase|" groups:idRef="R_PHOSPHOGLUCMUT_RXN_c"/>
           <groups:member groups:name="PHOSPHOGLUCMUT-RXN:|Phosphoglucomutase|" groups:idRef="R_PHOSPHOGLUCMUT_RXN_p"/>
           <groups:member groups:name="PGLUCISOM-RXN:Glucose-6-phosphate isomerase" groups:idRef="R_PGLUCISOM_RXN_p"/>
-          <groups:member groups:name="GLYCOGENSYN-RXN:Starch (bacterial glycogen) synthase" groups:idRef="R_GLYCOGENSYN_RXN_p"/>
           <groups:member groups:name="GLUC1PADENYLTRANS-RXN:Glucose-1-phosphate adenylyltransferase" groups:idRef="R_GLUC1PADENYLTRANS_RXN_p"/>
+          <groups:member groups:name="PHOSPHOGLUCMUT-RXN:|Phosphoglucomutase|" groups:idRef="R_PHOSPHOGLUCMUT_RXN_c"/>
+          <groups:member groups:name="PGLUCISOM-RXN:Glucose-6-phosphate isomerase" groups:idRef="R_PGLUCISOM_RXN_c"/>
+          <groups:member groups:name="GLYCOGENSYN-RXN:Starch (bacterial glycogen) synthase" groups:idRef="R_GLYCOGENSYN_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__6317" groups:name="D-galactose degradation I (Leloir pathway)" groups:kind="collection">
@@ -25509,47 +25515,47 @@
       <groups:group groups:id="G_PWY__45__6614" groups:name="tetrahydrofolate biosynthesis I" groups:kind="collection">
         <groups:listOfMembers>
           <groups:member groups:name="METHENYLTHFCYCLOHYDRO-RXN:Methenyltetrahydrofolate cyclohydrolase" groups:idRef="R_METHENYLTHFCYCLOHYDRO_RXN_c"/>
-          <groups:member groups:name="DIHYDROFOLATEREDUCT-RXN:Dihydrofolate reductase" groups:idRef="R_DIHYDROFOLATEREDUCT_RXN_m"/>
           <groups:member groups:name="GART-RXN:Phosphoribosylglycinamide formyltransferase" groups:idRef="R_GART_RXN_p"/>
+          <groups:member groups:name="DIHYDROFOLATEREDUCT-RXN:Dihydrofolate reductase" groups:idRef="R_DIHYDROFOLATEREDUCT_RXN_m"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__6964" groups:name="ammonia assimilation cycle II" groups:kind="collection">
         <groups:listOfMembers>
+          <groups:member groups:name="GLUTAMINESYN-RXN:Glutamate--ammonia ligase" groups:idRef="R_GLUTAMINESYN_RXN_m"/>
+          <groups:member groups:name="GLUTAMATE-SYNTHASE-FERREDOXIN-RXN:Glutamate synthase (ferredoxin)" groups:idRef="R_GLUTAMATE_SYNTHASE_FERREDOXIN_RXN_p"/>
           <groups:member groups:name="GLUTAMINESYN-RXN:Glutamate--ammonia ligase" groups:idRef="R_GLUTAMINESYN_RXN_c"/>
           <groups:member groups:name="GLUTAMINESYN-RXN:Glutamate--ammonia ligase" groups:idRef="R_GLUTAMINESYN_RXN_p"/>
-          <groups:member groups:name="GLUTAMATE-SYNTHASE-FERREDOXIN-RXN:Glutamate synthase (ferredoxin)" groups:idRef="R_GLUTAMATE_SYNTHASE_FERREDOXIN_RXN_p"/>
           <groups:member groups:name="GLUTAMATE-SYNTHASE-NADH-RXN:NIL" groups:idRef="R_GLUTAMATE_SYNTHASE_NADH_RXN_p"/>
-          <groups:member groups:name="GLUTAMINESYN-RXN:Glutamate--ammonia ligase" groups:idRef="R_GLUTAMINESYN_RXN_m"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__702" groups:name="L-methionine biosynthesis II" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="CYSPH-RXN:NIL" groups:idRef="R_CYSPH_RXN_p"/>
-          <groups:member groups:name="HOMOSERKIN-RXN:Homoserine kinase" groups:idRef="R_HOMOSERKIN_RXN_p"/>
           <groups:member groups:name="CYSTATHIONINE-BETA-LYASE-RXN:Cystathionine &amp;beta;-lyase" groups:idRef="R_CYSTATHIONINE_BETA_LYASE_RXN_p"/>
+          <groups:member groups:name="HOMOSERKIN-RXN:Homoserine kinase" groups:idRef="R_HOMOSERKIN_RXN_p"/>
+          <groups:member groups:name="CYSPH-RXN:NIL" groups:idRef="R_CYSPH_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__7560" groups:name="methylerythritol phosphate pathway II" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="RXN0-884:NIL" groups:idRef="R_RXN0_884_p"/>
-          <groups:member groups:name="HYPO_HMBPP_synthesis" groups:idRef="R_HMBPP_synthesis_p"/>
-          <groups:member groups:name="ISPH2-RXN:NIL" groups:idRef="R_ISPH2_RXN_p"/>
-          <groups:member groups:name="HYPO GGPP biosynthesis" groups:idRef="R_GGPP_biosynthesis_p"/>
           <groups:member groups:name="HYPO phytol biosynthesis" groups:idRef="R_Phytol_biosynthesis_p"/>
+          <groups:member groups:name="RXN0-884:NIL" groups:idRef="R_RXN0_884_p"/>
+          <groups:member groups:name="HYPO GGPP biosynthesis" groups:idRef="R_GGPP_biosynthesis_p"/>
+          <groups:member groups:name="ISPH2-RXN:NIL" groups:idRef="R_ISPH2_RXN_p"/>
+          <groups:member groups:name="HYPO_HMBPP_synthesis" groups:idRef="R_HMBPP_synthesis_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__801" groups:name="homocysteine and cysteine interconversion" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="RXN-15130:Cystathionine &amp;gamma;-lyase" groups:idRef="R_RXN_15130_p"/>
           <groups:member groups:name="CYSTATHIONINE-BETA-LYASE-RXN:Cystathionine &amp;beta;-lyase" groups:idRef="R_CYSTATHIONINE_BETA_LYASE_RXN_p"/>
+          <groups:member groups:name="RXN-15130:Cystathionine &amp;gamma;-lyase" groups:idRef="R_RXN_15130_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__8190" groups:name="L-glutamate degradation XI" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="RXN-6902:NIL" groups:idRef="R_RXN_6902_m"/>
           <groups:member groups:name="SUCCINATE-SEMIALDEHYDE-DEHYDROGENASE-RXN:Succinate-semialdehyde dehydrogenase" groups:idRef="R_SUCCINATE_SEMIALDEHYDE_DEHYDROGENASE_RXN_m"/>
-          <groups:member groups:name="GABATRANSAM-RXN:4-aminobutyrate aminotransferase" groups:idRef="R_GABATRANSAM_RXN_m"/>
           <groups:member groups:name="GLUTDECARBOX-RXN:Glutamate decarboxylase" groups:idRef="R_GLUTDECARBOX_RXN_c"/>
+          <groups:member groups:name="GABATRANSAM-RXN:4-aminobutyrate aminotransferase" groups:idRef="R_GABATRANSAM_RXN_m"/>
+          <groups:member groups:name="RXN-6902:NIL" groups:idRef="R_RXN_6902_m"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__862" groups:name="fructan degradation" groups:kind="collection">
@@ -25560,13 +25566,13 @@
       <groups:group groups:id="G_PWY__45__882" groups:name="L-ascorbate biosynthesis I (plants, L-galactose pathway)" groups:kind="collection">
         <groups:listOfMembers>
           <groups:member groups:name="2.7.7.69-GDP-L-galactose/GDP-D-glucose: hexose 1-phosphate guanylyltransferase" groups:idRef="R_RXNQT_4141_c"/>
-          <groups:member groups:name="2.7.7.13-RXN:Mannose-1-phosphate guanylyltransferase" groups:idRef="R_2_PERIOD_7_PERIOD_7_PERIOD_13_RXN_c"/>
-          <groups:member groups:name="3.1.3.93-L-galactose 1-phosphate phosphatase" groups:idRef="R_RXNQT_4142_c"/>
-          <groups:member groups:name="MANNPGUANYLTRANGDP_RXN_c" groups:idRef="R_MANNPGUANYLTRANGDP_RXN_c"/>
-          <groups:member groups:name="MANNPISOM-RXN:Mannose-6-phosphate isomerase" groups:idRef="R_MANNPISOM_RXN_c"/>
           <groups:member groups:name="1.3.2.3-L-galactonolactone dehydrogenase" groups:idRef="R_GALACTONOLACTONE_DEHYDROGENASE_RXN_m"/>
           <groups:member groups:name="5.1.3.18-GDP-mannose 3,5-epimerase" groups:idRef="R_RXN_7772_c"/>
+          <groups:member groups:name="2.7.7.13-RXN:Mannose-1-phosphate guanylyltransferase" groups:idRef="R_2_PERIOD_7_PERIOD_7_PERIOD_13_RXN_c"/>
+          <groups:member groups:name="MANNPGUANYLTRANGDP_RXN_c" groups:idRef="R_MANNPGUANYLTRANGDP_RXN_c"/>
+          <groups:member groups:name="MANNPISOM-RXN:Mannose-6-phosphate isomerase" groups:idRef="R_MANNPISOM_RXN_c"/>
           <groups:member groups:name="5.4.2.8-phosphomannomutase" groups:idRef="R_PHOSMANMUT_RXN_c"/>
+          <groups:member groups:name="3.1.3.93-L-galactose 1-phosphate phosphatase" groups:idRef="R_RXNQT_4142_c"/>
           <groups:member groups:name="1.1.1.316-L-galactose 1-dehydrogenase" groups:idRef="R_RXN_1884_c"/>
         </groups:listOfMembers>
       </groups:group>
@@ -25584,8 +25590,8 @@
       </groups:group>
       <groups:group groups:id="G_PWY0__45__1313" groups:name="acetate conversion to acetyl-CoA" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="ACETATE--COA-LIGASE-RXN:acetate--CoA ligase" groups:idRef="R_ACETATE_COA_LIGASE_RXN_x"/>
           <groups:member groups:name="ACETATE--COA-LIGASE-RXN:acetate--CoA ligase" groups:idRef="R_ACETATE__COA_LIGASE_RXN_p"/>
+          <groups:member groups:name="ACETATE--COA-LIGASE-RXN:acetate--CoA ligase" groups:idRef="R_ACETATE_COA_LIGASE_RXN_x"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY0__45__1319" groups:name="CDP-diacylglycerol biosynthesis II" groups:kind="collection">
@@ -25622,17 +25628,17 @@
       <groups:group groups:id="G_PWY490__45__3" groups:name="nitrate reduction VI (assimilatory)" groups:kind="collection">
         <groups:listOfMembers>
           <groups:member groups:name="GLUTAMINESYN-RXN:Glutamate--ammonia ligase" groups:idRef="R_GLUTAMINESYN_RXN_m"/>
-          <groups:member groups:name="GLUTAMINESYN-RXN:Glutamate--ammonia ligase" groups:idRef="R_GLUTAMINESYN_RXN_c"/>
           <groups:member groups:name="GLUTAMINESYN-RXN:Glutamate--ammonia ligase" groups:idRef="R_GLUTAMINESYN_RXN_p"/>
+          <groups:member groups:name="GLUTAMINESYN-RXN:Glutamate--ammonia ligase" groups:idRef="R_GLUTAMINESYN_RXN_c"/>
           <groups:member groups:name="FERREDOXIN--NITRITE-REDUCTASE-RXN:Ferredoxin--nitrite reductase" groups:idRef="R_FERREDOXIN_NITRITE_REDUCTASE_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY4FS__45__2" groups:name="phosphatidylcholine biosynthesis II" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="RXN-5781:Diacylglycerol cholinephosphotransferase" groups:idRef="R_RXN_5781_r"/>
-          <groups:member groups:name="RXN-5643:NIL" groups:idRef="R_RXN_5643_c"/>
-          <groups:member groups:name="2.7.7.15-RXN_m" groups:idRef="R_2_PERIOD_7_PERIOD_7_PERIOD_15_RXN_m"/>
           <groups:member groups:name="RXN-5642:NIL" groups:idRef="R_RXN_5642_c"/>
+          <groups:member groups:name="RXN-5781:Diacylglycerol cholinephosphotransferase" groups:idRef="R_RXN_5781_r"/>
+          <groups:member groups:name="2.7.7.15-RXN_m" groups:idRef="R_2_PERIOD_7_PERIOD_7_PERIOD_15_RXN_m"/>
+          <groups:member groups:name="RXN-5643:NIL" groups:idRef="R_RXN_5643_c"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY4FS__45__4" groups:name="phosphatidylcholine biosynthesis IV" groups:kind="collection">
@@ -25642,37 +25648,37 @@
       </groups:group>
       <groups:group groups:id="G_PWY4FS__45__6" groups:name="phosphatidylethanolamine biosynthesis II" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="ETHANOLAMINEPHOSPHOTRANSFERASE-RXN:Ethanolaminephosphotransferase" groups:idRef="R_ETHANOLAMINEPHOSPHOTRANSFERASE_RXN_r"/>
           <groups:member groups:name="2.7.7.14-RXN" groups:idRef="R_2_PERIOD_7_PERIOD_7_PERIOD_14_RXN_m"/>
           <groups:member groups:name="2.7.1.82-ethanolamine kinase" groups:idRef="R_ETHANOLAMINE_KINASE_RXN_m"/>
+          <groups:member groups:name="ETHANOLAMINEPHOSPHOTRANSFERASE-RXN:Ethanolaminephosphotransferase" groups:idRef="R_ETHANOLAMINEPHOSPHOTRANSFERASE_RXN_r"/>
           <groups:member groups:name="ETHANOLAMINE-KINASE-RXN:Ethanolamine kinase" groups:idRef="R_ETHANOLAMINE_KINASE_RXN_c"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY66__45__162" groups:name="ethanol degradation IV" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="ACETATE--COA-LIGASE-RXN:acetate--CoA ligase" groups:idRef="R_ACETATE_COA_LIGASE_RXN_x"/>
-          <groups:member groups:name="ACETATE--COA-LIGASE-RXN:acetate--CoA ligase" groups:idRef="R_ACETATE__COA_LIGASE_RXN_p"/>
           <groups:member groups:name="RXN66-3:NIL" groups:idRef="R_RXN66_3_c"/>
           <groups:member groups:name="RXN66-3:NIL" groups:idRef="R_RXN66_3_m"/>
+          <groups:member groups:name="ACETATE--COA-LIGASE-RXN:acetate--CoA ligase" groups:idRef="R_ACETATE__COA_LIGASE_RXN_p"/>
+          <groups:member groups:name="ACETATE--COA-LIGASE-RXN:acetate--CoA ligase" groups:idRef="R_ACETATE_COA_LIGASE_RXN_x"/>
           <groups:member groups:name="RXN66-1:NIL" groups:idRef="R_RXN66_1_c"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY66__45__21" groups:name="ethanol degradation II" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="ALCOHOL-DEHYDROG-RXN:NIL" groups:idRef="R_ALCOHOL_DEHYDROG_RXN_c"/>
-          <groups:member groups:name="ACETATE--COA-LIGASE-RXN:acetate--CoA ligase" groups:idRef="R_ACETATE_COA_LIGASE_RXN_x"/>
-          <groups:member groups:name="ACETATE--COA-LIGASE-RXN:acetate--CoA ligase" groups:idRef="R_ACETATE__COA_LIGASE_RXN_p"/>
           <groups:member groups:name="RXN66-3:NIL" groups:idRef="R_RXN66_3_c"/>
+          <groups:member groups:name="ALCOHOL-DEHYDROG-RXN:NIL" groups:idRef="R_ALCOHOL_DEHYDROG_RXN_c"/>
           <groups:member groups:name="RXN66-3:NIL" groups:idRef="R_RXN66_3_m"/>
+          <groups:member groups:name="ACETATE--COA-LIGASE-RXN:acetate--CoA ligase" groups:idRef="R_ACETATE__COA_LIGASE_RXN_p"/>
+          <groups:member groups:name="ACETATE--COA-LIGASE-RXN:acetate--CoA ligase" groups:idRef="R_ACETATE_COA_LIGASE_RXN_x"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PhosphatidylglycerolBiosynthesis" groups:name="Phosphatidylglycerol Biosynthesis" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="CDPDIGLYSYN-RXN:phosphatidate cytidylyltransferase" groups:idRef="R_CDPDIGLYSYN_RXN_p"/>
           <groups:member groups:name="PHOSPHAGLYPSYN-RXN:Phosphatidylglycerol phosphate synthase" groups:idRef="R_PHOSPHAGLYPSYN_RXN_p"/>
-          <groups:member groups:name="PGPPHOSPHA-RXN:Phosphatidylglycerophosphate phosphatase" groups:idRef="R_PGPPHOSPHA_RXN_m"/>
           <groups:member groups:name="PHOSPHAGLYPSYN-RXN:Phosphatidylglycerol phosphate synthase" groups:idRef="R_PHOSPHAGLYPSYN_RXN_m"/>
           <groups:member groups:name="CDPDIGLYSYN-RXN:phosphatidate cytidylyltransferase" groups:idRef="R_CDPDIGLYSYN_RXN_m"/>
+          <groups:member groups:name="PGPPHOSPHA-RXN:Phosphatidylglycerophosphate phosphatase" groups:idRef="R_PGPPHOSPHA_RXN_m"/>
+          <groups:member groups:name="CDPDIGLYSYN-RXN:phosphatidate cytidylyltransferase" groups:idRef="R_CDPDIGLYSYN_RXN_p"/>
           <groups:member groups:name="PGPPHOSPHA-RXN:Phosphatidylglycerophosphate phosphatase" groups:idRef="R_PGPPHOSPHA_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
@@ -25684,15 +25690,15 @@
       <groups:group groups:id="G_Photorespiration" groups:name="Photorespiration" groups:kind="collection">
         <groups:listOfMembers>
           <groups:member groups:name="GCVMULTI-RXN:NIL" groups:idRef="R_GCVMULTI_RXN_m"/>
-          <groups:member groups:name="GPH-RXN:Phosphoglycolate phosphatase" groups:idRef="R_GPH_RXN_p"/>
-          <groups:member groups:name="RXN-969:NIL" groups:idRef="R_RXN_969_x"/>
           <groups:member groups:name="GLYOHMETRANS-RXN:NIL" groups:idRef="R_GLYOHMETRANS_RXN_p"/>
-          <groups:member groups:name="GLY3KIN-RXN:Glycerate kinase" groups:idRef="R_GLY3KIN_RXN_p"/>
-          <groups:member groups:name="GLYOHMETRANS-RXN:NIL" groups:idRef="R_GLYOHMETRANS_RXN_m"/>
-          <groups:member groups:name="SERINE-GLYOXYLATE-AMINOTRANSFERASE-RXN:Serine--glyoxylate aminotransferase" groups:idRef="R_SERINE_GLYOXYLATE_AMINOTRANSFERASE_RXN_x"/>
           <groups:member groups:name="GLYCINE-AMINOTRANSFERASE-RXN:Glycine aminotransferase" groups:idRef="R_GLYCINE_AMINOTRANSFERASE_RXN_x"/>
-          <groups:member groups:name="GLYOHMETRANS-RXN:NIL" groups:idRef="R_GLYOHMETRANS_RXN_c"/>
+          <groups:member groups:name="RXN-969:NIL" groups:idRef="R_RXN_969_x"/>
+          <groups:member groups:name="GLYOHMETRANS-RXN:NIL" groups:idRef="R_GLYOHMETRANS_RXN_m"/>
           <groups:member groups:name="RXN-961:NIL" groups:idRef="R_RXN_961_p"/>
+          <groups:member groups:name="GLY3KIN-RXN:Glycerate kinase" groups:idRef="R_GLY3KIN_RXN_p"/>
+          <groups:member groups:name="GLYOHMETRANS-RXN:NIL" groups:idRef="R_GLYOHMETRANS_RXN_c"/>
+          <groups:member groups:name="SERINE-GLYOXYLATE-AMINOTRANSFERASE-RXN:Serine--glyoxylate aminotransferase" groups:idRef="R_SERINE_GLYOXYLATE_AMINOTRANSFERASE_RXN_x"/>
+          <groups:member groups:name="GPH-RXN:Phosphoglycolate phosphatase" groups:idRef="R_GPH_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_SAM__45__PWY" groups:name="S-adenosyl-L-methionine biosynthesis" groups:kind="collection">
@@ -25702,10 +25708,10 @@
       </groups:group>
       <groups:group groups:id="G_SERINE__45__BIOSYNTHESIS" groups:name="L-serine Biosynthesis" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="HYDROXYPYRUVATE_REDUCTASE_RXN_NAD_x" groups:idRef="R_HYDROXYPYRUVATE_REDUCTASE_RXN_NAD_x"/>
-          <groups:member groups:name="RXN0-5114:NIL" groups:idRef="R_RXN0_5114_p"/>
-          <groups:member groups:name="PGLYCDEHYDROG-RXN:Phosphoglycerate dehydrogenase" groups:idRef="R_PGLYCDEHYDROG_RXN_p"/>
           <groups:member groups:name="PSERTRANSAM-RXN:Phosphoserine aminotransferase" groups:idRef="R_PSERTRANSAM_RXN_p"/>
+          <groups:member groups:name="PGLYCDEHYDROG-RXN:Phosphoglycerate dehydrogenase" groups:idRef="R_PGLYCDEHYDROG_RXN_p"/>
+          <groups:member groups:name="RXN0-5114:NIL" groups:idRef="R_RXN0_5114_p"/>
+          <groups:member groups:name="HYDROXYPYRUVATE_REDUCTASE_RXN_NAD_x" groups:idRef="R_HYDROXYPYRUVATE_REDUCTASE_RXN_NAD_x"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_SO4ASSIM__45__PWY" groups:name="assimilatory sulfate reduction I" groups:kind="collection">
@@ -25722,23 +25728,23 @@
       </groups:group>
       <groups:group groups:id="G_Starch__45__Degradation" groups:name="Starch Degradation" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="RXN-2141:NIL" groups:idRef="R_RXN_2141_p"/>
+          <groups:member groups:name="PHOSPHOGLUCMUT-RXN:|Phosphoglucomutase|" groups:idRef="R_PHOSPHOGLUCMUT_RXN_p"/>
           <groups:member groups:name="RXN0-5184:Phosphorylase" groups:idRef="R_RXN0_5184_c"/>
+          <groups:member groups:name="RXN-2141:NIL" groups:idRef="R_RXN_2141_p"/>
+          <groups:member groups:name="RXN-1827:NIL" groups:idRef="R_RXN_1827_p"/>
+          <groups:member groups:name="PHOSPHOGLUCMUT-RXN:|Phosphoglucomutase|" groups:idRef="R_PHOSPHOGLUCMUT_RXN_c"/>
           <groups:member groups:name="MALTODEXGLUCOSID-RXN:NIL" groups:idRef="R_MALTODEXGLUCOSID_RXN_p"/>
           <groups:member groups:name="RXN-1826:starch phosphorylase" groups:idRef="R_RXN_1826_p"/>
-          <groups:member groups:name="PHOSPHOGLUCMUT-RXN:|Phosphoglucomutase|" groups:idRef="R_PHOSPHOGLUCMUT_RXN_c"/>
-          <groups:member groups:name="PHOSPHOGLUCMUT-RXN:|Phosphoglucomutase|" groups:idRef="R_PHOSPHOGLUCMUT_RXN_p"/>
-          <groups:member groups:name="RXN-1827:NIL" groups:idRef="R_RXN_1827_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_Sucrose__45__Biosynthesis" groups:name="Sucrose Biosynthesis" groups:kind="collection">
         <groups:listOfMembers>
+          <groups:member groups:name="PHOSPHOGLUCMUT-RXN:|Phosphoglucomutase|" groups:idRef="R_PHOSPHOGLUCMUT_RXN_p"/>
           <groups:member groups:name="MALTODEG-RXN:NIL" groups:idRef="R_MALTODEG_RXN_c"/>
-          <groups:member groups:name="GLUC1PURIDYLTRANS-RXN:UTP--glucose-1-phosphate uridylyltransferase" groups:idRef="R_GLUC1PURIDYLTRANS_RXN_c"/>
+          <groups:member groups:name="SUCROSE-PHOSPHATE-SYNTHASE-RXN:Sucrose-phosphate synthase" groups:idRef="R_SUCROSE_PHOSPHATE_SYNTHASE_RXN_c"/>
           <groups:member groups:name="SUCROSE-PHOSPHATASE-RXN:Sucrose-phosphatase" groups:idRef="R_SUCROSE_PHOSPHATASE_RXN_c"/>
           <groups:member groups:name="PHOSPHOGLUCMUT-RXN:|Phosphoglucomutase|" groups:idRef="R_PHOSPHOGLUCMUT_RXN_c"/>
-          <groups:member groups:name="PHOSPHOGLUCMUT-RXN:|Phosphoglucomutase|" groups:idRef="R_PHOSPHOGLUCMUT_RXN_p"/>
-          <groups:member groups:name="SUCROSE-PHOSPHATE-SYNTHASE-RXN:Sucrose-phosphate synthase" groups:idRef="R_SUCROSE_PHOSPHATE_SYNTHASE_RXN_c"/>
+          <groups:member groups:name="GLUC1PURIDYLTRANS-RXN:UTP--glucose-1-phosphate uridylyltransferase" groups:idRef="R_GLUC1PURIDYLTRANS_RXN_c"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_THIOREDOX__45__PWY" groups:name="thioredoxin pathway" groups:kind="collection">
@@ -25755,44 +25761,44 @@
       </groups:group>
       <groups:group groups:id="G_TRNA__45__CHARGING__45__PWY" groups:name="tRNA charging" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="HISTIDINE--TRNA-LIGASE-RXN:Histidine--tRNA ligase" groups:idRef="R_HISTIDINE_TRNA_LIGASE_RXN_c"/>
-          <groups:member groups:name="GLYCINE--TRNA-LIGASE-RXN:Glycine--tRNA ligase" groups:idRef="R_GLYCINE_TRNA_LIGASE_RXN_c"/>
-          <groups:member groups:name="ALANINE--TRNA-LIGASE-RXN:Alanine--tRNA ligase" groups:idRef="R_ALANINE_TRNA_LIGASE_RXN_c"/>
-          <groups:member groups:name="CYSTEINE--TRNA-LIGASE-RXN:Cysteine--tRNA ligase" groups:idRef="R_CYSTEINE__TRNA_LIGASE_RXN_c"/>
-          <groups:member groups:name="METHIONINE--TRNA-LIGASE-RXN:Methionine--tRNA ligase" groups:idRef="R_METHIONINE_TRNA_LIGASE_RXN_c"/>
-          <groups:member groups:name="THREONINE--TRNA-LIGASE-RXN:Threonine--tRNA ligase" groups:idRef="R_THREONINE_TRNA_LIGASE_RXN_c"/>
-          <groups:member groups:name="ASPARAGINE--TRNA-LIGASE-RXN:Asparagine--tRNA ligase" groups:idRef="R_ASPARAGINE_TRNA_LIGASE_RXN_c"/>
-          <groups:member groups:name="SERINE--TRNA-LIGASE-RXN:Serine--tRNA ligase" groups:idRef="R_SERINE_TRNA_LIGASE_RXN_c"/>
-          <groups:member groups:name="ISOLEUCINE--TRNA-LIGASE-RXN:Isoleucine--tRNA ligase" groups:idRef="R_ISOLEUCINE_TRNA_LIGASE_RXN_c"/>
-          <groups:member groups:name="PHENYLALANINE--TRNA-LIGASE-RXN:Phenylalanine--tRNA ligase" groups:idRef="R_PHENYLALANINE_TRNA_LIGASE_RXN_c"/>
           <groups:member groups:name="ARGININE--TRNA-LIGASE-RXN:Arginine--tRNA ligase" groups:idRef="R_ARGININE_TRNA_LIGASE_RXN_c"/>
-          <groups:member groups:name="ASPARTATE--TRNA-LIGASE-RXN:Aspartate--tRNA ligase" groups:idRef="R_ASPARTATE_TRNA_LIGASE_RXN_c"/>
-          <groups:member groups:name="TYROSINE--TRNA-LIGASE-RXN:Tyrosine--tRNA ligase" groups:idRef="R_TYROSINE_TRNA_LIGASE_RXN_c"/>
-          <groups:member groups:name="PROLINE--TRNA-LIGASE-RXN:Proline--tRNA ligase" groups:idRef="R_PROLINE__TRNA_LIGASE_RXN_c"/>
-          <groups:member groups:name="VALINE--TRNA-LIGASE-RXN:Valine--tRNA ligase" groups:idRef="R_VALINE_TRNA_LIGASE_RXN_c"/>
-          <groups:member groups:name="GLUTAMINE--TRNA-LIGASE-RXN:Glutamine--tRNA ligase" groups:idRef="R_GLUTAMINE_TRNA_LIGASE_RXN_c"/>
-          <groups:member groups:name="GLURS-RXN:Glutamate--tRNA ligase" groups:idRef="R_GLURS_RXN_c"/>
-          <groups:member groups:name="LEUCINE--TRNA-LIGASE-RXN:Leucine--tRNA ligase" groups:idRef="R_LEUCINE_TRNA_LIGASE_RXN_c"/>
+          <groups:member groups:name="ASPARAGINE--TRNA-LIGASE-RXN:Asparagine--tRNA ligase" groups:idRef="R_ASPARAGINE_TRNA_LIGASE_RXN_c"/>
+          <groups:member groups:name="METHIONINE--TRNA-LIGASE-RXN:Methionine--tRNA ligase" groups:idRef="R_METHIONINE_TRNA_LIGASE_RXN_c"/>
+          <groups:member groups:name="GLYCINE--TRNA-LIGASE-RXN:Glycine--tRNA ligase" groups:idRef="R_GLYCINE_TRNA_LIGASE_RXN_c"/>
           <groups:member groups:name="LYSINE--TRNA-LIGASE-RXN:Lysine--tRNA ligase" groups:idRef="R_LYSINE_TRNA_LIGASE_RXN_c"/>
+          <groups:member groups:name="CYSTEINE--TRNA-LIGASE-RXN:Cysteine--tRNA ligase" groups:idRef="R_CYSTEINE__TRNA_LIGASE_RXN_c"/>
+          <groups:member groups:name="PROLINE--TRNA-LIGASE-RXN:Proline--tRNA ligase" groups:idRef="R_PROLINE__TRNA_LIGASE_RXN_c"/>
+          <groups:member groups:name="THREONINE--TRNA-LIGASE-RXN:Threonine--tRNA ligase" groups:idRef="R_THREONINE_TRNA_LIGASE_RXN_c"/>
+          <groups:member groups:name="TYROSINE--TRNA-LIGASE-RXN:Tyrosine--tRNA ligase" groups:idRef="R_TYROSINE_TRNA_LIGASE_RXN_c"/>
+          <groups:member groups:name="ASPARTATE--TRNA-LIGASE-RXN:Aspartate--tRNA ligase" groups:idRef="R_ASPARTATE_TRNA_LIGASE_RXN_c"/>
+          <groups:member groups:name="PHENYLALANINE--TRNA-LIGASE-RXN:Phenylalanine--tRNA ligase" groups:idRef="R_PHENYLALANINE_TRNA_LIGASE_RXN_c"/>
+          <groups:member groups:name="ISOLEUCINE--TRNA-LIGASE-RXN:Isoleucine--tRNA ligase" groups:idRef="R_ISOLEUCINE_TRNA_LIGASE_RXN_c"/>
+          <groups:member groups:name="VALINE--TRNA-LIGASE-RXN:Valine--tRNA ligase" groups:idRef="R_VALINE_TRNA_LIGASE_RXN_c"/>
+          <groups:member groups:name="LEUCINE--TRNA-LIGASE-RXN:Leucine--tRNA ligase" groups:idRef="R_LEUCINE_TRNA_LIGASE_RXN_c"/>
+          <groups:member groups:name="HISTIDINE--TRNA-LIGASE-RXN:Histidine--tRNA ligase" groups:idRef="R_HISTIDINE_TRNA_LIGASE_RXN_c"/>
+          <groups:member groups:name="GLURS-RXN:Glutamate--tRNA ligase" groups:idRef="R_GLURS_RXN_c"/>
+          <groups:member groups:name="ALANINE--TRNA-LIGASE-RXN:Alanine--tRNA ligase" groups:idRef="R_ALANINE_TRNA_LIGASE_RXN_c"/>
+          <groups:member groups:name="SERINE--TRNA-LIGASE-RXN:Serine--tRNA ligase" groups:idRef="R_SERINE_TRNA_LIGASE_RXN_c"/>
           <groups:member groups:name="TRYTOPHAN--TRNA-LIGASE-RXN:Tryptophan--tRNA ligase" groups:idRef="R_TRYPTOPHAN__TRNA_LIGASE_RXN_c"/>
+          <groups:member groups:name="GLUTAMINE--TRNA-LIGASE-RXN:Glutamine--tRNA ligase" groups:idRef="R_GLUTAMINE_TRNA_LIGASE_RXN_c"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_TRYPTOPHAN__45__BIOSYNTHESIS" groups:name="L-tryptophan Biosynthesis" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="RXN0-2382:NIL" groups:idRef="R_RXN0_2382_p"/>
           <groups:member groups:name="IGPSYN-RXN:NIL" groups:idRef="R_IGPSYN_RXN_p"/>
-          <groups:member groups:name="RXN0-2381:NIL" groups:idRef="R_RXN0_2381_p"/>
+          <groups:member groups:name="ANTHRANSYN-RXN:Anthranilate synthase" groups:idRef="R_ANTHRANSYN_RXN_p"/>
           <groups:member groups:name="PRAISOM-RXN:Phosphoribosylanthranilate isomerase" groups:idRef="R_PRAISOM_RXN_p"/>
           <groups:member groups:name="PRTRANS-RXN:Anthranilate phosphoribosyltransferase" groups:idRef="R_PRTRANS_RXN_p"/>
-          <groups:member groups:name="ANTHRANSYN-RXN:Anthranilate synthase" groups:idRef="R_ANTHRANSYN_RXN_p"/>
+          <groups:member groups:name="RXN0-2382:NIL" groups:idRef="R_RXN0_2382_p"/>
+          <groups:member groups:name="RXN0-2381:NIL" groups:idRef="R_RXN0_2381_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_TYRFUMCAT__45__PWY" groups:name="L-tyrosine degradation I" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="HOMOGENTISATE-12-DIOXYGENASE-RXN:Homogentisate 1,2-dioxygenase" groups:idRef="R_HOMOGENTISATE_12_DIOXYGENASE_RXN_c"/>
           <groups:member groups:name="4-HYDROXYPHENYLPYRUVATE-DIOXYGENASE-RXN:NIL" groups:idRef="R_4_HYDROXYPHENYLPYRUVATE_DIOXYGENASE_RXN_c"/>
           <groups:member groups:name="FUMARYLACETOACETASE-RXN:Fumarylacetoacetase" groups:idRef="R_FUMARYLACETOACETASE_RXN_c"/>
           <groups:member groups:name="MALEYLACETOACETATE-ISOMERASE-RXN:Maleylacetoacetate isomerase" groups:idRef="R_MALEYLACETOACETATE_ISOMERASE_RXN_c"/>
+          <groups:member groups:name="HOMOGENTISATE-12-DIOXYGENASE-RXN:Homogentisate 1,2-dioxygenase" groups:idRef="R_HOMOGENTISATE_12_DIOXYGENASE_RXN_c"/>
           <groups:member groups:name="TYROSINE-AMINOTRANSFERASE-RXN:Tyrosine aminotransferase" groups:idRef="R_TYROSINE_AMINOTRANSFERASE_RXN_c"/>
         </groups:listOfMembers>
       </groups:group>
@@ -25806,22 +25812,22 @@
       <groups:group groups:id="G_VALDEG__45__PWY" groups:name="L-valine degradation I" groups:kind="collection">
         <groups:listOfMembers>
           <groups:member groups:name="METHYLACYLYLCOA-HYDROXY-RXN:Enoyl-CoA hydratase" groups:idRef="R_METHYLACYLYLCOA_HYDROXY_RXN_m"/>
-          <groups:member groups:name="3-HYDROXYISOBUTYRATE-DEHYDROGENASE-RXN:NIL" groups:idRef="R_3_HYDROXYISOBUTYRATE_DEHYDROGENASE_RXN_m"/>
-          <groups:member groups:name="1.2.1.25-RXN" groups:idRef="R_1_PERIOD_2_PERIOD_1_PERIOD_25_RXN_m"/>
           <groups:member groups:name="3-HYDROXYISOBUTYRYL-COA-HYDROLASE-RXN:NIL" groups:idRef="R_3_HYDROXYISOBUTYRYL_COA_HYDROLASE_RXN_m"/>
-          <groups:member groups:name="RXN-11213" groups:idRef="R_RXN_11213_m"/>
-          <groups:member groups:name="BRANCHED-CHAINAMINOTRANSFERVAL-RXN:Branched-chain amino acid aminotransferase" groups:idRef="R_BRANCHED_CHAINAMINOTRANSFERVAL_RXN_p"/>
           <groups:member groups:name="BRANCHED-CHAINAMINOTRANSFERVAL-RXN:Branched-chain amino acid aminotransferase" groups:idRef="R_BRANCHED_CHAINAMINOTRANSFERVAL_RXN_m"/>
+          <groups:member groups:name="BRANCHED-CHAINAMINOTRANSFERVAL-RXN:Branched-chain amino acid aminotransferase" groups:idRef="R_BRANCHED_CHAINAMINOTRANSFERVAL_RXN_p"/>
+          <groups:member groups:name="RXN-11213" groups:idRef="R_RXN_11213_m"/>
+          <groups:member groups:name="3-HYDROXYISOBUTYRATE-DEHYDROGENASE-RXN:NIL" groups:idRef="R_3_HYDROXYISOBUTYRATE_DEHYDROGENASE_RXN_m"/>
           <groups:member groups:name="MEPROPCOA-FAD-RXN:2-methylacyl-CoA dehydrogenase" groups:idRef="R_MEPROPCOA_FAD_RXN_m"/>
+          <groups:member groups:name="1.2.1.25-RXN" groups:idRef="R_1_PERIOD_2_PERIOD_1_PERIOD_25_RXN_m"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_VALINE__45__BIOSYNTHESIS" groups:name="L-valine Biosynthesis" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="DIHYDROXYISOVALDEHYDRAT-RXN:Dihydroxy-acid dehydratase" groups:idRef="R_DIHYDROXYISOVALDEHYDRAT_RXN_p"/>
-          <groups:member groups:name="ACETOLACTREDUCTOISOM-RXN:Ketol-acid reductoisomerase" groups:idRef="R_ACETOLACTREDUCTOISOM_RXN_p"/>
-          <groups:member groups:name="BRANCHED-CHAINAMINOTRANSFERVAL-RXN:Branched-chain amino acid aminotransferase" groups:idRef="R_BRANCHED_CHAINAMINOTRANSFERVAL_RXN_p"/>
           <groups:member groups:name="ACETOLACTSYN-RXN:Acetolactate synthase" groups:idRef="R_ACETOLACTSYN_RXN_p"/>
+          <groups:member groups:name="ACETOLACTREDUCTOISOM-RXN:Ketol-acid reductoisomerase" groups:idRef="R_ACETOLACTREDUCTOISOM_RXN_p"/>
           <groups:member groups:name="BRANCHED-CHAINAMINOTRANSFERVAL-RXN:Branched-chain amino acid aminotransferase" groups:idRef="R_BRANCHED_CHAINAMINOTRANSFERVAL_RXN_m"/>
+          <groups:member groups:name="BRANCHED-CHAINAMINOTRANSFERVAL-RXN:Branched-chain amino acid aminotransferase" groups:idRef="R_BRANCHED_CHAINAMINOTRANSFERVAL_RXN_p"/>
+          <groups:member groups:name="DIHYDROXYISOVALDEHYDRAT-RXN:Dihydroxy-acid dehydratase" groups:idRef="R_DIHYDROXYISOVALDEHYDRAT_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__7039" groups:name="phosphatidate metabolism, as a signaling molecule" groups:kind="collection"/>
@@ -25834,10 +25840,10 @@
       </groups:group>
       <groups:group groups:id="G_LYSINE__45__DEG2__45__PWY" groups:name="lysine degradation II" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="GLUTACONYL-COA-DECARBOXYLASE-RXN" groups:idRef="R_GLUTACONYL_COA_DECARBOXYLASE_RXN_x"/>
-          <groups:member groups:name="GLUTARYL-COA-DEHYDROG-RXN" groups:idRef="R_GLUTARYL_COA_DEHYDROG_RXN_m"/>
-          <groups:member groups:name="1.5.1.9-RXN" groups:idRef="R_1_PERIOD_5_PERIOD_1_PERIOD_9_RXN_c"/>
           <groups:member groups:name="1.5.1.8-RXN" groups:idRef="R_1_PERIOD_5_PERIOD_1_PERIOD_8_RXN_c"/>
+          <groups:member groups:name="GLUTACONYL-COA-DECARBOXYLASE-RXN" groups:idRef="R_GLUTACONYL_COA_DECARBOXYLASE_RXN_x"/>
+          <groups:member groups:name="1.5.1.9-RXN" groups:idRef="R_1_PERIOD_5_PERIOD_1_PERIOD_9_RXN_c"/>
+          <groups:member groups:name="GLUTARYL-COA-DEHYDROG-RXN" groups:idRef="R_GLUTARYL_COA_DEHYDROG_RXN_m"/>
           <groups:member groups:name="BHBDCLOS-RXN:NIL" groups:idRef="R_BHBDCLOS_RXN_x"/>
           <groups:member groups:name="3-HYDROXBUTYRYL-COA-DEHYDRATASE-RXN:NIL" groups:idRef="R_3_HYDROXBUTYRYL_COA_DEHYDRATASE_RXN_x"/>
         </groups:listOfMembers>
@@ -25849,18 +25855,18 @@
       </groups:group>
       <groups:group groups:id="G_PWY__45__7205" groups:name="CMP phosphorylation" groups:kind="collection">
         <groups:listOfMembers>
+          <groups:member groups:name="RXN-11832" groups:idRef="R_RXN_11832_p"/>
           <groups:member groups:name="RXN-11832" groups:idRef="R_RXN_11832_m"/>
           <groups:member groups:name="CDPKIN-RXN:NIL" groups:idRef="R_CDPKIN_RXN_p"/>
-          <groups:member groups:name="RXN-11832" groups:idRef="R_RXN_11832_p"/>
           <groups:member groups:name="CDPKIN-RXN:NIL" groups:idRef="R_CDPKIN_RXN_m"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__7184" groups:name="pyrimidine deoxyribonucleotides de novo biosynthesis I" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="DUTP-PYROP-RXN:dUTP pyrophosphatase" groups:idRef="R_DUTP_PYROP_RXN_p"/>
           <groups:member groups:name="CDPREDUCT-RXN:NIL" groups:idRef="R_CDPREDUCT_RXN_p"/>
-          <groups:member groups:name="UDPREDUCT-RXN:NIL" groups:idRef="R_UDPREDUCT_RXN_p"/>
+          <groups:member groups:name="DUTP-PYROP-RXN:dUTP pyrophosphatase" groups:idRef="R_DUTP_PYROP_RXN_p"/>
           <groups:member groups:name="DUDPKIN-RXN:NIL" groups:idRef="R_DUDPKIN_RXN_p"/>
+          <groups:member groups:name="UDPREDUCT-RXN:NIL" groups:idRef="R_UDPREDUCT_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__7185" groups:name="UTP and CTP dephosphorylation II" groups:kind="collection">
@@ -25888,22 +25894,22 @@
       </groups:group>
       <groups:group groups:id="G_PWY__45__7176" groups:name="UTP and CTP de novo biosynthesis" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="UDPKIN-RXN:NIL" groups:idRef="R_UDPKIN_RXN_c"/>
           <groups:member groups:name="UDPKIN-RXN:NIL" groups:idRef="R_UDPKIN_RXN_p"/>
+          <groups:member groups:name="UDPKIN-RXN:NIL" groups:idRef="R_UDPKIN_RXN_c"/>
           <groups:member groups:name="RXN-12002" groups:idRef="R_RXN_12002_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_LIPASYN__45__PWY" groups:name="phospholipases" groups:kind="collection">
         <groups:listOfMembers>
           <groups:member groups:name="3.1.4.4-phospholipase D" groups:idRef="R_PHOSPHOLIPASE_D_RXN_m"/>
-          <groups:member groups:name="PHOSPHOLIPASE-A2-RXN:Phospholipase" groups:idRef="R_PHOSPHOLIPASE_A2_RXN_c"/>
           <groups:member groups:name="PHOSPHOLIPASE-A-RXN:Phospholipase" groups:idRef="R_PHOSPHOLIPASE_A_RXN_p"/>
+          <groups:member groups:name="PHOSPHOLIPASE-A2-RXN:Phospholipase" groups:idRef="R_PHOSPHOLIPASE_A2_RXN_c"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__8270" groups:name="cyclic electron flow" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="NADPH_Dehydrogenase_p" groups:idRef="R_NADPH_Dehydrogenase_p"/>
           <groups:member groups:name="Ferredoxin_Plastoquinone_Reductase_p" groups:idRef="R_Ferredoxin_Plastoquinone_Reductase_p"/>
+          <groups:member groups:name="NADPH_Dehydrogenase_p" groups:idRef="R_NADPH_Dehydrogenase_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__7048" groups:name="malate-oxaloacetate shuttle II" groups:kind="collection">
@@ -25945,28 +25951,28 @@
       </groups:group>
       <groups:group groups:id="G_PWY__45__7219" groups:name="adenosine ribonucleotides de novo biosynthesis" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="ADENYL-KIN-RXN:Adenylate kinase" groups:idRef="R_ADENYL_KIN_RXN_c"/>
           <groups:member groups:name="ADENYL-KIN-RXN:Adenylate kinase" groups:idRef="R_ADENYL_KIN_RXN_p"/>
-          <groups:member groups:name="AMPSYN-RXN:Adenylosuccinate lyase" groups:idRef="R_AMPSYN_RXN_p"/>
           <groups:member groups:name="ADENYLOSUCCINATE-SYNTHASE-RXN:adenylosuccinate synthetase" groups:idRef="R_ADENYLOSUCCINATE_SYNTHASE_RXN_p"/>
+          <groups:member groups:name="AMPSYN-RXN:Adenylosuccinate lyase" groups:idRef="R_AMPSYN_RXN_p"/>
           <groups:member groups:name="ADENYL-KIN-RXN:Adenylate kinase" groups:idRef="R_ADENYL_KIN_RXN_m"/>
+          <groups:member groups:name="ADENYL-KIN-RXN:Adenylate kinase" groups:idRef="R_ADENYL_KIN_RXN_c"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__7221" groups:name="guanosine ribonucleotides de novo biosynthesis" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="GDPKIN-RXN:NIL" groups:idRef="R_GDPKIN_RXN_p"/>
-          <groups:member groups:name="GDPKIN-RXN:NIL" groups:idRef="R_GDPKIN_RXN_m"/>
-          <groups:member groups:name="GUANYL-KIN-RXN:Guanylate kinase" groups:idRef="R_GUANYL_KIN_RXN_c"/>
           <groups:member groups:name="GMP-SYN-GLUT-RXN:GMP synthetase (glutamine-hydrolysing)" groups:idRef="R_GMP_SYN_GLUT_RXN_c"/>
+          <groups:member groups:name="GDPKIN-RXN:NIL" groups:idRef="R_GDPKIN_RXN_m"/>
+          <groups:member groups:name="IMP-DEHYDROG-RXN:NIL" groups:idRef="R_IMP_DEHYDROG_RXN_c"/>
+          <groups:member groups:name="GDPKIN-RXN:NIL" groups:idRef="R_GDPKIN_RXN_p"/>
+          <groups:member groups:name="GUANYL-KIN-RXN:Guanylate kinase" groups:idRef="R_GUANYL_KIN_RXN_c"/>
           <groups:member groups:name="GDPKIN-RXN:NIL" groups:idRef="R_GDPKIN_RXN_c"/>
           <groups:member groups:name="GUANYL-KIN-RXN:Guanylate kinase" groups:idRef="R_GUANYL_KIN_RXN_p"/>
-          <groups:member groups:name="IMP-DEHYDROG-RXN:NIL" groups:idRef="R_IMP_DEHYDROG_RXN_c"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__7226" groups:name="guanosine deoxyribonucleotides de novo biosynthesis I" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="GDPREDUCT-RXN:NIL" groups:idRef="R_GDPREDUCT_RXN_p"/>
           <groups:member groups:name="DGDPKIN-RXN:NIL" groups:idRef="R_DGDPKIN_RXN_p"/>
+          <groups:member groups:name="GDPREDUCT-RXN:NIL" groups:idRef="R_GDPREDUCT_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY__45__6118" groups:name="glycerol-3-phosphate shuttle" groups:kind="collection">
@@ -25976,8 +25982,8 @@
       </groups:group>
       <groups:group groups:id="G_PWY__45__5329" groups:name="L-cysteine degradation III" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="MercaptoPyruvateSulfurtransferase" groups:idRef="R_MercaptoPyruvateSulfurtransferase_m"/>
           <groups:member groups:name="CYSTEINE-AMINOTRANSFERASE-RXN" groups:idRef="R_CYSTEINE_AMINOTRANSFERASE_RXN_m"/>
+          <groups:member groups:name="MercaptoPyruvateSulfurtransferase" groups:idRef="R_MercaptoPyruvateSulfurtransferase_m"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_PWY66__45__389" groups:name="phytol degradation" groups:kind="collection">
@@ -26009,20 +26015,20 @@
       </groups:group>
       <groups:group groups:id="G_PWY__45__7206" groups:name="pyrimidine deoxyribonucleotides dephosphorylation" groups:kind="collection">
         <groups:listOfMembers>
-          <groups:member groups:name="DUTP-PYROP-RXN:dUTP pyrophosphatase" groups:idRef="R_DUTP_PYROP_RXN_p"/>
-          <groups:member groups:name="Apyrase" groups:idRef="R_RXN_14216_p"/>
           <groups:member groups:name="3.6.1.39-thymidine-triphosphatase (Apyrase)" groups:idRef="R_THYMIDINE_TRIPHOSPHATASE_RXN_c"/>
+          <groups:member groups:name="Apyrase" groups:idRef="R_RXN_14216_p"/>
+          <groups:member groups:name="DUTP-PYROP-RXN:dUTP pyrophosphatase" groups:idRef="R_DUTP_PYROP_RXN_p"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_maintenance" groups:name="maintenance" groups:kind="collection">
         <groups:listOfMembers>
+          <groups:member groups:name="Protein_Translocation_c" groups:idRef="R_Protein_Translocation_c"/>
           <groups:member groups:name="Protein_Processing_c" groups:idRef="R_Protein_Processing_c"/>
           <groups:member groups:name="Protein_Polymerisation_c" groups:idRef="R_Protein_Polymerisation_c"/>
-          <groups:member groups:name="Protein_Translocation_c" groups:idRef="R_Protein_Translocation_c"/>
-          <groups:member groups:name="NADPHoxp_tx" groups:idRef="R_NADPHoxp_tx"/>
-          <groups:member groups:name="ATPase_tx" groups:idRef="R_ATPase_tx"/>
-          <groups:member groups:name="NADPHoxc_tx" groups:idRef="R_NADPHoxc_tx"/>
           <groups:member groups:name="NADPHoxm_tx" groups:idRef="R_NADPHoxm_tx"/>
+          <groups:member groups:name="NADPHoxc_tx" groups:idRef="R_NADPHoxc_tx"/>
+          <groups:member groups:name="ATPase_tx" groups:idRef="R_ATPase_tx"/>
+          <groups:member groups:name="NADPHoxp_tx" groups:idRef="R_NADPHoxp_tx"/>
         </groups:listOfMembers>
       </groups:group>
       <groups:group groups:id="G_H_transporting_ATPase" groups:name="Proton transporting ATPase" groups:kind="collection">

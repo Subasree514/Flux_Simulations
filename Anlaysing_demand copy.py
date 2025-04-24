@@ -26,7 +26,7 @@ import matplotlib.pyplot as plt
 from cobra.io import load_json_model, save_json_model, load_matlab_model, save_matlab_model, read_sbml_model, write_sbml_model
 
 
-core_model = cobra.io.load_matlab_model(join('core_model_RS.mat'))
+core_model = read_sbml_model('beta_day_RS_DM.xml')
 #core_model = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/model_rs.mat'))
 
 ## Pareto function
@@ -93,12 +93,18 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
         reaction_obj2.bounds = (0, 1000.0)
     return result_list
 
+##Constraints
 rubisco = core_model.problem.Constraint(3 * core_model.reactions.get_by_id("RXN_961_p").flux_expression - core_model.reactions.get_by_id("RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p").flux_expression,lb=0, ub=0,)
-# Adding to model
 core_model.add_cons_vars([rubisco])
-#core_model.reactions.get_by_id('LPG_biosynthesis_c').bounds=(0,0)
-objective1 =  'DM_HYDROGEN_PEROXIDE_cell'
-objective2 =  'AraCore_Biomass_tx'
+
+atp = core_model.problem.Constraint((0.0049*core_model.reactions.get_by_id("Photon_tx").flux_expression+2.7851)-core_model.reactions.get_by_id("ATPase_tx").flux_expression, lb=0, ub=0)
+core_model.add_cons_vars(atp)
+
+atp_nadph_03 = core_model.problem.Constraint(3 * (core_model.reactions.get_by_id("NADPHoxm_tx").flux_expression + core_model.reactions.get_by_id("NADPHoxc_tx").flux_expression + core_model.reactions.get_by_id("NADPHoxp_tx").flux_expression) - core_model.reactions.get_by_id("ATPase_tx").flux_expression, lb=0, ub=0)
+core_model.add_cons_vars(atp_nadph_03)
+
+objective1 =  'DM_NITRIC-OXIDE_cell' #'#ho2_rad_p_demand tput_tx AraCore_Biomass_tx DM_HS_cell DM_CPD0-1395_cell'DM_SUPER_OXIDE_cell'#'DM_NITRIC-OXIDE_cell'#'DM_CPD-12377_cell'#'DM_HYDROGEN_PEROXIDE_cell'
+objective2 =  'AraCore_Biomass_tx'#Arabidopsis_biomass_tx' #AraCore_Biomass_tx
 result_list=pareto_analysis(core_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
 data=pd.DataFrame(result_list)
 plt.plot(data[1],data[2])
