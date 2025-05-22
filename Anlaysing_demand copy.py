@@ -26,7 +26,7 @@ import matplotlib.pyplot as plt
 from cobra.io import load_json_model, save_json_model, load_matlab_model, save_matlab_model, read_sbml_model, write_sbml_model
 
 
-core_model = read_sbml_model('beta_day_RS_DM.xml')
+core_model = read_sbml_model('beta_antiox_dm.xml')#beta_antiox_dm  beta_day_RS_DM
 #core_model = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/model_rs.mat'))
 
 ## Pareto function
@@ -103,17 +103,19 @@ core_model.add_cons_vars(atp)
 atp_nadph_03 = core_model.problem.Constraint(3 * (core_model.reactions.get_by_id("NADPHoxm_tx").flux_expression + core_model.reactions.get_by_id("NADPHoxc_tx").flux_expression + core_model.reactions.get_by_id("NADPHoxp_tx").flux_expression) - core_model.reactions.get_by_id("ATPase_tx").flux_expression, lb=0, ub=0)
 core_model.add_cons_vars(atp_nadph_03)
 
-objective1 =  'DM_NITRIC-OXIDE_cell' #'#ho2_rad_p_demand tput_tx AraCore_Biomass_tx DM_HS_cell DM_CPD0-1395_cell'DM_SUPER_OXIDE_cell'#'DM_NITRIC-OXIDE_cell'#'DM_CPD-12377_cell'#'DM_HYDROGEN_PEROXIDE_cell'
+#core_model.reactions.get_by_id('Photon_tx').bounds = (0,29.96568)
+objective1 =  'DM_HYDROGEN_PEROXIDE_cell' #'#ho2_rad_p_demand tput_tx AraCore_Biomass_tx DM_HS_cell DM_CPD0-1395_cell'DM_SUPER_OXIDE_cell'#'DM_NITRIC-OXIDE_cell'#'DM_CPD-12377_cell'#'DM_HYDROGEN_PEROXIDE_cell'
 objective2 =  'AraCore_Biomass_tx'#Arabidopsis_biomass_tx' #AraCore_Biomass_tx
 result_list=pareto_analysis(core_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
 data=pd.DataFrame(result_list)
-plt.plot(data[1],data[2])
+plt.plot(data[1][:25],data[2][:25])
 plt.ylabel('Biomass reaction')
-plt.xlabel('RS demand overall')
+plt.xlabel('HYDROGEN SULFIDE demand')
 plt.title("RS vs.Biomass analysis")
-plt.savefig('/Users/subasrees/Desktop/FluxMap_Workshop/h2o2_biomass_rscore.pdf')
-#plt.ticklabel_format(style='plain')
+#plt.savefig('/Users/subasrees/Desktop/FluxMap_Workshop/h2o2_biomass_rscore.pdf')
+plt.ticklabel_format(style='plain')
 plt.show()
+print(data.head(25))
 
 
 

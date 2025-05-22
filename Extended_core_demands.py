@@ -291,7 +291,7 @@ core_model.add_reactions([reaction])
 reaction = Reaction('H2O2_c_demand')
 reaction.name = 'HYDROGEN PEROXIDE cytosolic transport'
 reaction.subsystem = 'RS demand'
-reaction.lower_bound =-1000.  # This is the default
+reaction.lower_bound =0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 reaction.add_metabolites({core_model.metabolites.get_by_id ('HYDROGEN_PEROXIDE_c'): -1.0,core_model.metabolites.get_by_id('HYDROGEN_PEROXIDE_cell'): 1.0})
 print(reaction.reaction) 
@@ -565,8 +565,8 @@ with core_model:
     core_model.reactions.get_by_id('GLC_tx').bounds = (-1000, 0)
     core_model.reactions.get_by_id('Photon_tx').bounds = (0, 300)
     rubisco = core_model.problem.Constraint(3 * core_model.reactions.get_by_id("RXN_961_p").flux_expression - core_model.reactions.get_by_id("RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p").flux_expression,lb=0, ub=0,)
-    beta_day_RS_DM=core_model
-    write_sbml_model(beta_day_RS_DM, "beta_day_RS_DM.xml")
+    beta_day_RS_DM_r=core_model
+    write_sbml_model(beta_day_RS_DM_r, "beta_day_RS_DM_r.xml")
 
-    sol = beta_day_RS_DM.optimize()
-    print(beta_day_RS_DM.summary(sol))
+    sol = beta_day_RS_DM_r.optimize()
+    print(beta_day_RS_DM_r.summary(sol))
