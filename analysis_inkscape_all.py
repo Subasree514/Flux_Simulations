@@ -87,7 +87,7 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
             tests=['GLUTATHIONE_SYN_RXN_p','GLUTATHIONE_mc','GLUTATHIONE_SYN_RXN_c','GALACTONOLACTONE_DEHYDROGENASE_RXN_m','ASCORBATE_mc','ASCORBATE_pc']
             primary_dark=primary_1+primary_4
             primary_sugar=primary_2+primary_3
-            solution_primary.append(solution.fluxes[primary_dark])
+            solution_primary.append(solution.fluxes[primary_anti_1])
             reaction_obj2.bounds = (0, 1000.0)
         elif metric == 'euclidean':
 
@@ -116,11 +116,11 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
 ## Plots
 #model = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/alpha_day_DM.mat'))
 #model_rs = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/model_rs_dm.mat'))
-model_rs = read_sbml_model('beta_day_RS_DM.xml')
+model_rs = read_sbml_model('beta_antiox_dm.xml')
 core_model=model_rs
-print(core_model.metabolites.get_by_id('ASCORBATE_m').reactions)
+#print(core_model.metabolites.get_by_id('ASCORBATE_m').reactions)
 #print(core_model.metabolites.query('ASCORBATE'))
-core_model.reactions.get_by_id('Photon_tx').bounds = (0,29.96568)
+#core_model.reactions.get_by_id('Photon_tx').bounds = (0,29.96568)
 
 ##Constraints
 rubisco = core_model.problem.Constraint(3 * core_model.reactions.get_by_id("RXN_961_p").flux_expression - core_model.reactions.get_by_id("RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p").flux_expression,lb=0, ub=0,)
