@@ -18,25 +18,17 @@ import os
 from os.path import join
 import matplotlib.pyplot as plt
 from cobra.medium import minimal_medium
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
 from cobra.flux_analysis import production_envelope
 from cobra import Model, Reaction, Metabolite
 from cobra.flux_analysis import flux_variability_analysis
 import matplotlib.pyplot as plt
 from cobra.io import load_json_model, save_json_model, load_matlab_model, save_matlab_model, read_sbml_model, write_sbml_model
+
 ## import models
 #core_model = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/alpha_day_rs.mat'))
 core_model = read_sbml_model('/Users/subasrees/Desktop/core_model_test/extended_core_model.xml')
 
-## Query for compartments
-print(core_model.metabolites.query("SO3"))
-# Details of the
-print(len(core_model.groups))
-print(len(core_model.reactions))
-print(len(core_model.metabolites))
-
-## Initialize demand metabolites for all RS
+## Add demand metabolites for all RS
 core_model.add_metabolites([
     Metabolite(
     'HS_cell',
@@ -147,7 +139,7 @@ core_model.add_boundary(core_model.metabolites.get_by_id("ho2_rad_cell"), type="
 ## 11. ooh demand
 core_model.add_boundary(core_model.metabolites.get_by_id("OOH-_cell"), type="demand")
 
-## Add individual demand reactions for the RS in organelles
+## Add individual demand reactions for the RS in organelles depending on their occurences
 ## H2S
 reaction = Reaction('H2S_p_demand')
 reaction.name = 'Hydrogen sulfide plastid demand'

@@ -17,8 +17,6 @@ import os
 from os.path import join
 import matplotlib.pyplot as plt
 from cobra.medium import minimal_medium
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
 from cobra.flux_analysis import production_envelope
 from cobra import Model, Reaction, Metabolite
 from cobra.flux_analysis import flux_variability_analysis
@@ -28,9 +26,8 @@ from cobra.io import load_json_model, save_json_model, load_matlab_model, save_m
 #alpha_day = cobra.io.load_matlab_model(join("/home/subasree/Desktop/Models_to_work/alpha_day.mat"))
 alpha_day = read_sbml_model("/Users/subasrees/Desktop/core_model_test/core_model_final.xml")
 core_model=alpha_day
-## Query for compartments
-print(core_model.metabolites.query("SO3"))
-## Initialize demand metabolites for each RS
+
+## Initialize demand metabolites for each 4 RS
 core_model.add_metabolites([
     Metabolite(
     'HS_cell',
