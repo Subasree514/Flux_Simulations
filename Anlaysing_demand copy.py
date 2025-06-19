@@ -26,7 +26,7 @@ import matplotlib.pyplot as plt
 from cobra.io import load_json_model, save_json_model, load_matlab_model, save_matlab_model, read_sbml_model, write_sbml_model
 
 
-core_model = read_sbml_model('beta_antiox_dm.xml')#beta_antiox_dm  beta_day_RS_DM
+core_model = read_sbml_model('beta_antiox_dm.xml')#beta_antiox_dm  beta_day_RS_DM beta_day_RS_DM_r beta_day_RS_DM_new beta_day_DM_new
 #core_model = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/model_rs.mat'))
 
 ## Pareto function
@@ -103,20 +103,28 @@ core_model.add_cons_vars(atp)
 atp_nadph_03 = core_model.problem.Constraint(3 * (core_model.reactions.get_by_id("NADPHoxm_tx").flux_expression + core_model.reactions.get_by_id("NADPHoxc_tx").flux_expression + core_model.reactions.get_by_id("NADPHoxp_tx").flux_expression) - core_model.reactions.get_by_id("ATPase_tx").flux_expression, lb=0, ub=0)
 core_model.add_cons_vars(atp_nadph_03)
 
+print(core_model.reactions.get_by_id('AraCore_Biomass_tx').summary())
 #core_model.reactions.get_by_id('Photon_tx').bounds = (0,29.96568)
 objective1 =  'DM_HYDROGEN_PEROXIDE_cell' #'#ho2_rad_p_demand tput_tx AraCore_Biomass_tx DM_HS_cell DM_CPD0-1395_cell'DM_SUPER_OXIDE_cell'#'DM_NITRIC-OXIDE_cell'#'DM_CPD-12377_cell'#'DM_HYDROGEN_PEROXIDE_cell'
 objective2 =  'AraCore_Biomass_tx'#Arabidopsis_biomass_tx' #AraCore_Biomass_tx
 result_list=pareto_analysis(core_model, objective1 = objective1, objective2=objective2, pareto_range = pareto_range, metric = metric)
 data=pd.DataFrame(result_list)
-plt.plot(data[1][:25],data[2][:25])
-plt.ylabel('Biomass reaction')
-plt.xlabel('HYDROGEN SULFIDE demand')
-plt.title("RS vs.Biomass analysis")
-#plt.savefig('/Users/subasrees/Desktop/FluxMap_Workshop/h2o2_biomass_rscore.pdf')
-plt.ticklabel_format(style='plain')
+gr=np.array(data[2]*(3600*10**-6*0.027746))
+plt.plot(data[1],data[2])
+#plt.ylabel('RGR (1/h)',fontsize=14)
+plt.ylabel('Biomass flux(μmol/$m^{2}$ s)',fontsize=14)
+plt.xlabel('Hydrogen peroxide total demand (μmol/$m^{2}$ s)',fontsize=14)
+plt.title("Hydrogen peroxide vs. Biomass analysis",fontsize=16)
+#plt.ticklabel_format(style='plain',fontsize=14)
+plt.xticks(fontsize=11)
+plt.yticks(fontsize=11)
+#plt.axvline(x=74, ymin=0.31,ymax=1,color='k',ls='--')
+#plt.axvline(x=10.1, ymin=0.31,ymax=0.95,color='r',ls='-.')
+#plt.axvline(x=7.4, ymin=0.315,ymax=0.95,color='b',ls='-.')
+#plt.axhline(y=91,xmin=0,xmax=0.72,color='k',ls='--')
+print(data.head(30))
+#plt.savefig('/Users/subasrees/Desktop/h2o2_biomass_77.pdf')
 plt.show()
-print(data.head(25))
-
 
 
 #with core_model:

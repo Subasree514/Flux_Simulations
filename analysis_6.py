@@ -107,7 +107,7 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
 ## Plots
 #model = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/alpha_day_DM.mat'))
 #model_rs = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/model_rs_dm.mat'))
-model_rs = read_sbml_model('beta_day_RS_DM.xml')
+model_rs = read_sbml_model('beta_antiox_dm.xml')
 core_model=model_rs
 
 
@@ -174,9 +174,9 @@ xticks_resp=['PETC', 'PETH1','COX2']#'PLGG1','ME2','CA2','PDH']#'HXK2','rbcl-o2'
 xticks_photo=['rbcl','GLO2','GGAT1','SHM2','AGT1','GLYK']
 xticks_redox=data.columns
 ax.set_xlabel('Reactions', fontweight='bold',fontsize=20)
-ax.set_xticks(r,xticks_redox,rotation=20,fontsize=20)
-ax.set_xticks(r,xticks_redox,rotation=20,fontsize=20)
-ax.set_xticks(r,xticks_redox,rotation=20,fontsize=20)
+#ax.set_xticks(r,xticks_redox,rotation=20,fontsize=20)
+#ax.set_xticks(r,xticks_redox,rotation=20,fontsize=20)
+#ax.set_xticks(r,xticks_redox,rotation=20,fontsize=20)
 ax.set_ylabel('Fluxes', fontweight='bold',fontsize=20)
 
 # Title

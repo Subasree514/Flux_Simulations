@@ -87,7 +87,7 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
             tests=['GLUTATHIONE_SYN_RXN_p','GLUTATHIONE_mc','GLUTATHIONE_SYN_RXN_c','GALACTONOLACTONE_DEHYDROGENASE_RXN_m','ASCORBATE_mc','ASCORBATE_pc']
             primary_dark=primary_1+primary_4
             primary_sugar=primary_2+primary_3
-            solution_primary.append(solution.fluxes[primary_anti_1])
+            solution_primary.append(solution.fluxes[primary_dark])
             reaction_obj2.bounds = (0, 1000.0)
         elif metric == 'euclidean':
 
@@ -116,7 +116,7 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
 ## Plots
 #model = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/alpha_day_DM.mat'))
 #model_rs = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/model_rs_dm.mat'))
-model_rs = read_sbml_model('beta_antiox_dm.xml')
+model_rs = read_sbml_model('beta_day_RS_DM_new.xml') #beta_antiox_dm beta_day_RS_DM_r
 core_model=model_rs
 #print(core_model.metabolites.get_by_id('ASCORBATE_m').reactions)
 #print(core_model.metabolites.query('ASCORBATE'))
@@ -149,7 +149,7 @@ bars1_df.columns=['Fluxes_zero','Rxns_zero']
 bars1_df["Rxns_zero"] = bars1_df["Rxns_zero"].apply(lambda x: x+'_zero')
 bars1_df.reset_index(drop=True, inplace=True)
 
-bars2 = round(data.iloc[45,:],2)
+bars2 = round(data.iloc[10,:],2)
 bars2_df=pd.DataFrame([bars2])
 bars2_df=bars2_df.T
 bars2_df['Rxns_half']=bars2_df.index
@@ -157,7 +157,7 @@ bars2_df.columns=['Fluxes_half','Rxns_half']
 bars2_df["Rxns_half"] = bars2_df["Rxns_half"].apply(lambda x: x+'_half')
 bars2_df.reset_index(drop=True, inplace=True)
 
-bars3 = round(data.iloc[100,:],2)
+bars3 = round(data.iloc[20,:],2)
 bars3_df=pd.DataFrame([bars3])
 bars3_df=bars3_df.T
 bars3_df['Rxns_max']=bars3_df.index
@@ -177,4 +177,4 @@ df=pd.DataFrame([df_rxns,df_fluxes])
 df_n2=df.T
 df_n2.columns=['Reactions','Fluxes']
 print(df_n2)
-#df_n2.to_csv('/Users/subasrees/Desktop/FluxMap_Workshop/csvs/etc_h2s_1.csv')
+df_n2.to_csv('/Users/subasrees/Desktop/FluxMap_Workshop/csvs/dark_20.csv')
