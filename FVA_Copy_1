@@ -10,7 +10,7 @@ from cobra.io import load_json_model, save_json_model, load_matlab_model, save_m
 import os
 from os.path import join
 
-model_rs_0 = cobra.io.load_matlab_model(join('alpha_day_rs.mat'))
+model_rs_0 = cobra.io.load_matlab_model(join('/Users/subasrees/Desktop/Core_Model_Simulations/alpha_day_rs.mat'))
 #block_rs_0=cobra.flux_analysis.variability.find_blocked_reactions(model_rs_0,model_rs_0.reactions,open_exchanges=True)
 core_model_0=model_rs_0
 for i in core_model_0.exchanges:
