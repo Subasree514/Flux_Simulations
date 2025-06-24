@@ -25,3 +25,8 @@ heatmap.ipynb contains the code to visually represent the variations in the flux
 rxns_from_compartment.py contains the code to find the number of reactions in each compartment
 
 FVA_Copy_1 contains the code to get the flux spans of reactions along with reaction description
+
+#### Archived codes
+https://github.com/Subasree514/Flux_Simulations/blob/trial/RS%20demands/rename_core.py contains the codes to update the group names to the core model
+
+https://github.com/Subasree514/Flux_Simulations/blob/trial/RS%20demands/rename_extendedcore.py contains the codes to update the group names to the extended core model
