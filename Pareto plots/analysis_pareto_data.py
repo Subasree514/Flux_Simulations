@@ -75,16 +75,25 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
             primary_6=['Photon_tx','PSII_RXN_p','PLASTOQUINOL_PLASTOCYANIN_REDUCTASE_RXN_p','1_PERIOD_18_PERIOD_1_PERIOD_2_RXN_p']
             ## N2 metabolism
             primary_7=['Nitrate_tx','GLUTAMINESYN_RXN_p','GLUTAMATE_SYNTHASE_FERREDOXIN_RXN_p','GLN_GLU_mc','GLUTAMINESYN_RXN_m']
+            ## Glycolysis
             primary_8a= ['GLUCOKIN_RXN_p','6PFRUCTPHOS_RXN_p','3PGAREARR_RXN_p','2PGADEHYDRAT_RXN_p','PEPDEPHOS_RXN_p','PYRUVDEH_RXN_p']
+            ## Citric acid cycle
             primary_8b= ['OAA_xc','CITSYN_RXN_x','CIT_xc','ACONITATEDEHYDR_RXN_c','2KG_ACONITATE_mc','ACONITATEHYDR_RXN_m','ISOCITRATE_DEHYDROGENASE_NAD_RXN_m','ASPAMINOTRANS_RXN_c','MALSYN_RXN_x','MALATE_DEH_RXN_x']
+            ## Respiration
             primary_9=['NADH_DEHYDROG_A_RXN_mi','1_PERIOD_10_PERIOD_2_PERIOD_2_RXN_mi','SUCCINATE_DEHYDROGENASE_UBIQUINONE_RXN_mi','CYTOCHROME_C_OXIDASE_RXN_mi','Mitochondrial_ATP_Synthase_m']
+            ##
             primary_10=['2TRANSKETO_RXN_p','PGLUCISOM_RXN_c','GLU6PDEHYDROG_RXN_p','6PGLUCONOLACT_RXN_c','6PGLUCONDEHYDROG_RXN_p','RIBULP3EPIM_RXN_c']
+            ## Antioxidant enzymes - core
             primary_anti_1=['CATAL_RXN_x','L_ASCORBATE_PEROXIDASE_RXN_m','GLUTATHIONE_PEROXIDASE_RXN_p','L_ASCORBATE_PEROXIDASE_RXN_p','RXN66_1_c','RXN_3521_p','SUPEROX_DISMUT_RXN_c','SUPEROX_DISMUT_RXN_p']
+            ## Antioxidant enzymes - Extended core
             primary_anti_2=['RS_Plant_APX_A','RS_Plant_APX_C','RS_Plant_APX_G','RS_Plant_APX_X','RS_Plant_CAT_M','RS_Plant_GPX_M3','RS_Plant_GPX2_C','RS_Plant_GPX2_N','RS_Plant_GPX5_Mb','RS_Plant_PER1_C','RS_Plant_PER1_CP','RS_Plant_PER1_N']
+            ## Chloroplast metabolism
             primary_11=['RXN1F_66_p','RXN_7674_p','RXN_7676_p','RXN_7677_p','RXN_7678_NADP_p','RXN_7678_NAD_p','RXN_7679_p']
+            ## Transport reactiond
             primary_12=['Ca_tx','H_tx','H2O_tx','K_tx','Mg_tx','Pi_tx','SO4_tx','Nitrate_tx']
+            ## Maintenance reactions
             primary_13=['ATPase_tx','NADPHoxc_tx','NADPHoxm_tx','NADPHoxp_tx']
-            tests=['GLUTATHIONE_SYN_RXN_p','GLUTATHIONE_mc','GLUTATHIONE_SYN_RXN_c','GALACTONOLACTONE_DEHYDROGENASE_RXN_m','ASCORBATE_mc','ASCORBATE_pc']
+            Glutathione_Ascorbate=['GLUTATHIONE_SYN_RXN_p','GLUTATHIONE_mc','GLUTATHIONE_SYN_RXN_c','GALACTONOLACTONE_DEHYDROGENASE_RXN_m','ASCORBATE_mc','ASCORBATE_pc']
             primary_dark=primary_1+primary_4
             primary_sugar=primary_2+primary_3
             solution_primary.append(solution.fluxes[primary_dark])
@@ -118,9 +127,6 @@ def pareto_analysis(model, objective1=objective1, objective2=objective2, pareto_
 #model_rs = cobra.io.load_matlab_model(join('/home/subasree/Desktop/Models_to_work/model_rs_dm.mat'))
 model_rs = read_sbml_model('beta_day_RS_DM_new.xml') #beta_antiox_dm beta_day_RS_DM_r
 core_model=model_rs
-#print(core_model.metabolites.get_by_id('ASCORBATE_m').reactions)
-#print(core_model.metabolites.query('ASCORBATE'))
-#core_model.reactions.get_by_id('Photon_tx').bounds = (0,29.96568)
 
 ##Constraints
 rubisco = core_model.problem.Constraint(3 * core_model.reactions.get_by_id("RXN_961_p").flux_expression - core_model.reactions.get_by_id("RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p").flux_expression,lb=0, ub=0,)
@@ -132,7 +138,6 @@ core_model.add_cons_vars(atp)
 atp_nadph_03 = core_model.problem.Constraint(3 * (core_model.reactions.get_by_id("NADPHoxm_tx").flux_expression + core_model.reactions.get_by_id("NADPHoxc_tx").flux_expression + core_model.reactions.get_by_id("NADPHoxp_tx").flux_expression) - core_model.reactions.get_by_id("ATPase_tx").flux_expression, lb=0, ub=0)
 core_model.add_cons_vars(atp_nadph_03)
 #10.1111/pce.12932
-
 
 ## plot pareto plot
 objective1 =  'DM_HYDROGEN_PEROXIDE_cell'#ho2_rad_p_demand tput_tx AraCore_Biomass_tx DM_HS_cell DM_CPD0-1395_cell'DM_SUPER_OXIDE_cell'#'DM_NITRIC-OXIDE_cell'#'DM_CPD-12377_cell'#'DM_HYDROGEN_PEROXIDE_cell'
@@ -177,4 +182,4 @@ df=pd.DataFrame([df_rxns,df_fluxes])
 df_n2=df.T
 df_n2.columns=['Reactions','Fluxes']
 print(df_n2)
-df_n2.to_csv('/Users/subasrees/Desktop/FluxMap_Workshop/csvs/dark_20.csv')
+#df_n2.to_csv('/Users/subasrees/Desktop/FluxMap_Workshop/csvs/dark_20.csv')

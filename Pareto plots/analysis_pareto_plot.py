@@ -114,17 +114,7 @@ core_model=model_rs
 ##Constraints
 rubisco = core_model.problem.Constraint(3 * core_model.reactions.get_by_id("RXN_961_p").flux_expression - core_model.reactions.get_by_id("RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p").flux_expression,lb=0, ub=0,)
 core_model.add_cons_vars([rubisco])
-#h2o2_x = core_model.problem.Constraint(50 * core_model.reactions.get_by_id("H2O2_m_demand").flux_expression + 2 * core_model.reactions.get_by_id("H2O2_p_demand").flux_expression - core_model.reactions.get_by_id("H2O2_x_demand").flux_expression,lb=0, ub=0,)
-#core_model.add_cons_vars([h2o2_x])
-#10.1111/pce.12932
-#h2o2_x2 = core_model.problem.Constraint(50 * core_model.reactions.get_by_id("H2O2_m_demand").flux_expression - core_model.reactions.get_by_id("H2O2_x_demand").flux_expression,lb=0, ub=0,)
-#core_model.add_cons_vars([h2o2_x2])
-#inv_flux_1 = core_model.problem.Constraint(core_model.reactions.get_by_id('FRU_tr').flux_expression + core_model.reactions.get_by_id('GLC_tr').flux_expression - core_model.reactions.get_by_id('3_PERIOD_2_PERIOD_1_PERIOD_48_RXN_c').flux_expression,lb=0,ub=0)
-#core_model.add_cons_vars(inv_flux_1)
-#inv_flux_2 = core_model.problem.Constraint(core_model.reactions.get_by_id('CWINV1').flux_expression + core_model.reactions.get_by_id('Sucrose_tr').flux_expression,lb=100,ub=100)
-#core_model.add_cons_vars(inv_flux_2)
-#https://doi.org/10.1093/jxb/erm298
-#core_model.add_boundary(core_model.metabolites.get_by_id("GLUTATHIONE_p"), type="demand")atp = core_model.problem.Constraint(0.0049*core_model.reactions.get_by_id("Photon_tx").flux_expression+2.7851-core_model.reactions.get_by_id("ATPase_tx").flux_expression, lb=0, ub=0)
+##
 atp = core_model.problem.Constraint((0.0049*core_model.reactions.get_by_id("Photon_tx").flux_expression+2.7851)-core_model.reactions.get_by_id("ATPase_tx").flux_expression, lb=0, ub=0)
 core_model.add_cons_vars(atp)
 
@@ -174,8 +164,6 @@ xticks_resp=['PETC', 'PETH1','COX2']#'PLGG1','ME2','CA2','PDH']#'HXK2','rbcl-o2'
 xticks_photo=['rbcl','GLO2','GGAT1','SHM2','AGT1','GLYK']
 xticks_redox=data.columns
 ax.set_xlabel('Reactions', fontweight='bold',fontsize=20)
-#ax.set_xticks(r,xticks_redox,rotation=20,fontsize=20)
-#ax.set_xticks(r,xticks_redox,rotation=20,fontsize=20)
 #ax.set_xticks(r,xticks_redox,rotation=20,fontsize=20)
 ax.set_ylabel('Fluxes', fontweight='bold',fontsize=20)
 
