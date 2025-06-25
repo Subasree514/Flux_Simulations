@@ -28,7 +28,7 @@ https://github.com/Subasree514/Flux_Simulations/blob/trial/RS%20demands/rename_c
 
 https://github.com/Subasree514/Flux_Simulations/blob/trial/RS%20demands/rename_extendedcore.py contains the codes to update the group names to the extended core model
 
-https://github.com/Subasree514/Flux_Simulations/blob/trial/Constraints/limiting_nutrient_analysis)limiting_nutrient_analysis - Constraints added to simulate autotrophic conditions
+https://github.com/Subasree514/Flux_Simulations/blob/trial/Constraints/limiting_nutrient_analysis - Constraints added to simulate autotrophic conditions
 
 rxns_from_compartment.py contains the code to find the number of reactions in each compartment
 
