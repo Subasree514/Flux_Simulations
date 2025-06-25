@@ -170,7 +170,7 @@ with core_model:
     core_model.reactions.get_by_id('Photon_tx').bounds = (0, 300)
     rubisco = core_model.problem.Constraint(3 * core_model.reactions.get_by_id("RXN_961_p").flux_expression - core_model.reactions.get_by_id("RIBULOSE_BISPHOSPHATE_CARBOXYLASE_RXN_p").flux_expression,lb=0, ub=0,)
     beta_day_DM=core_model
-    write_sbml_model(beta_day_DM, "beta_day_DM.xml")
+    write_sbml_model(beta_day_DM, "/Users/subasrees/Desktop/Core_Model_Simulations/beta_day_DM.xml")
 
     
     sol = beta_day_DM.optimize()
