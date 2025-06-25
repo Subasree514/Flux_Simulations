@@ -7,7 +7,9 @@ https://github.com/Subasree514/Flux_Simulations/tree/trial/RS%20demands contains
   2. Extended core metabolic model [extended_core_model.xml - not published yet] - Extended_core_demands.py. The model is now called as beta_day_RS_DM_r.xml. extended_core_model.xml was constructed by merging the core_model_final.xml and the RS model for plants
      
 #### Codes to add specific constraints to the models
-https://github.com/Subasree514/Flux_Simulations/tree/trial/Constraints
+Experimental values of activities of antioxidant enzymes are convereted into the bounds of the reespective reactions in the models. Experimental values for total demand demand reactions of non-enzymatic antioxidants like oxidised and reduced glutathione, ascorbate and dehydroascorbate were also added from the studies of (a)biotic stresses on plants
+- https://github.com/Subasree514/Flux_Simulations/tree/trial/Constraints
+
   1. exp_val_core.ipynb - Constraints added to antioxidant enzymes in core model [beta_day_DM.xml]. The constrained model is now called as beta_antiox_core_dm.xml
   2. exp_val.ipynb - Constraints added to antioxidant enzymes in extended core model [beta_day_RS_DM_r.xml]. The constrained model is now called as beta_antiox_dm.xml
 
@@ -21,14 +23,13 @@ biomass_rescaling.ipynb contains the code to rescale the biomass reaction to acc
 
 heatmap.ipynb contains the code to visually represent the variations in the fluxes through the reactions at the three chosen equidistant points on the pareto curve
 
-rxns_from_compartment.py contains the code to find the number of reactions in each compartment
-
-FVA_Copy_1 contains the code to get the flux spans of reactions along with reaction description
-
 #### Archived codes
 https://github.com/Subasree514/Flux_Simulations/blob/trial/RS%20demands/rename_core.py contains the codes to update the group names to the core model
 
 https://github.com/Subasree514/Flux_Simulations/blob/trial/RS%20demands/rename_extendedcore.py contains the codes to update the group names to the extended core model
 
-#### Codes to add generic constraints to the models
 https://github.com/Subasree514/Flux_Simulations/blob/trial/Constraints/limiting_nutrient_analysis)limiting_nutrient_analysis - Constraints added to simulate autotrophic conditions
+
+rxns_from_compartment.py contains the code to find the number of reactions in each compartment
+
+FVA_Copy_1.py contains the code to get the flux spans of reactions along with reaction description
